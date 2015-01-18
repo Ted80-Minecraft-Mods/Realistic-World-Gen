@@ -1,4 +1,7 @@
-<<<<<<< HEAD
+## REALISTIC WORLD GEN ##
+
+http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1281910-teds-world-gen-mods-realistic-world-gen-alpha-1-3
+
 ## CHANGELOG ##
      
         Version Alpha 1.3 '03-01-2015'
@@ -27,7 +30,3 @@
         - Added new biome placement system
         - Improved biome dictionary
         - Added redwood test biome
-        
-=======
-# Realistic-World-Gen
->>>>>>> origin/master
