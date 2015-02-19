@@ -57,7 +57,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	
     private World worldObj;
     private ChunkManagerRealistic cmr;
-    public MapGenBase caveGenerator = new MapGenCaves();
+    public MapGenBase caves = new MapGenCaves();
     private MapGenStronghold strongholdGenerator = new MapGenStronghold();
     private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     private MapGenVillage villageGenerator;
