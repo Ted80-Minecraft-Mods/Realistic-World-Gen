@@ -1,6 +1,7 @@
 package rwg.world;
 
 import static net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.*;
+import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.feature.WorldGenCactus;
 import net.minecraft.world.gen.feature.WorldGenDeadBush;
@@ -58,7 +60,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	
     private World worldObj;
     private ChunkManagerRealistic cmr;
-    private MapGenCaves caves;
+    private MapGenBase caves = new MapGenCaves();
     private MapGenStronghold strongholdGenerator = new MapGenStronghold();
     private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     private MapGenVillage villageGenerator;
@@ -97,7 +99,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	
     public ChunkGeneratorRealistic(World world, long l)
     {
-    	caves = new MapGenCaves();
+    	caves = TerrainGen.getModdedMapGen(caves, CAVE);
         worldObj = world;
         cmr = (ChunkManagerRealistic)worldObj.getWorldChunkManager();
         
