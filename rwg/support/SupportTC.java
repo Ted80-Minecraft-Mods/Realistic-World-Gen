@@ -1,5 +1,6 @@
 package rwg.support;
 
+import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.surface.SurfaceGrassland;
 import rwg.terrain.TerrainSmallSupport;
@@ -29,7 +30,7 @@ public class SupportTC
 				{
 					Support.addBiome(
 						new RealisticBiomeSupport(
-							b[i],
+							b[i], RWGBiomes.baseRiverTemperate,
 							new TerrainSmallSupport(),
 							new SurfaceGrassland(b[i].topBlock, b[i].fillerBlock, Blocks.stone, Blocks.cobblestone)
 						),

@@ -40,17 +40,12 @@ public class Support
 		
 		if (Loader.isModLoaded("ExtrabiomesXL"))
 		{
-			//SupportEBXL.init();
+			SupportEBXL.init();
 		}
 		
 		if (Loader.isModLoaded("Thaumcraft"))
 		{
 			SupportTC.init();
-		}
-		
-		if (Loader.isModLoaded("Highlands"))
-		{
-			//SupportHL.init();
 		}
 	}
 	

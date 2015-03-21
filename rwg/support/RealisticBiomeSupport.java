@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import rwg.api.RWGBiomes;
 import rwg.biomes.base.BaseBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.support.edit.EditBase;
@@ -26,9 +27,9 @@ public class RealisticBiomeSupport extends RealisticBiomeBase
 	public EditBase[] edits;
 	public int editLength;
 	
-	public RealisticBiomeSupport(BiomeGenBase b, TerrainBase t, SurfaceBase[] s, EditBase[] e)
+	public RealisticBiomeSupport(BiomeGenBase b, BiomeGenBase riverbiome, TerrainBase t, SurfaceBase[] s, EditBase[] e)
 	{
-		super(0, b);
+		super(0, b, RealisticBiomeBase.coastDunes, riverbiome);
 		customBiome = b;
 		terrain = t;
 		
@@ -46,14 +47,14 @@ public class RealisticBiomeSupport extends RealisticBiomeBase
 		}
 	}
 	
-	public RealisticBiomeSupport(BiomeGenBase b, TerrainBase t, SurfaceBase s, EditBase e)
+	public RealisticBiomeSupport(BiomeGenBase b, BiomeGenBase riverbiome, TerrainBase t, SurfaceBase s, EditBase e)
 	{
-		this(b, t, new SurfaceBase[]{s}, e != null ? new EditBase[]{e} : null);
+		this(b, riverbiome, t, new SurfaceBase[]{s}, e != null ? new EditBase[]{e} : null);
 	}
 	
-	public RealisticBiomeSupport(BiomeGenBase b, TerrainBase t, SurfaceBase s)
+	public RealisticBiomeSupport(BiomeGenBase b, BiomeGenBase riverbiome, TerrainBase t, SurfaceBase s)
 	{
-		this(b, t, s, null);
+		this(b, riverbiome, t, s, null);
 	}
 
     @Override

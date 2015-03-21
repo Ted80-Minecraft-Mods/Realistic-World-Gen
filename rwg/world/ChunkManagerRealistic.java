@@ -295,7 +295,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h *= biomes_smallLength;
         	return biomes_small.get((int)(h));
     	}
-    	else if((wetEnabled && b < 0.25f) || b < 0.33f)
+    	else if((wetEnabled && b < 0.25f) || (!wetEnabled && b < 0.33f))
     	{
         	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
@@ -303,7 +303,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h *= biomes_snowLength;
         	return biomes_snow.get((int)(h));
     	}
-    	else if((wetEnabled && b < 0.50f) || b < 0.66f)
+    	else if((wetEnabled && b < 0.50f) || (!wetEnabled && b < 0.66f))
     	{
         	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
@@ -311,7 +311,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h *= biomes_coldLength;
         	return biomes_cold.get((int)(h));
     	}
-    	else if((wetEnabled && b < 0.75f) || b < 1f)
+    	else if((wetEnabled && b < 0.75f) || (!wetEnabled && b < 1f))
     	{
         	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
