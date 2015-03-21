@@ -10,10 +10,17 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class DecoCacti extends WorldGenerator
 {
 	private boolean sand;
+	private int eHeight;
 	
 	public DecoCacti(boolean sandOnly)
 	{
+		this(sandOnly, 0);
+	}
+	
+	public DecoCacti(boolean sandOnly, int extraHeight)
+	{
 		sand = sandOnly;
+		eHeight = extraHeight;
 	}
 
     public boolean generate(World world, Random rand, int x, int y, int z)
@@ -36,7 +43,7 @@ public class DecoCacti extends WorldGenerator
 	                	world.setBlock(i1, j1 - 1, k1, Blocks.sand, 0, 2);
 	                }
 	
-	                for (int i2 = 0; i2 < l1; ++i2)
+	                for (int i2 = 0; i2 < l1 + eHeight; ++i2)
 	                {
 	                    if (Blocks.cactus.canBlockStay(world, i1, j1 + i2, k1))
 	                    {

@@ -1,4 +1,4 @@
-package rwg.biomes.realistic.land;
+package rwg.biomes.realistic.desert;
 
 import java.util.Random;
 
@@ -6,8 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.feature.WorldGenBlockBlob;
-import net.minecraft.world.gen.feature.WorldGenCactus;
 import net.minecraft.world.gen.feature.WorldGenDeadBush;
 import net.minecraft.world.gen.feature.WorldGenPumpkin;
 import net.minecraft.world.gen.feature.WorldGenReed;
@@ -15,44 +13,44 @@ import net.minecraft.world.gen.feature.WorldGenShrub;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
+import rwg.deco.DecoBlob;
 import rwg.deco.DecoCacti;
 import rwg.deco.DecoFlowers;
 import rwg.deco.DecoGrass;
 import rwg.deco.trees.DecoSavannah;
 import rwg.surface.SurfaceBase;
-import rwg.surface.SurfaceMesa;
-import rwg.surface.SurfaceRiverOasis;
+import rwg.surface.SurfaceDesertMountain;
+import rwg.surface.river.SurfaceRiverOasis;
 import rwg.terrain.TerrainBase;
-import rwg.terrain.TerrainMesa;
+import rwg.terrain.TerrainHilly;
 import rwg.util.CellNoise;
 import rwg.util.PerlinNoise;
 
-public class RealisticBiomeMesa extends RealisticBiomeBase
+public class RealisticBiomeDesertMountains extends RealisticBiomeBase
 {
 	private TerrainBase terrain;
 	private SurfaceBase surface;
 	private SurfaceBase riverSurface;
-	
-	public RealisticBiomeMesa() 
+
+	public RealisticBiomeDesertMountains() 
 	{
-		super(0, RWGBiomes.baseHotDesert);
-		
-		terrain = new TerrainMesa();
-		surface = new SurfaceMesa(Blocks.sand, Blocks.sand, (byte)1);
+		super(0, RWGBiomes.baseHotDesert, RealisticBiomeBase.coastDunes, RWGBiomes.baseRiverOasis);
+		terrain = new TerrainHilly(230f, 120f, 0f);
+		surface = new SurfaceDesertMountain(Blocks.sand, Blocks.sandstone, false, null, 0f, 1.5f, 60f, 65f, 1.5f);
 		riverSurface = new SurfaceRiverOasis();
 	}
 
 	@Override
     public void rDecorate(World world, Random rand, int chunkX, int chunkY, PerlinNoise perlin, CellNoise cell, float strength, float river)
     {
-		for (int l = 0; l < 1; ++l)
+		if(rand.nextInt((int)(2f / strength)) == 0)
 		{
 			int i1 = chunkX + rand.nextInt(16) + 8;
 			int j1 = chunkY + rand.nextInt(16) + 8;
 		    int k1 = world.getHeightValue(i1, j1);
-		    if(k1 < 83)
+			if(k1 < 85)
 			{
-				(new WorldGenBlockBlob(Blocks.cobblestone, 0)).generate(world, rand, i1, k1, j1);
+				(new DecoBlob(Blocks.cobblestone, 0)).generate(world, rand, i1, k1, j1);
 			}
 		}
 		
@@ -125,38 +123,24 @@ public class RealisticBiomeMesa extends RealisticBiomeBase
 				}
 			}
 		}
-		else
+		
+		for(int k18 = 0; k18 < 12; k18++)
 		{
-			for (int b1 = 0; b1 < 3; b1++)
+			int k21 = chunkX + rand.nextInt(16) + 8;
+			int j23 = rand.nextInt(160);
+			int k24 = chunkY + rand.nextInt(16) + 8;
+			if(j23 < 120f)
 			{
-				int j6 = chunkX + rand.nextInt(16) + 8;
-				int k10 = chunkY + rand.nextInt(16) + 8;
-				int z52 = world.getHeightValue(j6, k10);
-	
-				if(z52 < 90)
-				{
-					WorldGenerator worldgenerator;
-					worldgenerator = new WorldGenShrub(0, 0);
-					worldgenerator.setScale(1.0D, 1.0D, 1.0D);
-					worldgenerator.generate(world, rand, j6, z52, k10);
-				}
+				(new DecoCacti(false)).generate(world, rand, k21, j23, k24);
 			}
-			
-			for(int i15 = 0; i15 < 3; i15++)
-			{
-				int i17 = chunkX + rand.nextInt(16) + 8;
-				int i20 = 60 + rand.nextInt(40);
-				int l22 = chunkY + rand.nextInt(16) + 8;
-				(new WorldGenDeadBush(Blocks.deadbush)).generate(world, rand, i17, i20, l22);
-			}
-			
-			for(int k18 = 0; k18 < 18; k18++)
-			{
-				int k21 = chunkX + rand.nextInt(16) + 8;
-				int j23 = 60 + rand.nextInt(40);
-				int k24 = chunkY + rand.nextInt(16) + 8;
-				(new WorldGenCactus()).generate(world, rand, k21, j23, k24);
-			}
+		}
+		
+		for(int i15 = 0; i15 < 3f * strength; i15++)
+		{
+			int i17 = chunkX + rand.nextInt(16) + 8;
+			int i20 = rand.nextInt(160);
+			int l22 = chunkY + rand.nextInt(16) + 8;
+			(new WorldGenDeadBush(Blocks.deadbush)).generate(world, rand, i17, i20, l22);
 		}
     }
     

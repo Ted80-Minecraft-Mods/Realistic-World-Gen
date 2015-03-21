@@ -10,16 +10,23 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class DecoSavannah extends WorldGenerator
 {
 	private int type;
+	private boolean sand;
 	
     public DecoSavannah(int t)
     {
+    	this(t, true);
+    }
+    
+    public DecoSavannah(int t, boolean s)
+    {
     	type = t;
+    	sand = s;
     }
 
     public boolean generate(World world, Random rand, int x, int y, int z)
     {
     	Block b = world.getBlock(x, y - 1, z);
-    	if(b != Blocks.grass && b != Blocks.dirt && b != Blocks.sand)
+    	if(b != Blocks.grass && b != Blocks.dirt && ((sand && b != Blocks.sand) || !sand))
     	{
     		return false;
     	}

@@ -36,10 +36,10 @@ public class TerrainCanyon extends TerrainBase
 	 * canyonStrength = 40f
 	 * 
 	 */
-	public TerrainCanyon(boolean riverGen, float[] heightArray, float heightStrength, float canyonWidth, float canyonHeight, float canyonStrength, float baseHeight)
+	public TerrainCanyon(boolean riverGen, float heightStrength, float canyonWidth, float canyonHeight, float canyonStrength, float baseHeight)
 	{
 		smallRiver = riverGen;
-		height = heightArray;
+		height = new float[]{5.0f, 0.5f, 12.5f, 0.5f, 18.0f, 0.5f};
 		strength = heightStrength;
 		heightLength = height.length;
 		cWidth = canyonWidth;
@@ -55,7 +55,9 @@ public class TerrainCanyon extends TerrainBase
 		//b *= b / cStrength;
 		river *= 1.3f;
 		river = river > 1f ? 1f : river;
-		float b = 27f * river;
+		float r = perlin.noise2(x / 100f, y / 100f) * 50f;
+		r = r < -7.4f ? -7.4f : r > 7.4f ? 7.4f : r;
+		float b = (17f + r) * river;
 		
 		float hn = perlin.noise2(x / 12f, y / 12f) * 0.5f;
 		float sb = 0f;

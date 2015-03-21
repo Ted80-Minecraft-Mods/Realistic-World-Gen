@@ -5,7 +5,28 @@ import java.util.List;
 import java.util.Random;
 
 import rwg.biomes.realistic.RealisticBiomeBase;
+import rwg.biomes.realistic.desert.RealisticBiomeDesert;
+import rwg.biomes.realistic.desert.RealisticBiomeDesertMountains;
+import rwg.biomes.realistic.desert.RealisticBiomeDuneValley;
+import rwg.biomes.realistic.desert.RealisticBiomeOasis;
+import rwg.biomes.realistic.forest.RealisticBiomeDarkRedwood;
+import rwg.biomes.realistic.forest.RealisticBiomeDarkRedwoodPlains;
+import rwg.biomes.realistic.forest.RealisticBiomeWoodHills;
+import rwg.biomes.realistic.forest.RealisticBiomeWoodMountains;
 import rwg.biomes.realistic.land.*;
+import rwg.biomes.realistic.red.RealisticBiomeCanyon;
+import rwg.biomes.realistic.red.RealisticBiomeMesa;
+import rwg.biomes.realistic.red.RealisticBiomeRedDesertMountains;
+import rwg.biomes.realistic.red.RealisticBiomeRedOasis;
+import rwg.biomes.realistic.savanna.RealisticBiomeCanyonForest;
+import rwg.biomes.realistic.savanna.RealisticBiomeDuneValleyForest;
+import rwg.biomes.realistic.savanna.RealisticBiomeHotForest;
+import rwg.biomes.realistic.savanna.RealisticBiomeMesaPlains;
+import rwg.biomes.realistic.savanna.RealisticBiomeSavanna;
+import rwg.biomes.realistic.savanna.RealisticBiomeSavannaDunes;
+import rwg.biomes.realistic.savanna.RealisticBiomeSavannaForest;
+import rwg.biomes.realistic.savanna.RealisticBiomeStoneMountains;
+import rwg.biomes.realistic.savanna.RealisticBiomeStoneMountainsCactus;
 import rwg.support.Support;
 import rwg.util.CellNoise;
 import rwg.util.PerlinNoise;
@@ -41,11 +62,14 @@ public class ChunkManagerRealistic extends WorldChunkManager
     
     private boolean wetEnabled;
     private boolean smallEnabled;
+
+    private float[] borderNoise;
 	
 	protected ChunkManagerRealistic()
 	{
         this.biomeCache = new BiomeCache(this);
         this.biomesToSpawnIn = new ArrayList();
+    	borderNoise = new float[256];
 	}
 
     public ChunkManagerRealistic(World par1World)
@@ -66,23 +90,40 @@ public class ChunkManagerRealistic extends WorldChunkManager
     	biomes_test = new ArrayList<RealisticBiomeBase>();
 
     	biomes_snow.add(RealisticBiomeBase.polar);
-    	biomes_snow.add(RealisticBiomeBase.tundraHills);
-    	biomes_snow.add(RealisticBiomeBase.tundraPlains);
     	biomes_snow.add(RealisticBiomeBase.snowHills);
     	biomes_snow.add(RealisticBiomeBase.snowRivers);
     	biomes_snow.add(RealisticBiomeBase.snowLakes);
     	biomes_snow.add(RealisticBiomeBase.redwoodSnow);
     	
+    	biomes_cold.add(RealisticBiomeBase.tundraHills);
+    	biomes_cold.add(RealisticBiomeBase.tundraPlains);
     	biomes_cold.add(RealisticBiomeBase.taigaHills);
     	biomes_cold.add(RealisticBiomeBase.taigaPlains);
     	biomes_cold.add(RealisticBiomeBase.redwood);
-
-    	biomes_hot.add(RealisticBiomeBase.desertMountains);
-    	biomes_hot.add(RealisticBiomeBase.dunes);
-    	biomes_hot.add(RealisticBiomeBase.stoneMountains);
+    	biomes_cold.add(RealisticBiomeBase.darkRedwood);
+    	biomes_cold.add(RealisticBiomeBase.darkRedwoodPlains);
+    	biomes_cold.add(RealisticBiomeBase.woodhills);
+    	biomes_cold.add(RealisticBiomeBase.woodmountains);
+    	
+    	biomes_cold.add(RealisticBiomeBase.woodhills);
+    	biomes_cold.add(RealisticBiomeBase.woodmountains);
+    	
+    	biomes_hot.add(RealisticBiomeBase.duneValleyForest);
     	biomes_hot.add(RealisticBiomeBase.savanna);
     	biomes_hot.add(RealisticBiomeBase.savannaForest);
     	biomes_hot.add(RealisticBiomeBase.savannaDunes);
+    	biomes_hot.add(RealisticBiomeBase.stoneMountains);
+    	biomes_hot.add(RealisticBiomeBase.stoneMountainsCactus);
+    	biomes_hot.add(RealisticBiomeBase.hotForest);
+    	biomes_hot.add(RealisticBiomeBase.hotRedwood);
+    	biomes_hot.add(RealisticBiomeBase.canyonForest);
+    	biomes_hot.add(RealisticBiomeBase.mesaPlains);
+    	biomes_hot.add(RealisticBiomeBase.desert);
+    	biomes_hot.add(RealisticBiomeBase.desertMountains);
+    	biomes_hot.add(RealisticBiomeBase.duneValley);
+    	biomes_hot.add(RealisticBiomeBase.oasis);
+    	biomes_hot.add(RealisticBiomeBase.redDesertMountains);
+    	biomes_hot.add(RealisticBiomeBase.redDesertOasis);
     	biomes_hot.add(RealisticBiomeBase.canyon);
     	biomes_hot.add(RealisticBiomeBase.mesa);
     	
@@ -143,8 +184,53 @@ public class ChunkManagerRealistic extends WorldChunkManager
     
     public float getOceanValue(int x, int y)
     {
-    	return 1f;// 0.5f + perlin.noise2(x / 2000f, y / 2000f);
+		float base = -(-0f);
+		float sample1 = perlin.noise2(x / 1200f, y / 1200f) + base;
+		float sample2 = 0f, sa = 0f, highest = 0f;
+		
+		if(sample1 == 0f)
+		{
+			highest = 1f;
+		}
+		
+		if(diff(sample1, sample2 = perlin.noise2((x - 100f) / 1200f, y / 1200f) + base, base))
+		{
+			sa = sample1 * (1 / Math.abs(sample1 - sample2));
+			highest = 1f - Math.abs(sa) > highest ? 1f - Math.abs(sa) : highest;
+		}
+		else if(diff(sample1, sample2 = perlin.noise2((x + 100f) / 1200f, y / 1200f) + base, base))
+		{
+			sa = sample1 * (1 / Math.abs(sample1 - sample2));
+			highest = 1f - Math.abs(sa) > highest ? 1f - Math.abs(sa) : highest;
+		}
+		
+		if(diff(sample1, sample2 = perlin.noise2(x / 1200f, (y + 100f) / 1200f) + base, base))
+		{
+			sa = sample1 * (1 / Math.abs(sample1 - sample2));
+			highest = 1f - Math.abs(sa) > highest ? 1f - Math.abs(sa) : highest;
+		}
+		else if(diff(sample1, sample2 = perlin.noise2(x / 1200f, (y - 100f) / 1200f) + base, base))
+		{
+			sa = sample1 * (1 / Math.abs(sample1 - sample2));
+			highest = 1f - Math.abs(sa) > highest ? 1f - Math.abs(sa) : highest;
+		}
+		
+		if(sample1 > 0f)
+		{
+			highest = 2f - highest;
+		}
+		
+    	return highest;
     }
+	
+	public boolean diff(float sample1, float sample2, float base)
+	{
+		if((sample1 < base && sample2 > base) || (sample1 > base && sample2 < base))
+		{
+			return true;
+		}
+		return false;
+	}
 
     public BiomeGenBase getBiomeGenAt(int par1, int par2)
     {
@@ -158,7 +244,47 @@ public class ChunkManagerRealistic extends WorldChunkManager
     
     public RealisticBiomeBase getBiomeDataAt(int par1, int par2, float ocean)
     {
-    	float b = (biomecell.noise((par1 + 4000f) / 1600D, par2 / 1600D, 1D) * 0.5f) + 0.5f;
+    	//return RealisticBiomeBase.woodmountains;
+    	
+    	//return RealisticBiomeBase.hotForest; //rainForestHigh test
+    	
+    	/*
+    	if(par1 + par2 < 0)
+    	{
+    		return RealisticBiomeBase.islandTropicalVolcano;
+    	}
+    	else
+    	{
+    		return RealisticBiomeBase.ocean;
+    	}
+    	*/
+    	
+    	/*
+    	if(ocean >= 1.99f)
+    	{
+        	return RealisticBiomeBase.hotForest;
+    	}
+    	else if(ocean <= 0.01f)
+    	{
+        	return RealisticBiomeBase.ocean;
+    	}
+    	else
+    	{
+        	return RealisticBiomeBase.coastDunes;
+    	}*/
+    	
+    	/*
+    	if(par1 + par2 > 0f)
+    	{
+        	return RealisticBiomeBase.savannaDunes;
+    	}
+    	else
+    	{
+        	return RealisticBiomeBase.mesa;
+    	}
+    	*/
+    	
+    	float b = (biomecell.noise((par1 + 4000f) / 1200D, par2 / 1200D, 1D) * 0.5f) + 0.5f;
     	b = b < 0f ? 0f : b >= 0.9999999f ? 0.9999999f : b;
 
     	float s = smallEnabled ? (biomecell.noise(par1 / 140D, par2 / 140D, 1D) * 0.5f) + 0.5f : 0f;
@@ -171,7 +297,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
     	}
     	else if((wetEnabled && b < 0.25f) || b < 0.33f)
     	{
-        	float h = (biomecell.noise(par1 / 550D, par2 / 550D, 1D) * 0.5f) + 0.5f;
+        	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_snowLength;
@@ -179,7 +305,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
     	}
     	else if((wetEnabled && b < 0.50f) || b < 0.66f)
     	{
-        	float h = (biomecell.noise(par1 / 550D, par2 / 550D, 1D) * 0.5f) + 0.5f;
+        	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_coldLength;
@@ -187,7 +313,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
     	}
     	else if((wetEnabled && b < 0.75f) || b < 1f)
     	{
-        	float h = (biomecell.noise(par1 / 550D, par2 / 550D, 1D) * 0.5f) + 0.5f;
+        	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_hotLength;
@@ -195,7 +321,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
     	}
     	else if(wetEnabled)
     	{
-        	float h = (biomecell.noise(par1 / 550D, par2 / 550D, 1D) * 0.5f) + 0.5f;
+        	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_wetLength;
@@ -203,7 +329,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
     	}
     	else
     	{
-        	float h = (biomecell.noise(par1 / 550D, par2 / 550D, 1D) * 0.5f) + 0.5f;
+        	float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_hotLength;
@@ -302,6 +428,11 @@ public class ChunkManagerRealistic extends WorldChunkManager
     	return getBiomeDataAt(x, y, ocean).rNoise(perlin, cell, x, y, ocean, 1f, river);
     }
     
+    public float getNoiseWithRiverOceanAt(int x, int y, float river, float ocean)
+    {
+    	return getBiomeDataAt(x, y, ocean).rNoise(perlin, cell, x, y, ocean, 1f, river);
+    }
+    
     public float calculateRiver(int x, int y, float st, float biomeHeight)
     {
     	if(st < 0f && biomeHeight > 59f)
@@ -320,6 +451,31 @@ public class ChunkManagerRealistic extends WorldChunkManager
     public float getRiverStrength(int x, int y)
     {
     	return cell.border((x + (perlin.noise1(y / 240f) * 220f)) / 1250D, (y + (perlin.noise1(x / 240f) * 220f)) / 1250D, 50D / 300D, 1f);
+    }
+    
+    public boolean isBorderlessAt(int x, int y)
+    {
+    	int bx, by;
+    	
+        for(bx = -2; bx <= 2; bx++)
+        {
+        	for(by = -2; by <= 2; by++)
+        	{
+        		borderNoise[getBiomeDataAt(x + bx * 16, y + by * 16).biomeID] += 0.04f;
+        	}
+        }
+        
+        by = 0;
+        for(bx = 0; bx < 256; bx++)
+        {
+        	if(borderNoise[bx] > 0.98f)
+        	{
+        		by = 1;
+        	}
+        	borderNoise[bx] = 0;
+        }
+        
+    	return by == 1 ? true : false;
     }
     
     public List getBiomesToSpawnIn()

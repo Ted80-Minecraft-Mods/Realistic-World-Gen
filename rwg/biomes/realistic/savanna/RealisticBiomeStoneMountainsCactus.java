@@ -1,4 +1,4 @@
-package rwg.biomes.realistic.land;
+package rwg.biomes.realistic.savanna;
 
 import java.util.Random;
 
@@ -13,48 +13,45 @@ import net.minecraft.world.gen.feature.WorldGenShrub;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
-import rwg.deco.DecoBlob;
 import rwg.deco.DecoCacti;
 import rwg.deco.DecoFlowers;
 import rwg.deco.DecoGrass;
-import rwg.deco.DecoWildWheat;
 import rwg.deco.trees.DecoSavannah;
 import rwg.surface.SurfaceBase;
-import rwg.surface.SurfaceDuneValley;
-import rwg.surface.SurfaceGrasslandMix1;
-import rwg.surface.SurfaceRiverOasis;
+import rwg.surface.SurfaceMountainStoneMix1;
+import rwg.surface.river.SurfaceRiverOasis;
 import rwg.terrain.TerrainBase;
-import rwg.terrain.TerrainDuneValley;
-import rwg.terrain.TerrainGrasslandFlats;
+import rwg.terrain.TerrainHilly;
 import rwg.util.CellNoise;
 import rwg.util.PerlinNoise;
 
-public class RealisticBiomeSavannaDunes extends RealisticBiomeBase
-{	
+public class RealisticBiomeStoneMountainsCactus extends RealisticBiomeBase
+{
 	private TerrainBase terrain;
 	private SurfaceBase surface;
 	private SurfaceBase riverSurface;
 
-	public RealisticBiomeSavannaDunes() 
+	public RealisticBiomeStoneMountainsCactus()
 	{
-		super(0, RWGBiomes.baseHotPlains);
-		terrain = new TerrainDuneValley(300f);
-		surface = new SurfaceDuneValley(Blocks.grass, Blocks.dirt, 300f, true, true);
+		super(0, RWGBiomes.baseHotPlains, RealisticBiomeBase.coastDunes, RWGBiomes.baseRiverOasis);
+		terrain = new TerrainHilly(230f, 120f, 0f);
+		surface = new SurfaceMountainStoneMix1(Blocks.grass, Blocks.dirt, false, null, 0f, 1.5f, 60f, 65f, 1.5f, Blocks.stone, 0.20f);
 		riverSurface = new SurfaceRiverOasis();
 	}
 
 	@Override
     public void rDecorate(World world, Random rand, int chunkX, int chunkY, PerlinNoise perlin, CellNoise cell, float strength, float river)
     {
-		if(rand.nextInt((int)(2f / strength)) == 0)
+		for (int i23 = 0; i23 < 1; i23++)
 		{
 			int i1 = chunkX + rand.nextInt(16) + 8;
 			int j1 = chunkY + rand.nextInt(16) + 8;
 		    int k1 = world.getHeightValue(i1, j1);
-			if(k1 < 85)
-			{
-				(new DecoBlob(Blocks.cobblestone, 0)).generate(world, rand, i1, k1, j1);
-			}
+		    
+		    if(k1 < 80)
+		    {
+		    	(new WorldGenBlockBlob(Blocks.cobblestone, 0)).generate(world, rand, i1, k1, j1);
+		    }
 		}
 		
 		if(river > 0.7f)
@@ -116,7 +113,7 @@ public class RealisticBiomeSavannaDunes extends RealisticBiomeBase
 				int k22 = rand.nextInt(128);
 				int j24 = chunkY + rand.nextInt(16) + 8;
 
-				if(rand.nextInt(6) == 0)
+				if(rand.nextInt(3) == 0)
 				{
 					(new DecoGrass(Blocks.double_plant, 2)).generate(world, rand, l19, k22, j24);
 				}
@@ -128,12 +125,30 @@ public class RealisticBiomeSavannaDunes extends RealisticBiomeBase
 		}
 		else
 		{
-			if(rand.nextInt((int)(22f / strength)) == 0)
+			int a = 6 - (int)(perlin.noise2(chunkX / 100f, chunkY / 100f) * 10);
+			if(a < 1 || rand.nextInt(a) == 0)
 			{
-				int j16 = chunkX + rand.nextInt(16) + 8;
-				int j18 = rand.nextInt(128);
-				int j21 = chunkY + rand.nextInt(16) + 8;
-				(new WorldGenPumpkin()).generate(world, rand, j16, j18, j21);
+				int j6 = chunkX + rand.nextInt(16) + 8;
+				int k10 = chunkY + rand.nextInt(16) + 8;
+				int z52 = world.getHeightValue(j6, k10);
+	
+				if(z52 < 100f || (z52 < 120f && rand.nextInt(10) == 0))
+				{
+					WorldGenerator worldgenerator = rand.nextInt(14) != 0 ? new WorldGenShrub(0, 0) : new DecoSavannah(1);
+					worldgenerator.setScale(1.0D, 1.0D, 1.0D);
+					worldgenerator.generate(world, rand, j6, z52, k10);
+				}
+			}
+	
+			for(int k18 = 0; k18 < 70; k18++)
+			{
+				int k21 = chunkX + rand.nextInt(16) + 8;
+				int j23 = 64 + rand.nextInt(64);
+				int k24 = chunkY + rand.nextInt(16) + 8;
+				if(j23 < 120f)
+				{
+					(new DecoCacti(false)).generate(world, rand, k21, j23, k24);
+				}
 			}
 			
 			if(rand.nextInt((int)(3f / strength)) == 0) 
@@ -143,7 +158,15 @@ public class RealisticBiomeSavannaDunes extends RealisticBiomeBase
 				(new WorldGenReed()).generate(world, rand, i18, 60 + rand.nextInt(8), i23);
 			}
 			
-			for(int f23 = 0; f23 < 3f * strength; f23++)
+			if(rand.nextInt(28) == 0)
+			{
+				int j16 = chunkX + rand.nextInt(16) + 8;
+				int j18 = rand.nextInt(128);
+				int j21 = chunkY + rand.nextInt(16) + 8;
+				(new WorldGenPumpkin()).generate(world, rand, j16, j18, j21);
+			}
+			
+			for(int f23 = 0; f23 < 3; f23++)
 			{
 				int j15 = chunkX + rand.nextInt(16) + 8;
 				int j17 = rand.nextInt(128);
@@ -151,43 +174,10 @@ public class RealisticBiomeSavannaDunes extends RealisticBiomeBase
 				(new DecoFlowers(new int[]{9,9,9,9,3,3,3,3,3,2,2,2,11,11,11})).generate(world, rand, j15, j17, j20);
 			}
 			
-			if(rand.nextInt((int)(100f / strength)) == 0)
-			{
-				int k21 = chunkX + rand.nextInt(16) + 8;
-				int j23 = rand.nextInt(60) + 60;
-				int k24 = chunkY + rand.nextInt(16) + 8;
-				(new DecoWildWheat(rand.nextInt(3))).generate(world, rand, k21, j23, k24);
-			}
-			
-			if(rand.nextInt((int)(30f / strength)) == 0)
-			{
-				int j6 = chunkX + rand.nextInt(16) + 8;
-				int k10 = chunkY + rand.nextInt(16) + 8;
-				int z52 = world.getHeightValue(j6, k10);
-	
-				if(z52 < 85)
-				{
-					WorldGenerator worldgenerator = new DecoSavannah(1);
-					worldgenerator.setScale(1.0D, 1.0D, 1.0D);
-					worldgenerator.generate(world, rand, j6, z52, k10);
-				}
-			}
-			
-			for(int k18 = 0; k18 < 36f * strength; k18++)
-			{
-				int k21 = chunkX + rand.nextInt(16) + 8;
-				int j23 = rand.nextInt(160);
-				int k24 = chunkY + rand.nextInt(16) + 8;
-				if(j23 < 90)
-				{
-					(new DecoCacti(false)).generate(world, rand, k21, j23, k24);
-				}
-			}
-			
-			for(int l14 = 0; l14 < 8f * strength; l14++)
+			for(int l14 = 0; l14 < 15; l14++)
 			{
 				int l19 = chunkX + rand.nextInt(16) + 8;
-				int k22 = 60 + rand.nextInt(40);
+				int k22 = rand.nextInt(128);
 				int j24 = chunkY + rand.nextInt(16) + 8;
 	
 				if(rand.nextInt(3) == 0)

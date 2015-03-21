@@ -51,11 +51,12 @@ public class DecoJungleFat extends WorldGenerator
     		return false;
     	}
     	
+    	float r = rand.nextFloat() * 360;
     	if(root > 0f)
     	{
 	    	for(int k = 0; k < 5; k++)
 	    	{
-	    		generateBranch(world, rand, (float)x + 0.5f, y + root, (float)z + 0.5f, (120 * k) - 25 + rand.nextInt(50), 1.6f + rand.nextFloat() * 0.1f, root * 1.8f, 1f);
+	    		generateBranch(world, rand, (float)x + 0.5f, y + root, (float)z + 0.5f, (120 * k) - 25 + rand.nextInt(50) + r, 1.6f + rand.nextFloat() * 0.1f, root * 1.8f, 1f);
 	    	}
     	}
     	

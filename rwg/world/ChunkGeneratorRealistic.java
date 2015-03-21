@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.Random;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
+import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
-import rwg.map.MapGenAncientVillage;
+import rwg.deco.DecoClay;
+import rwg.map.old.MapGenAncientVillage;
 import rwg.util.CanyonColor;
 import rwg.util.CellNoise;
 import rwg.util.PerlinNoise;
@@ -52,6 +54,7 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 public class ChunkGeneratorRealistic implements IChunkProvider
 {
     private Random rand;
+    private Random mapRand;
 	
     private World worldObj;
     private ChunkManagerRealistic cmr;
@@ -78,6 +81,10 @@ public class ChunkGeneratorRealistic implements IChunkProvider
     private float[][] hugeRender;
     private float[][] smallRender;
     private float[] testHeight;
+    private float[] mapGenBiomes;
+    private float[] borderNoise;
+    
+    private long worldSeed;
     
 	private WorldGenMinable ore_dirt = new WorldGenMinable(Blocks.dirt, 32);
 	private WorldGenMinable ore_gravel = new WorldGenMinable(Blocks.gravel, 32);
@@ -98,11 +105,14 @@ public class ChunkGeneratorRealistic implements IChunkProvider
         perlin = new PerlinNoise(l);
     	cell = new CellNoise(l, (short)0);
     	cell.setUseDistance(true);
+    	
+    	mapRand = new Random(l);
+    	worldSeed = l;
         
-        //Map m = new HashMap();
-        //m.put("size", "0");
-        //m.put("distance", "4");
-        villageGenerator = new MapGenVillage();//m);
+        Map m = new HashMap();
+        m.put("size", "0");
+        m.put("distance", "24");
+        villageGenerator = new MapGenVillage(m);
         
         CanyonColor.init(l);
 
@@ -126,8 +136,10 @@ public class ChunkGeneratorRealistic implements IChunkProvider
     	hugeRender = new float[81][256];
     	smallRender = new float[625][256];
     	testHeight = new float[256];
+    	mapGenBiomes = new float[258];
+    	borderNoise = new float[256];
     }
-
+    
     public Chunk provideChunk(int cx, int cy)
     {
     	rand.setSeed((long)cx * 0x4f9939f508L + (long)cy * 0x1ef1565bd5L);
@@ -138,17 +150,26 @@ public class ChunkGeneratorRealistic implements IChunkProvider
         int k;
         
         generateTerrain(cmr, cx, cy, blocks, metadata, biomesForGeneration, noise);
+        
         for(k = 0; k < 256; k++)
         {
+        	if(mapGenBiomes[k] > 0f)
+        	{
+        		RealisticBiomeBase.getBiome(k).generateMapGen(blocks, metadata, worldSeed, worldObj, cmr, mapRand, cx, cy, perlin, cell, noise);
+        		mapGenBiomes[k] = 0f;
+        	}
         	baseBiomesList[k] = biomesForGeneration[k].baseBiome;
         }
+        
         replaceBlocksForBiome(cx, cy, blocks, metadata, biomesForGeneration, baseBiomesList, noise);
         caves.func_151539_a(this, worldObj, cx, cy, blocks);
-
+        
         mineshaftGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
         strongholdGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
         villageGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
         
+    	long second = System.currentTimeMillis();
+
         Chunk chunk = new Chunk(this.worldObj, blocks, metadata, cx, cy);
         byte[] abyte1 = chunk.getBiomeArray();
         for (k = 0; k < abyte1.length; ++k)
@@ -156,6 +177,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider
             abyte1[k] = (byte)this.baseBiomesList[k].biomeID;
         }
         chunk.generateSkylightMap();
+        
         return chunk;
     }
     
@@ -333,8 +355,8 @@ public class ChunkGeneratorRealistic implements IChunkProvider
     			biomes[i] = b;
     		}
     	}
-    	
-    	float river;
+
+    	float river, ocean;
     	for(i = 0; i < 16; i++)
     	{
     		for(j = 0; j < 16; j++)
@@ -346,12 +368,19 @@ public class ChunkGeneratorRealistic implements IChunkProvider
     				bRand = bRand < 0f ? 0f : bRand > 0.99999f ? 0.99999f : bRand;
     			}
     			
-    			float ocean = cmr.getOceanValue(x, y);
+    			ocean = cmr.getOceanValue(x + i, y + j);
     			l = ((int)(i + 4) * 25 + (j + 4));
     			
     			testHeight[i * 16 + j] = 0f;
     			
     			river = cmr.getRiverStrength(x + i, y + j);
+
+    			if(l == 312)
+    			{
+	    			mapGenBiomes[256] = ocean;
+	    			mapGenBiomes[257] = river;
+    			}
+    			
     			for(k = 0; k < 256; k++)
     			{
     				if(smallRender[l][k] > 0f)
@@ -364,6 +393,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider
     	    					biomes[j * 16 + i] = RealisticBiomeBase.getBiome(k);
     	    					bCount = 2f; //20f;
     	    				}
+    	    			}    
+    	    			
+    	    			if(l == 312)
+    	    			{
+    	    				mapGenBiomes[k] = smallRender[312][k];
     	    			}
     	    			
     					testHeight[i * 16 + j] += cmr.calculateRiver(x + i, y + j, river, RealisticBiomeBase.getBiome(k).rNoise(perlin, cell, x + i, y + j, ocean, smallRender[l][k], river + 1f)) * smallRender[l][k];
@@ -400,14 +434,22 @@ public class ChunkGeneratorRealistic implements IChunkProvider
         if (event.getResult() == Result.DENY) return;
     	
     	int i, j, depth;
+    	float river;
     	for(i = 0; i < 16; i++)
     	{
     		for(j = 0; j < 16; j++)
     		{
     			RealisticBiomeBase biome = biomes[i * 16 + j];
+    			
+    			river = -cmr.getRiverStrength(cx * 16 + j, cy * 16 + i);
+    			if(river > 0.05f && river + (perlin.noise2((cx * 16 + j) / 10f, (cy * 16 + i) / 10f) * 0.15f) > 0.8f)
+    			{
+    				base[i * 16 + j] = biome.riverBiome;
+    			}
+    			
     			depth = -1;
                 
-    			biome.rReplace(blocks, metadata, cx * 16 + j, cy * 16 + i, i, j, depth, worldObj, rand, perlin, cell, n, -cmr.getRiverStrength(cx * 16 + j, cy * 16 + i), base);
+    			biome.rReplace(blocks, metadata, cx * 16 + j, cy * 16 + i, i, j, depth, worldObj, rand, perlin, cell, n, river, base);
     			
     			blocks[(j * 16 + i) * 256] = Blocks.bedrock;
     			blocks[(j * 16 + i) * 256 + rand.nextInt(2)] = Blocks.bedrock;
@@ -484,6 +526,18 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 		}
 		
 		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Pre(worldObj, rand, x, y));
+
+        float river = -cmr.getRiverStrength(x + 16, y + 16);
+        if(river > 0.85f)
+        {
+			for(int j2 = 0; j2 < 3; j2++)
+			{
+				int l5 = x + rand.nextInt(16);
+				int i9 = 53 + rand.nextInt(15);
+				int l11 = y + rand.nextInt(16);
+				(new DecoClay(Blocks.clay, 0, 20)).generate(worldObj, rand, l5, i9, l11);
+			}
+        }
 
 		if (TerrainGen.generateOre(worldObj, rand, ore_dirt, x, y, DIRT))
 		{
@@ -603,12 +657,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 			}
 		}
         
-        float[] biomeNoise = new float[256];
         for(int bx = -4; bx <= 4; bx++)
         {
         	for(int by = -4; by <= 4; by++)
         	{
-        		biomeNoise[cmr.getBiomeDataAt(x + 24 + bx * 16, y + 24 + by * 16).biomeID] += 0.01234569f;
+        		borderNoise[cmr.getBiomeDataAt(x + 24 + bx * 16, y + 24 + by * 16).biomeID] += 0.01234569f;
         	}
         }
         
@@ -623,26 +676,26 @@ public class ChunkGeneratorRealistic implements IChunkProvider
         
         RealisticBiomeBase b;
         float snow = 0f;
-        float river = -cmr.getRiverStrength(x + 16, y + 16);
         for(int bn = 0; bn < 256; bn++)
         {
-        	if(biomeNoise[bn] > 0f)
+        	if(borderNoise[bn] > 0f)
         	{
-        		if(biomeNoise[bn] >= 1f)
+        		if(borderNoise[bn] >= 1f)
         		{
-        			biomeNoise[bn] = 1f;
+        			borderNoise[bn] = 1f;
         		}
         		b = RealisticBiomeBase.getBiome(bn);
-                b.rDecorate(this.worldObj, this.rand, x, y, perlin, cell, biomeNoise[bn], river);
+                b.rDecorate(this.worldObj, this.rand, x, y, perlin, cell, borderNoise[bn], river);
                 
                 if(b.baseBiome.temperature < 0.15f)
                 {
-                	snow -= 0.6f * biomeNoise[bn];
+                	snow -= 0.6f * borderNoise[bn];
                 }
                 else
                 {
-                	snow += 0.6f * biomeNoise[bn];
+                	snow += 0.6f * borderNoise[bn];
                 }
+                borderNoise[bn] = 0f;
         	}
         }
         
@@ -725,7 +778,6 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	            }
 	        }
         }
-		
 
         BlockFalling.fallInstantly = false;
     }

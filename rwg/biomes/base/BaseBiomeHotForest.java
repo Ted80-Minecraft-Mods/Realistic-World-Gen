@@ -1,7 +1,10 @@
 package rwg.biomes.base;
 
+import rwg.data.VillageMaterialData;
+import rwg.data.VillageMaterials;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -14,6 +17,16 @@ public class BaseBiomeHotForest extends BiomeGenBase
 		setTemperatureRainfall(0.8f, 0.2f);
 		setBiomeName(bn);
 		setDisableRain();
+		
+		VillageMaterialData vmd = new VillageMaterialData(this);
+		vmd.plankBlock = Blocks.planks;
+		vmd.plankBlockMeta = 4;
+		vmd.logBlock = Blocks.log2;
+		vmd.logBlockMeta = 0;
+		vmd.pathBlock = Blocks.cobblestone;
+		vmd.stairsWoodBlock = Blocks.acacia_stairs;
+		vmd.slabsBlock = Blocks.fence;
+		VillageMaterials.registerVillageMaterial(vmd);
 	}
 	
     @SideOnly(Side.CLIENT)

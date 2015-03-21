@@ -13,10 +13,20 @@ public class DecoLargePine extends WorldGenerator
 	private int startHeight;
 	private int treeSize;
 	
+	private int metadataLog;
+	private int metadataLeaves;
+	
 	public DecoLargePine(int start, int s)
+	{
+		this(start, s, 0, 0);
+	}
+	
+	public DecoLargePine(int start, int s, int log, int leaves)
 	{
 		startHeight = start;
 		treeSize = s;
+		metadataLog = log;
+		metadataLeaves = leaves;
 	}
 	
     public boolean generate(World world, Random rand, int x, int y, int z)
@@ -37,7 +47,7 @@ public class DecoLargePine extends WorldGenerator
     	int i;
     	for(i = 0; i < startHeight; i++)
     	{
-    		world.setBlock(x, y, z, Blocks.log, 0, 0);
+    		world.setBlock(x, y, z, Blocks.log, metadataLog, 0);
     		if(i > 5 && rand.nextInt(7) == 0)
     		{
     			int dX = -1 + rand.nextInt(3);
@@ -88,7 +98,7 @@ public class DecoLargePine extends WorldGenerator
         			i < treeSize - 5 ? 2 : 1
         		);
     		}
-    		world.setBlock(x, y, z, Blocks.log, 0, 0);
+    		world.setBlock(x, y, z, Blocks.log, metadataLog, 0);
     		
     		if(i < treeSize - 2)
 	    	{
@@ -133,7 +143,7 @@ public class DecoLargePine extends WorldGenerator
     	
     	for(int m = 1; m <= logLength; m++)
     	{
-        	world.setBlock(x + (dX * m), y, z + (dZ * m), Blocks.log, 0, 0);
+        	world.setBlock(x + (dX * m), y, z + (dZ * m), Blocks.log, metadataLog, 0);
     	}
     }
     
@@ -142,7 +152,7 @@ public class DecoLargePine extends WorldGenerator
     	Block b = world.getBlock(x, y, z);
     	if(b.getMaterial() == Material.air)
     	{
-    		world.setBlock(x, y, z, Blocks.leaves, 0, 0);
+    		world.setBlock(x, y, z, Blocks.leaves, metadataLeaves, 0);
     	}
     }
     
@@ -152,7 +162,7 @@ public class DecoLargePine extends WorldGenerator
     	h = h + rand.nextInt(h * 2);
     	for(int i = -1; i < h; i++)
     	{
-    		world.setBlock(x, y + i, z, Blocks.log, 12, 0);
+    		world.setBlock(x, y + i, z, Blocks.log, metadataLog + 12, 0);
     	}
     }
 }

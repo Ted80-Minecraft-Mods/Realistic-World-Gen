@@ -19,24 +19,44 @@ import rwg.deco.DecoFlowers;
 import rwg.deco.DecoGrass;
 import rwg.deco.DecoLog;
 import rwg.deco.DecoWildWheat;
+import rwg.deco.trees.DecoBirch;
 import rwg.deco.trees.DecoJungleFat;
 import rwg.deco.trees.DecoJungleSmall;
 import rwg.deco.trees.DecoSavannah;
 import rwg.deco.trees.DecoShrub;
 import rwg.deco.trees.DecoJungleTall;
+import rwg.surface.SurfaceBase;
+import rwg.surface.SurfaceMountainSnow;
 import rwg.util.CellNoise;
 import rwg.util.PerlinNoise;
 
 public class RealisticBiomeTest extends RealisticBiomeBase
 {
+	private SurfaceBase surface;
+	
 	public RealisticBiomeTest() 
 	{
-		super(0, RWGBiomes.baseJungle);
+		super(0, RWGBiomes.baseColdForest);
+		
+		surface = new SurfaceMountainSnow(Blocks.grass, Blocks.dirt, true, Blocks.sand, 0.2f);
 	}
 	
 	@Override
     public void rDecorate(World world, Random rand, int chunkX, int chunkY, PerlinNoise perlin, CellNoise cell, float strength, float river)
     {
+		/*
+		for(int a = 0; a < 1f * strength; a++)
+		{
+			int j6 = chunkX + rand.nextInt(16) + 8;
+			int k10 = chunkY + rand.nextInt(16) + 8;
+			int z52 = world.getHeightValue(j6, k10);
+	
+			WorldGenerator worldgenerator = new DecoBirch(4 + rand.nextInt(5), 6 + rand.nextInt(5));
+			worldgenerator.setScale(1.0D, 1.0D, 1.0D);
+			worldgenerator.generate(world, rand, j6, z52, k10);
+		}*/
+		
+		/*
 		for(int f24 = 0; f24 < 3f * strength; f24++)
     	{
 			int i1 = chunkX + rand.nextInt(16) + 8;
@@ -97,7 +117,7 @@ public class RealisticBiomeTest extends RealisticBiomeBase
 			int j18 = rand.nextInt(100);
 			int j21 = chunkY + rand.nextInt(16) + 8;
 			(new WorldGenMelon()).generate(world, rand, j16, j18, j21);
-		}
+		}*/
 		
 		/* ==============================================================================================
 		for(int f23 = 0; f23 < 8f * strength; f23++)
@@ -108,13 +128,13 @@ public class RealisticBiomeTest extends RealisticBiomeBase
 			(new DecoFlowers(new int[]{0,1,2,3,4,5,6,7,8,9,10,11})).generate(world, rand, j15, j17, j20);
 		}*/
     	
-		for(int l14 = 0; l14 < 12f * strength; l14++)
+		/*for(int l14 = 0; l14 < 12f * strength; l14++)
 		{
 			int l19 = chunkX + rand.nextInt(16) + 8;
 			int k22 = rand.nextInt(128);
 			int j24 = chunkY + rand.nextInt(16) + 8;
 			(new DecoGrass(Blocks.tallgrass, 1 + rand.nextInt(2))).generate(world, rand, l19, k22, j24);
-		}
+		}*/
 		
 		/*
 		WorldGenVines worldgenvines = new WorldGenVines();
@@ -131,12 +151,54 @@ public class RealisticBiomeTest extends RealisticBiomeBase
 	@Override
     public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river)
     {
-    	return 70.1f;
+		/*
+		float pX = x;// + (perlin.noise1(y / 130f) * 80f);
+		float pY = y;// + (perlin.noise1(x / 130f) * 80f);
+		
+		float st = 1.005f + cell.border2(pX / 250D, pY / 250D, 0.2D, 1F);
+		st *= river;
+		//st *= st * 2f > 1f ? 1f : st * 2f;
+		
+		float h = st * 50f;
+		*/
+		/*
+		float h = st * (90f + perlin.noise2(pX / 50f, pY / 50f) * 20f);
+		
+		if(h < 10f)
+		{
+			h += perlin.noise2(x / 25f, y / 25f) * (10f - h) * 0.2f;
+		}
+		
+		if(h > 10f)
+		{
+			float d = (h - 10f) / 2f > 8f ? 8f : (h - 10f) / 2f;
+			h += perlin.noise2(x / 35f, y / 35f) * d;
+			h += perlin.noise2(x / 60f, y / 60f) * d * 0.5f;
+
+			if(h > 35f)
+			{
+				float d2 = (h - 35f) / 1.5f > 30f ? 30f : (h - 35f) / 1.5f;
+				h += cell.noise(x / 25D, y / 25D, 1D) * d2;
+			}
+		}
+
+		if(h > 2f)
+		{
+			float d = (h - 2f) / 2f > 4f ? 4f : (h - 2f) / 2f;
+    		h += perlin.noise2(x / 28f, y / 28f) * d;
+    		h += perlin.noise2(x / 18f, y / 18f) * (d / 2f);
+    		h += perlin.noise2(x / 8f, y / 8f) * (d / 2f);
+		}*/
+		
+		return 70f;
     }
 
 	@Override
     public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world, Random rand, PerlinNoise perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base)
     {
+		surface.paintTerrain(blocks, metadata, i, j, x, y, depth, world, rand, perlin, cell, noise, river, base);
+		
+		/*
     	Block b;
 		for(int k = 255; k > -1; k--)
 		{
@@ -166,5 +228,6 @@ public class RealisticBiomeTest extends RealisticBiomeBase
         		}
             }
 		}
+		*/
     }
 }

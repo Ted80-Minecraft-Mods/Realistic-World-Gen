@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import rwg.support.edit.*;
 import rwg.surface.*;
+import rwg.surface.river.SurfaceRiverOasis;
 import rwg.terrain.*;
 import biomesoplenty.api.content.BOPCBiomes;
 import rwg.support.Support.BiomeCategory;
@@ -98,8 +99,8 @@ public class SupportBOP
 		Support.addBiome(
 			new RealisticBiomeSupport(
 				BOPCBiomes.canyon, 
-				new TerrainCanyon(true, new float[]{7.0f, 0.5f, 10.5f, 0.5f, 17.0f, 0.5f}, 35f, 160f, 60f, 40f, 69f),
-				new SurfaceCanyon(BOPCBiomes.canyon.topBlock, BOPCBiomes.canyon.fillerBlock, (byte)0)
+				new TerrainCanyon(true, 35f, 160f, 60f, 40f, 69f),
+				new SurfaceCanyon(BOPCBiomes.canyon.topBlock, BOPCBiomes.canyon.fillerBlock, (byte)0, 0)
 			),
 			BiomeCategory.HOT
 		);

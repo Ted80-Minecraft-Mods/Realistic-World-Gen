@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 import rwg.support.edit.*;
 import rwg.surface.*;
+import rwg.surface.river.SurfaceRiverOasis;
 import rwg.terrain.*;
 import rwg.support.Support.BiomeCategory;
 

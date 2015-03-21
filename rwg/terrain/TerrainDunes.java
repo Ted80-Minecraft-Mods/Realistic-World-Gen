@@ -7,7 +7,6 @@ public class TerrainDunes extends TerrainBase
 {
 	public TerrainDunes()
 	{
-		
 	}
 
 	public float generateNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river)

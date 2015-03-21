@@ -8,17 +8,29 @@ public class TerrainHilly extends TerrainBase
 	private float width;
 	private float strength;
 	private float lakeDepth;
+	private float lakeWidth;
+	private float terrainHeight;
 	
 	/*
 	 * width = 230f
 	 * strength = 120f
 	 * lake = 50f;
+	 * 
+	 * 230f, 120f, 50f
 	 */
-	public TerrainHilly(float mountainWidth, float mountainStrength, float lake)
+
+	public TerrainHilly(float mountainWidth, float mountainStrength, float depthLake)
+	{
+		this(mountainWidth, mountainStrength, depthLake, 260f, 68f);
+	}
+	
+	public TerrainHilly(float mountainWidth, float mountainStrength, float depthLake, float widthLake, float height)
 	{
 		width = mountainWidth;
 		strength = mountainStrength;
-		lakeDepth = lake;
+		lakeDepth = depthLake;
+		lakeWidth = widthLake;
+		terrainHeight = height;
 	}
 	
 	@Override
@@ -41,10 +53,10 @@ public class TerrainHilly extends TerrainBase
 		
 		m += c;
 		
-		float l = perlin.noise2(x / 260f, y / 260f) * lakeDepth;
+		float l = perlin.noise2(x / lakeWidth, y / lakeWidth) * lakeDepth;
 		l *= l / 25f;
 		l = l < -8f ? -8f : l;
 		
-		return 68f + h + m - l;
+		return terrainHeight + h + m - l;
 	}
 }

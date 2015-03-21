@@ -14,11 +14,13 @@ public class SurfaceCanyon extends SurfaceBase
 {
 	private int[] claycolor = new int[100];
 	private byte blockByte = 0;
+	private int grassRaise = 0;
 	
-	public SurfaceCanyon(Block top, Block fill, byte b)
+	public SurfaceCanyon(Block top, Block fill, byte b, int grassHeight)
 	{
 		super(top, fill);
 		blockByte = b;
+		grassRaise = grassHeight;
 		
 		int[] c = new int[]{1, 8, 0};
 		PerlinNoise perlin = new PerlinNoise(2L);
@@ -70,7 +72,7 @@ public class SurfaceCanyon extends SurfaceBase
 		        			blocks[(y * 16 + x) * 256 + k] = Blocks.stained_hardened_clay;
 		        			metadata[(y * 16 + x) * 256 + k] = getClayColorForHeight(k);
 	        			}
-	        			else if(k > 77)
+	        			else if(k > 74 + grassRaise)
 	        			{
 	        				if(rand.nextInt(5) == 0)
 	        				{
@@ -94,11 +96,22 @@ public class SurfaceCanyon extends SurfaceBase
 	        			{
 	        				blocks[(y * 16 + x) * 256 + k] = Blocks.dirt;
 	        			}
-	        			else if(k < 75)
+	        			else if(k < 62 + grassRaise)
 	        			{
 	        				if(depth == 0)
 	        				{
-		        				int r = (int)((k - 62f) / 2f);
+	        					blocks[(y * 16 + x) * 256 + k] = Blocks.grass;
+	        				}
+	        				else
+	        				{
+	        					blocks[(y * 16 + x) * 256 + k] = Blocks.dirt;
+	        				}
+	        			}
+	        			else if(k < 75 + grassRaise)
+	        			{
+	        				if(depth == 0)
+	        				{
+		        				int r = (int)((k - (62 + grassRaise)) / 2f);
 		        				if(rand.nextInt(r + 1) == 0)
 		        				{
 			        				blocks[(y * 16 + x) * 256 + k] = Blocks.grass;

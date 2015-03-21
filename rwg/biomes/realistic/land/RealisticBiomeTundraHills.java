@@ -33,7 +33,7 @@ public class RealisticBiomeTundraHills extends RealisticBiomeBase
 
 	public RealisticBiomeTundraHills() 
 	{
-		super(0, RWGBiomes.baseColdPlains);
+		super(0, RWGBiomes.baseColdPlains, RealisticBiomeBase.coastDunes, RWGBiomes.baseRiverCold);
 		
 		terrain = new TerrainMountain();
 		surface = new SurfaceTundra(Blocks.grass, Blocks.dirt);

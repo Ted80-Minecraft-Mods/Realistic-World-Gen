@@ -1,4 +1,4 @@
-package rwg.map;
+package rwg.map.old;
 
 import java.util.Random;
 

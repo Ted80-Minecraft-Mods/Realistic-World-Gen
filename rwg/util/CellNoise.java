@@ -49,6 +49,11 @@ public class CellNoise
 		this.seed = seed;
 		this.distanceMethod = distanceMethod;
 	}
+	
+	private double distance(double xDist, double zDist)
+	{
+		return Math.sqrt(xDist * xDist + zDist * zDist);
+	}
 
 	private double getDistance2D(double xDist, double zDist) 
 	{
@@ -149,6 +154,69 @@ public class CellNoise
 		else return ((float)CellNoise.valueNoise2D (
 		       (int)(Math.floor (xCandidate)),
 		       (int)(Math.floor (zCandidate)), seed));
+	}
+	
+	public float border2(double x, double z, double width, float depth)
+	{
+		x *= 1D;
+		z *= 1D;
+
+		int xInt = (x > .0? (int)x: (int)x - 1);
+		int zInt = (z > .0? (int)z: (int)z - 1);
+		
+		double dCandidate = 32000000.0;
+		double xCandidate = 0;
+		double zCandidate = 0;
+		
+		double dNeighbour = 32000000.0;
+		double xNeighbour = 0;
+		double zNeighbour = 0;
+		
+		double xPos, zPos, xDist, zDist, dist;
+		for(int zCur = zInt - 2; zCur <= zInt + 2; zCur++) 
+		{
+			for(int xCur = xInt - 2; xCur <= xInt + 2; xCur++) 
+			{
+				xPos = xCur + valueNoise2D(xCur, zCur, seed);
+				zPos = zCur + valueNoise2D(xCur, zCur, new Random(seed).nextLong());
+				xDist = xPos - x;
+				zDist = zPos - z;
+				dist = distance(xPos - x, zPos - z);
+				
+				if(dist < dCandidate) 
+				{
+					dNeighbour = dCandidate;
+					xNeighbour = xCandidate;
+					zNeighbour = zCandidate;
+					
+					dCandidate = dist;
+					xCandidate = xPos;
+					zCandidate = zPos;
+				}
+				else if(dist > dCandidate && dist < dNeighbour)
+				{
+					dNeighbour = dist;
+					xNeighbour = xPos;
+					zNeighbour = zPos;
+				}
+			}
+		}
+		
+		double diff = distance(xCandidate - xNeighbour, zCandidate - zNeighbour);
+		double total = (dCandidate + dNeighbour) / diff;
+		
+		dCandidate = dCandidate / total;
+		dNeighbour = dNeighbour / total;
+		
+		double c = (diff / 2D) - dCandidate;
+		if(c < width)
+		{
+			return (((float)(c / width)) - 1f) * depth;
+		}
+		else
+		{
+			return 0f;
+		}
 	}
 	
 	public float border(double x, double z, double width, float depth) 

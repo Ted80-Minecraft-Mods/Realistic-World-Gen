@@ -1,4 +1,4 @@
-package rwg.biomes.realistic.land;
+package rwg.biomes.realistic.red;
 
 import java.util.Random;
 
@@ -29,10 +29,10 @@ public class RealisticBiomeCanyon extends RealisticBiomeBase
 	
 	public RealisticBiomeCanyon() 
 	{
-		super(0, RWGBiomes.baseHotForest);
+		super(0, RWGBiomes.baseHotPlains, RealisticBiomeBase.coastDunes, RWGBiomes.baseRiverOasis);
 
-		terrain = new TerrainCanyon(true, new float[]{7.0f, 0.5f, 10.5f, 0.5f, 17.0f, 0.5f}, 35f, 160f, 60f, 40f, 69f);
-		surface = new SurfaceCanyon(Blocks.sand, Blocks.sand, (byte)1);
+		terrain = new TerrainCanyon(true, 35f, 160f, 60f, 40f, 69f);
+		surface = new SurfaceCanyon(Blocks.sand, Blocks.sand, (byte)1, 0);
 	}
 
 	@Override

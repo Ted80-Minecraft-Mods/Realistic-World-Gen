@@ -35,7 +35,7 @@ public class RealisticBiomeTundraPlains extends RealisticBiomeBase
 
 	public RealisticBiomeTundraPlains() 
 	{
-		super(0, RWGBiomes.baseColdPlains);
+		super(0, RWGBiomes.baseColdPlains, RealisticBiomeBase.coastDunes, RWGBiomes.baseRiverCold);
 		
 		terrain = new TerrainFlatLakes();
 		surface = new SurfaceTundra(Blocks.grass, Blocks.dirt);

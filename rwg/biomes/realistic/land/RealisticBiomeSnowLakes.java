@@ -34,7 +34,7 @@ public class RealisticBiomeSnowLakes extends RealisticBiomeBase
 
 	public RealisticBiomeSnowLakes() 
 	{
-		super(0, RWGBiomes.baseSnowForest);
+		super(0, RWGBiomes.baseSnowForest, RealisticBiomeBase.coastIce, RWGBiomes.baseRiverIce);
 		
 		terrain = new TerrainFlatLakes();
 		surface = new SurfaceMountainSnow(Blocks.grass, Blocks.dirt, true, Blocks.sand, 0.2f);

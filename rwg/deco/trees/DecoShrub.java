@@ -65,29 +65,32 @@ public class DecoShrub extends WorldGenerator
 	public void buildLeaves(World world, int x, int y, int z, int size)
 	{
 		Block b = world.getBlock(x, y - 2, z);
-		if(b.getMaterial() == Material.grass || b.getMaterial() == Material.ground || b.getMaterial() == Material.snow || (sand && b.getMaterial() == Material.sand))
+		if(b.getMaterial() == Material.grass || b.getMaterial() == Material.ground || (sand && b.getMaterial() == Material.sand))
 		{
-			for(int i = -size; i <= size; i++)
+			if(world.getBlock(x, y - 1, z) != Blocks.water )
 			{
-				for(int j = -1; j <= 1; j++)
+				for(int i = -size; i <= size; i++)
 				{
-					for(int k = -size; k <= size; k++)
+					for(int j = -1; j <= 1; j++)
 					{
-						if(Math.abs(i) + Math.abs(j) + Math.abs(k) <= size)
+						for(int k = -size; k <= size; k++)
 						{
-							buildBlock(world, x + i, y + j, z + k, leaveBlock, leaveMeta);
+							if(Math.abs(i) + Math.abs(j) + Math.abs(k) <= size)
+							{
+								buildBlock(world, x + i, y + j, z + k, leaveBlock, leaveMeta);
+							}
 						}
 					}
 				}
+				world.setBlock(x, y - 1, z, logBlock, logMeta, 0);
 			}
-			world.setBlock(x, y - 1, z, logBlock, logMeta, 0);
 		}
 	}
 	
 	public void buildBlock(World world, int x, int y, int z, Block block, int meta)
 	{
 		Block b = world.getBlock(x, y, z);
-		if(b.getMaterial() == Material.air || b.getMaterial() == Material.vine || b.getMaterial() == Material.plants || b.getMaterial() == Material.snow)
+		if(b.getMaterial() == Material.air || b.getMaterial() == Material.vine || b.getMaterial() == Material.plants || b == Blocks.snow_layer)
 		{
 			world.setBlock(x, y, z, block, meta, 0);
 		}

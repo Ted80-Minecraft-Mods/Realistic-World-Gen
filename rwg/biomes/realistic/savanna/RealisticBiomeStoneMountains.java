@@ -1,4 +1,4 @@
-package rwg.biomes.realistic.land;
+package rwg.biomes.realistic.savanna;
 
 import java.util.Random;
 
@@ -19,7 +19,7 @@ import rwg.deco.DecoGrass;
 import rwg.deco.trees.DecoSavannah;
 import rwg.surface.SurfaceBase;
 import rwg.surface.SurfaceMountainStoneMix1;
-import rwg.surface.SurfaceRiverOasis;
+import rwg.surface.river.SurfaceRiverOasis;
 import rwg.terrain.TerrainBase;
 import rwg.terrain.TerrainHilly;
 import rwg.util.CellNoise;
@@ -33,7 +33,7 @@ public class RealisticBiomeStoneMountains extends RealisticBiomeBase
 
 	public RealisticBiomeStoneMountains()
 	{
-		super(0, RWGBiomes.baseHotPlains);
+		super(0, RWGBiomes.baseHotPlains, RealisticBiomeBase.coastDunes, RWGBiomes.baseRiverOasis);
 		terrain = new TerrainHilly(230f, 120f, 0f);
 		surface = new SurfaceMountainStoneMix1(Blocks.grass, Blocks.dirt, false, null, 0f, 1.5f, 60f, 65f, 1.5f, Blocks.stone, 0.08f);
 		riverSurface = new SurfaceRiverOasis();

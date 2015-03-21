@@ -34,7 +34,7 @@ public class RealisticBiomeTaigaPlains extends RealisticBiomeBase
 
 	public RealisticBiomeTaigaPlains() 
 	{
-		super(0, RWGBiomes.baseColdForest);
+		super(0, RWGBiomes.baseColdForest, RealisticBiomeBase.coastDunes, RWGBiomes.baseRiverCold);
 		
 		terrain = new TerrainFlatLakes();
 		surface = new SurfaceTundra(Blocks.grass, Blocks.dirt);
@@ -68,18 +68,7 @@ public class RealisticBiomeTaigaPlains extends RealisticBiomeBase
 		
 		//trees
 		float l = perlin.noise2(chunkX / 100f, chunkY / 100f) * 6f + 0.8f;
-		for (int b1 = 0; b1 < l * 2f * strength; b1++)
-		{
-			int j6 = chunkX + rand.nextInt(16) + 8;
-			int k10 = chunkY + rand.nextInt(16) + 8;
-			int z52 = world.getHeightValue(j6, k10);
-
-			WorldGenerator worldgenerator = rand.nextInt(4) == 0 ? new DecoSmallSpruce(1 + rand.nextInt(2)) : rand.nextInt(6) == 0 ? new DecoSmallPine(1 + rand.nextInt(3), 4 + rand.nextInt(4)) : new DecoSmallPine(4 + rand.nextInt(6), 5 + rand.nextInt(10));
-			worldgenerator.setScale(1.0D, 1.0D, 1.0D);
-			worldgenerator.generate(world, rand, j6, z52, k10);
-		}
-		
-		for (int b1 = 0; b1 < l * 2f * strength; b1++)
+		for (int b1 = 0; b1 < l * 4f * strength; b1++)
 		{
 			int j6 = chunkX + rand.nextInt(16) + 8;
 			int k10 = chunkY + rand.nextInt(16) + 8;

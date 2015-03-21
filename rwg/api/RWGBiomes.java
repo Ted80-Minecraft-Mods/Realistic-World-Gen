@@ -7,6 +7,20 @@ public class RWGBiomes
 	/*
 	 * These biomes are used for grass/foliage color and entity spawning
 	 */
+	public static BiomeGenBase baseRiverIce;
+	public static BiomeGenBase baseRiverCold;
+	public static BiomeGenBase baseRiverTemperate;
+	public static BiomeGenBase baseRiverHot;
+	public static BiomeGenBase baseRiverWet;
+	public static BiomeGenBase baseRiverOasis;
+	
+	public static BiomeGenBase baseOceanIce;
+	public static BiomeGenBase baseOceanCold;
+	public static BiomeGenBase baseOceanTemperate;
+	public static BiomeGenBase baseOceanHot;
+	public static BiomeGenBase baseOceanWet;
+	public static BiomeGenBase baseOceanOasis;
+	
 	public static BiomeGenBase baseSnowDesert;
 	public static BiomeGenBase baseSnowForest;
 	public static BiomeGenBase baseColdPlains;
@@ -19,6 +33,7 @@ public class RWGBiomes
 	public static BiomeGenBase baseRedwood;
 	public static BiomeGenBase baseJungle;
 	public static BiomeGenBase baseOasis;
+	public static BiomeGenBase baseTemperateForest;
 	
 	/*
 	 * This function will never break. use this instead of the above.
@@ -26,6 +41,19 @@ public class RWGBiomes
 	public static BiomeGenBase[] getAllBaseBiomes()
 	{
 		return new BiomeGenBase[]{
+			baseRiverIce,
+			baseRiverCold,
+			baseRiverTemperate,
+			baseRiverHot,
+			baseRiverWet,
+			baseRiverOasis,
+			
+			baseOceanIce,
+			baseOceanCold,
+			baseOceanTemperate,
+			baseOceanHot,
+			baseOceanWet,
+				
 			baseSnowDesert,
 			baseSnowForest,
 			baseColdPlains,

@@ -46,7 +46,7 @@ public class DecoJungleSmall extends WorldGenerator
 	public boolean generate(World world, Random rand, int x, int y, int z) 
 	{
     	Block b = world.getBlock(x, y - 1, z);
-    	if(b != Blocks.grass && b != Blocks.dirt && b != Blocks.sand)
+    	if(b != Blocks.grass && b != Blocks.dirt)
     	{
     		return false;
     	}

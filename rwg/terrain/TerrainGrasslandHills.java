@@ -24,6 +24,8 @@ public class TerrainGrasslandHills extends TerrainBase
 	 * lakeWidth = 260f
 	 * 
 	 * baseHeight = 68f
+	 * 
+	 * 70f, 180f, 7f, 100f, 38f, 260f, 68f
 	 */
 	public TerrainGrasslandHills(float hillHeight, float hillWidth, float varHeight, float varWidth, float lakeHeight, float lakeWidth, float baseHeight)
 	{
