@@ -21,11 +21,14 @@ public class ConfigRWG
 {
 	public static Configuration config;
 	public static int[] biomeIDs = new int[25];
+
+	public static boolean generateEmeralds = true;
+	public static boolean enableCobblestoneBoulders = true;
 	
 	public static void init(FMLPreInitializationEvent event)
 	{
 		config = new Configuration(event.getSuggestedConfigurationFile());
-		
+
 		for(int c = 0; c < biomeIDs.length; c++)
 		{
 			biomeIDs[c] = 200 + c;
@@ -62,6 +65,9 @@ public class ConfigRWG
 			biomeIDs[22] = config.get("Biome IDs", "22 rwg_jungle", 222).getInt();
 			biomeIDs[23] = config.get("Biome IDs", "23 rwg_oasis", 223).getInt();
 			biomeIDs[24] = config.get("Biome IDs", "24 rwg_temperateForest", 224).getInt();
+
+			generateEmeralds = config.getBoolean("Generate Emeralds", "Settings", true, "");
+			enableCobblestoneBoulders = config.getBoolean("Enable Cobblestone Boulders", "Settings", true, "");
 		}
 		catch (Exception e) 
 		{
