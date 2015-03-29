@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.deco.DecoClay;
@@ -60,10 +61,10 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	
     private World worldObj;
     private ChunkManagerRealistic cmr;
-    private MapGenBase caves = new MapGenCaves();
-    private MapGenStronghold strongholdGenerator = new MapGenStronghold();
-    private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
-    private MapGenVillage villageGenerator;
+    private final MapGenBase caves;
+    private final MapGenStronghold strongholdGenerator;
+    private final MapGenMineshaft mineshaftGenerator;
+    private final MapGenVillage villageGenerator;
     
     private PerlinNoise perlin;
     private CellNoise cell;
@@ -96,10 +97,10 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	private WorldGenMinable ore_redstone = new WorldGenMinable(Blocks.redstone_ore, 7);
 	private WorldGenMinable ore_diamond = new WorldGenMinable(Blocks.diamond_ore, 7);
 	private WorldGenMinable ore_lapis = new WorldGenMinable(Blocks.lapis_ore, 6);
-	
+
     public ChunkGeneratorRealistic(World world, long l)
     {
-    	caves = TerrainGen.getModdedMapGen(caves, CAVE);
+    	caves = TerrainGen.getModdedMapGen(new MapGenCaves(), CAVE);
         worldObj = world;
         cmr = (ChunkManagerRealistic)worldObj.getWorldChunkManager();
         
@@ -114,7 +115,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider
         Map m = new HashMap();
         m.put("size", "0");
         m.put("distance", "24");
-        villageGenerator = new MapGenVillage(m);
+        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(new MapGenVillage(m), VILLAGE);
+		strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(new MapGenStronghold(), STRONGHOLD);
+		mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(new MapGenMineshaft(), MINESHAFT);
         
         CanyonColor.init(l);
 
