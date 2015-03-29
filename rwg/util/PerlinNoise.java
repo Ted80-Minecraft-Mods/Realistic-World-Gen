@@ -1,631 +1,352 @@
-/*****************************************************************************
- *                        J3D.org Copyright (c) 2000
- *                               Java Source
+/**
+ * Replacement PerlinNoise.java that generates
+ * OpenSimplex Noise instead of Perlin Noise.
  *
- * This source is licensed under the GNU LGPL v2.1
- * Please read http://www.gnu.org/copyleft/lgpl.html for more information
- *
- * This software comes with the standard NO WARRANTY disclaimer for any
- * purpose. Use it at your own risk. If there's a problem you get to fix it.
- *
- ****************************************************************************/
+ * 2D function by Kurt Spencer (With new Dodecagonal gradient set)
+ * 3D function heavily optimized variant by DigitalShadow
+ */
+ 
 package rwg.util;
 
-import java.util.Random;
-
 /**
- * Computes Perlin Noise for three dimensions.
- * <p>
- *
- * The result is a continuous function that interpolates a smooth path
- * along a series random points. The function is consitent, so given
- * the same parameters, it will always return the same value. The smoothing
- * function is based on the Improving Noise paper presented at Siggraph 2002.
- * <p>
- * Computing noise for one and two dimensions can make use of the 3D problem
- * space by just setting the un-needed dimensions to a fixed value.
- *
- * @author Justin Couch
- * @version $Revision: 1.4 $
+ * @author Kurt Spencer
+ * @version $Revision: 1.1$
  */
-public class PerlinNoise
-{
-	private Random rand;
+public class PerlinNoise {
+
+	private static final double STRETCH_2D = -0.211324865405187;    //(1/Math.sqrt(2+1)-1)/2;
+	private static final double STRETCH_3D = -1.0 / 6.0;            //(1/Math.sqrt(3+1)-1)/3;
+	private static final double SQUISH_2D = 0.366025403784439;      //(Math.sqrt(2+1)-1)/2;
+	private static final double SQUISH_3D = 1.0 / 3.0;              //(Math.sqrt(3+1)-1)/3;
 	
-    // Constants for setting up the Perlin-1 noise functions
-    private final int B = 0x1000;
-    private final int BM = 0xff;
+	private static final long DEFAULT_SEED = 0;
+	
+	private int[] perm;
+	private int[] perm2D;
+	private int[] perm3D;
+	
+	public PerlinNoise() {
+		this(DEFAULT_SEED);
+	}
+	
+	public PerlinNoise(long seed) {
+		perm = new int[256];
+		perm2D = new int[256];
+		perm3D = new int[256];
+		int[] source = new int[256];
+		for (int i = 0; i < 256; i++) {
+			source[i] = i;
+		}
+		for (int i = 255; i >= 0; i--) {
+			seed = seed * 6364136223846793005L + 1442695040888963407L;
+			int r = (int)((seed + 31) % (i + 1));
+			if (r < 0) {
+				r += (i + 1);
+			}
+			perm[i] = source[r];
+			perm2D[i] = ((perm[i] % 12) * 2);
+			perm3D[i] = ((perm[i] % 24) * 3);
+			source[r] = source[i];
+		}
+	}
+	
+	//Alias for 1D
+	public float noise1(float x) {
+		return (float)noise(x, 0.5);
+	}
+	
+	//Alias for 2D
+	public float noise2(float x, float y) {
+		return (float)noise(x, y);
+	}
+	
+	//Alias for 3D
+	public float noise3(float x, float y, float z) {
+		return (float)noise(x, y, z);
+	}
+	
+	//Alias for 3D (again)
+	public double improvedNoise(double x, double y, double z)
+	{
+		return noise(x, y, z);
+	}
+	
+	//2D OpenSimplex Noise
+	public double noise(double x, double y) {
+	
+		//Place input coordinates onto grid.
+		double stretchOffset = (x + y) * STRETCH_2D;
+		double xs = x + stretchOffset;
+		double ys = y + stretchOffset;
+		
+		//Floor to get grid coordinates of rhombus (stretched square) super-cell origin.
+		int xsb = fastFloor(xs);
+		int ysb = fastFloor(ys);
+		
+		//Skew out to get actual coordinates of rhombus origin. We'll need these later.
+		double squishOffset = (xsb + ysb) * SQUISH_2D;
+		double xb = xsb + squishOffset;
+		double yb = ysb + squishOffset;
+		
+		//Compute grid coordinates relative to rhombus origin.
+		double xins = xs - xsb;
+		double yins = ys - ysb;
+		
+		//Sum those together to get a value that determines which region we're in.
+		double inSum = xins + yins;
+
+		//Positions relative to origin point.
+		double dx0 = x - xb;
+		double dy0 = y - yb;
+		
+		//We'll be defining these inside the next block and using them afterwards.
+		double dx_ext, dy_ext;
+		int xsv_ext, ysv_ext;
+		
+		double value = 0;
+
+		//Contribution (1,0)
+		double dx1 = dx0 - 1 - SQUISH_2D;
+		double dy1 = dy0 - 0 - SQUISH_2D;
+		double attn1 = 2 - dx1 * dx1 - dy1 * dy1;
+		if (attn1 > 0) {
+			attn1 *= attn1;
+			value += attn1 * attn1 * extrapolate2D(xsb + 1, ysb + 0, dx1, dy1);
+		}
+
+		//Contribution (0,1)
+		double dx2 = dx0 - 0 - SQUISH_2D;
+		double dy2 = dy0 - 1 - SQUISH_2D;
+		double attn2 = 2 - dx2 * dx2 - dy2 * dy2;
+		if (attn2 > 0) {
+			attn2 *= attn2;
+			value += attn2 * attn2 * extrapolate2D(xsb + 0, ysb + 1, dx2, dy2);
+		}
+		
+		if (inSum <= 1) { //We're inside the triangle (2-Simplex) at (0,0)
+			double zins = 1 - inSum;
+			if (zins > xins || zins > yins) { //(0,0) is one of the closest two triangular vertices
+				if (xins > yins) {
+					xsv_ext = xsb + 1;
+					ysv_ext = ysb - 1;
+					dx_ext = dx0 - 1;
+					dy_ext = dy0 + 1;
+				} else {
+					xsv_ext = xsb - 1;
+					ysv_ext = ysb + 1;
+					dx_ext = dx0 + 1;
+					dy_ext = dy0 - 1;
+				}
+			} else { //(1,0) and (0,1) are the closest two vertices.
+				xsv_ext = xsb + 1;
+				ysv_ext = ysb + 1;
+				dx_ext = dx0 - 1 - 2 * SQUISH_2D;
+				dy_ext = dy0 - 1 - 2 * SQUISH_2D;
+			}
+		} else { //We're inside the triangle (2-Simplex) at (1,1)
+			double zins = 2 - inSum;
+			if (zins < xins || zins < yins) { //(0,0) is one of the closest two triangular vertices
+				if (xins > yins) {
+					xsv_ext = xsb + 2;
+					ysv_ext = ysb + 0;
+					dx_ext = dx0 - 2 - 2 * SQUISH_2D;
+					dy_ext = dy0 + 0 - 2 * SQUISH_2D;
+				} else {
+					xsv_ext = xsb + 0;
+					ysv_ext = ysb + 2;
+					dx_ext = dx0 + 0 - 2 * SQUISH_2D;
+					dy_ext = dy0 - 2 - 2 * SQUISH_2D;
+				}
+			} else { //(1,0) and (0,1) are the closest two vertices.
+				dx_ext = dx0;
+				dy_ext = dy0;
+				xsv_ext = xsb;
+				ysv_ext = ysb;
+			}
+			xsb += 1;
+			ysb += 1;
+			dx0 = dx0 - 1 - 2 * SQUISH_2D;
+			dy0 = dy0 - 1 - 2 * SQUISH_2D;
+		}
+		
+		//Contribution (0,0) or (1,1)
+		double attn0 = 2 - dx0 * dx0 - dy0 * dy0;
+		if (attn0 > 0) {
+			attn0 *= attn0;
+			value += attn0 * attn0 * extrapolate2D(xsb, ysb, dx0, dy0);
+		}
+		
+		//Extra Vertex
+		double attn_ext = 2 - dx_ext * dx_ext - dy_ext * dy_ext;
+		if (attn_ext > 0) {
+			attn_ext *= attn_ext;
+			value += attn_ext * attn_ext * extrapolate2D(xsv_ext, ysv_ext, dx_ext, dy_ext);
+		}
+		
+		return value;
+	}
+	
+	//3D OpenSimplex Noise
+	public double noise(double x, double y, double z)
+	{
+		double stretchOffset = (x + y + z) * STRETCH_3D;
+		double xs = x + stretchOffset;
+		double ys = y + stretchOffset;
+		double zs = z + stretchOffset;
+
+		int xsb = fastFloor(xs);
+		int ysb = fastFloor(ys);
+		int zsb = fastFloor(zs);
+
+		double squishOffset = (xsb + ysb + zsb) * SQUISH_3D;
+		double dx0 = x - (xsb + squishOffset);
+		double dy0 = y - (ysb + squishOffset);
+		double dz0 = z - (zsb + squishOffset);
+
+		double xins = xs - xsb;
+		double yins = ys - ysb;
+		double zins = zs - zsb;
+
+		double inSum = xins + yins + zins;
+
+		int hash =
+		   (int)(yins - zins + 1) |
+		   (int)(xins - yins + 1) << 1 |
+		   (int)(xins - zins + 1) << 2 |
+		   (int)inSum << 3 |
+		   (int)(inSum + zins) << 5 |
+		   (int)(inSum + yins) << 7 |
+		   (int)(inSum + xins) << 9;
+
+		Contribution3 c = lookup3D[hash];
+
+		double value = 0.0;
+		while (c != null)
+		{
+			double dx = dx0 + c.dx;
+			double dy = dy0 + c.dy;
+			double dz = dz0 + c.dz;
+			double attn = 2 - dx * dx - dy * dy - dz * dz;
+			if (attn > 0)
+			{
+				int px = xsb + c.xsb;
+				int py = ysb + c.ysb;
+				int pz = zsb + c.zsb;
+
+				int i = perm3D[(perm[(perm[px & 0xFF] + py) & 0xFF] + pz) & 0xFF];
+				double valuePart = gradients3D[i] * dx + gradients3D[i + 1] * dy + gradients3D[i + 2] * dz;
+
+				attn *= attn;
+				value += attn * attn * valuePart;
+			}
+
+			c = c.next;
+		}
+		return value;
+	}
+	
+	private double extrapolate2D(int xsb, int ysb, double dx, double dy)
+	{
+		int index = perm2D[(perm[xsb & 0xFF] + ysb) & 0xFF];
+		return gradients2D[index] * dx + gradients2D[index + 1] * dy;
+	}
+	
+	private static int fastFloor(double x) {
+		int xi = (int)x;
+		return x < xi ? xi - 1 : xi;
+	}
+
+	private static Contribution3[] lookup3D;
+	
+	static {
+		int[][] base3D = new int[][] {
+			new int[] { 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1 },
+			new int[] { 2, 1, 1, 0, 2, 1, 0, 1, 2, 0, 1, 1, 3, 1, 1, 1 },
+			new int[] { 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 2, 1, 1, 0, 2, 1, 0, 1, 2, 0, 1, 1 }
+		};
+		int[] p3D = new int[] { 0, 0, 1, -1, 0, 0, 1, 0, -1, 0, 0, -1, 1, 0, 0, 0, 1, -1, 0, 0, -1, 0, 1, 0, 0, -1, 1, 0, 2, 1, 1, 0, 1, 1, 1, -1, 0, 2, 1, 0, 1, 1, 1, -1, 1, 0, 2, 0, 1, 1, 1, -1, 1, 1, 1, 3, 2, 1, 0, 3, 1, 2, 0, 1, 3, 2, 0, 1, 3, 1, 0, 2, 1, 3, 0, 2, 1, 3, 0, 1, 2, 1, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 0, 1, 0, 2, 0, 2, 0, 1, 1, 0, 0, 1, 2, 0, 0, 2, 2, 0, 0, 0, 0, 1, 1, -1, 1, 2, 0, 0, 0, 0, 1, -1, 1, 1, 2, 0, 0, 0, 0, 1, 1, 1, -1, 2, 3, 1, 1, 1, 2, 0, 0, 2, 2, 3, 1, 1, 1, 2, 2, 0, 0, 2, 3, 1, 1, 1, 2, 0, 2, 0, 2, 1, 1, -1, 1, 2, 0, 0, 2, 2, 1, 1, -1, 1, 2, 2, 0, 0, 2, 1, -1, 1, 1, 2, 0, 0, 2, 2, 1, -1, 1, 1, 2, 0, 2, 0, 2, 1, 1, 1, -1, 2, 2, 0, 0, 2, 1, 1, 1, -1, 2, 0, 2, 0 };
+		int[] lookupPairs3D = new int[] { 0, 2, 1, 1, 2, 2, 5, 1, 6, 0, 7, 0, 32, 2, 34, 2, 129, 1, 133, 1, 160, 5, 161, 5, 518, 0, 519, 0, 546, 4, 550, 4, 645, 3, 647, 3, 672, 5, 673, 5, 674, 4, 677, 3, 678, 4, 679, 3, 680, 13, 681, 13, 682, 12, 685, 14, 686, 12, 687, 14, 712, 20, 714, 18, 809, 21, 813, 23, 840, 20, 841, 21, 1198, 19, 1199, 22, 1226, 18, 1230, 19, 1325, 23, 1327, 22, 1352, 15, 1353, 17, 1354, 15, 1357, 17, 1358, 16, 1359, 16, 1360, 11, 1361, 10, 1362, 11, 1365, 10, 1366, 9, 1367, 9, 1392, 11, 1394, 11, 1489, 10, 1493, 10, 1520, 8, 1521, 8, 1878, 9, 1879, 9, 1906, 7, 1910, 7, 2005, 6, 2007, 6, 2032, 8, 2033, 8, 2034, 7, 2037, 6, 2038, 7, 2039, 6 };
+
+		Contribution3[] contributions3D = new Contribution3[p3D.length / 9];
+		for (int i = 0; i < p3D.length; i += 9) {
+			int[] baseSet = base3D[p3D[i]];
+			Contribution3 previous = null, current = null;
+			for (int k = 0; k < baseSet.length; k += 4) {
+				current = new Contribution3(baseSet[k], baseSet[k + 1], baseSet[k + 2], baseSet[k + 3]);
+				if (previous == null) {
+					contributions3D[i / 9] = current;
+				} else {
+					previous.next = current;
+				}
+				previous = current;
+			}
+			current.next = new Contribution3(p3D[i + 1], p3D[i + 2], p3D[i + 3], p3D[i + 4]);
+			current.next.next = new Contribution3(p3D[i + 5], p3D[i + 6], p3D[i + 7], p3D[i + 8]);
+		}
+		
+		lookup3D = new Contribution3[2048];
+		for (int i = 0; i < lookupPairs3D.length; i += 2) {
+			lookup3D[lookupPairs3D[i]] = contributions3D[lookupPairs3D[i + 1]];
+		}
+	}
+	
+	//2D Gradients -- new scheme (Dodecagon)
+	private static double[] gradients2D = new double[] {
+	   0.114251372530929,   0.065963060686016,
+	   0.131926121372032,   0.000000000000000,
+	   0.114251372530929,  -0.065963060686016,
+	   0.065963060686016,  -0.114251372530929,
+	   0.000000000000000,  -0.131926121372032,
+	  -0.065963060686016,  -0.114251372530929,
+	  -0.114251372530929,  -0.065963060686016,
+	  -0.131926121372032,  -0.000000000000000,
+	  -0.114251372530929,   0.065963060686016,
+	  -0.065963060686016,   0.114251372530929,
+	  -0.000000000000000,   0.131926121372032,
+	   0.065963060686016,   0.114251372530929,
+	};
+	
+	//3D Gradients (Stretched Rhombicuboctahedron)
+	private static double[] gradients3D = new double[] {
+		-0.106796116504854,		0.0388349514563107,		0.0388349514563107,
+		-0.0388349514563107,	0.106796116504854,		0.0388349514563107,
+		-0.0388349514563107,	0.0388349514563107,		0.106796116504854,
+		0.106796116504854,		0.0388349514563107,		0.0388349514563107,
+		0.0388349514563107,		0.106796116504854,		0.0388349514563107,
+		0.0388349514563107,		0.0388349514563107,		0.106796116504854,
+		-0.106796116504854,		-0.0388349514563107,	0.0388349514563107,
+		-0.0388349514563107,	-0.106796116504854,		0.0388349514563107,
+		-0.0388349514563107,	-0.0388349514563107,	0.106796116504854,
+		0.106796116504854,		-0.0388349514563107,	0.0388349514563107,
+		0.0388349514563107,		-0.106796116504854,		0.0388349514563107,
+		0.0388349514563107,		-0.0388349514563107,	0.106796116504854
+		-0.106796116504854,		0.0388349514563107,		-0.0388349514563107,
+		-0.0388349514563107,	0.106796116504854,		-0.0388349514563107,
+		-0.0388349514563107,	0.0388349514563107,		-0.106796116504854,
+		0.106796116504854,		0.0388349514563107,		-0.0388349514563107,
+		0.0388349514563107,		0.106796116504854,		-0.0388349514563107,
+		0.0388349514563107,		0.0388349514563107,		-0.106796116504854
+		-0.106796116504854,		-0.0388349514563107,	-0.0388349514563107,
+		-0.0388349514563107,	-0.106796116504854,		-0.0388349514563107,
+		-0.0388349514563107,	-0.0388349514563107,	-0.106796116504854,
+		0.106796116504854,		-0.0388349514563107,	-0.0388349514563107,
+		0.0388349514563107,		-0.106796116504854,		-0.0388349514563107,
+		0.0388349514563107,		-0.0388349514563107,	-0.106796116504854,
+	};
+
+	private static class Contribution3 {
+		public double dx, dy, dz;
+		public int xsb, ysb, zsb;
+		public Contribution3 next;
+
+		public Contribution3(double multiplier, int xsb, int ysb, int zsb) {
+			dx = -xsb - multiplier * SQUISH_3D;
+			dy = -ysb - multiplier * SQUISH_3D;
+			dz = -zsb - multiplier * SQUISH_3D;
+			this.xsb = xsb;
+			this.ysb = ysb;
+			this.zsb = zsb;
+		}
+	}
 
-    private final int N = 0x1000;
-    private final int NP = 12;   /* 2^N */
-    private final int NM = 0xfff;
-
-    /** Default sample size to work with */
-    private final int DEFAULT_SAMPLE_SIZE = 256;
-
-    /** The log of 1/2 constant. Used Everywhere */
-    private final float LOG_HALF = (float)Math.log(0.5);
-
-    /** Permutation array for the improved noise function */
-    private int[] p_imp;
-
-    /** P array for perline 1 noise */
-    private int[] p;
-    private float[][] g3;
-    private float[][] g2;
-    private float[] g1;
-
-
-    /**
-     * Create a new noise creator with the default seed value
-     */
-    public PerlinNoise()
-    {
-        this(100);
-    }
-
-    /**
-     * Create a new noise creator with the given seed value for the randomness
-     *
-     * @param seed The seed value to use
-     */
-    public PerlinNoise(long seed)
-    {
-        p_imp = new int[DEFAULT_SAMPLE_SIZE << 1];
-
-        int i, j, k;
-        rand = new Random(seed);
-
-        // Calculate the table of psuedo-random coefficients.
-        for(i = 0; i < DEFAULT_SAMPLE_SIZE; i++)
-            p_imp[i] = i;
-
-        // generate the psuedo-random permutation table.
-        while(--i > 0)
-        {
-            k = p_imp[i];
-            j = (int)(rand.nextLong() & DEFAULT_SAMPLE_SIZE);
-            p_imp[i] = p_imp[j];
-            p_imp[j] = k;
-        }
-
-        initPerlin1();
-    }
-
-    /**
-     * Computes noise function for three dimensions at the point (x,y,z).
-     *
-     * @param x x dimension parameter
-     * @param y y dimension parameter
-     * @param z z dimension parameter
-     * @return the noise value at the point (x, y, z)
-     */
-    public double improvedNoise(double x, double y, double z)
-    {
-        // Constraint the point to a unit cube
-        int uc_x = (int)Math.floor(x) & 255;
-        int uc_y = (int)Math.floor(y) & 255;
-        int uc_z = (int)Math.floor(z) & 255;
-
-        // Relative location of the point in the unit cube
-        double xo = x - Math.floor(x);
-        double yo = y - Math.floor(y);
-        double zo = z - Math.floor(z);
-
-        // Fade curves for x, y and z
-        double u = fade(xo);
-        double v = fade(yo);
-        double w = fade(zo);
-
-        // Generate a hash for each coordinate to find out where in the cube
-        // it lies.
-        int a =  p_imp[uc_x] + uc_y;
-        int aa = p_imp[a] + uc_z;
-        int ab = p_imp[a + 1] + uc_z;
-
-        int b =  p_imp[uc_x + 1] + uc_y;
-        int ba = p_imp[b] + uc_z;
-        int bb = p_imp[b + 1] + uc_z;
-
-        // blend results from the 8 corners based on the noise function
-        double c1 = grad(p_imp[aa], xo, yo, zo);
-        double c2 = grad(p_imp[ba], xo - 1, yo, zo);
-        double c3 = grad(p_imp[ab], xo, yo - 1, zo);
-        double c4 = grad(p_imp[bb], xo - 1, yo - 1, zo);
-        double c5 = grad(p_imp[aa + 1], xo, yo, zo - 1);
-        double c6 = grad(p_imp[ba + 1], xo - 1, yo, zo - 1);
-        double c7 = grad(p_imp[ab + 1], xo, yo - 1, zo - 1);
-        double c8 = grad(p_imp[bb + 1], xo - 1, yo - 1, zo - 1);
-
-        return lerp(w, lerp(v, lerp(u, c1, c2), lerp(u, c3, c4)),
-                       lerp(v, lerp(u, c5, c6), lerp(u, c7, c8)));
-    }
-
-    /**
-     * 1-D noise generation function using the original perlin algorithm.
-     *
-     * @param x Seed for the noise function
-     * @return The noisy output
-     */
-    public float noise1(float x)
-    {
-        float t = x + N;
-        int bx0 = ((int) t) & BM;
-        int bx1 = (bx0 + 1) & BM;
-        float rx0 = t - (int) t;
-        float rx1 = rx0 - 1;
-
-        float sx = sCurve(rx0);
-
-        float u = rx0 * g1[p[bx0]];
-        float v = rx1 * g1[p[bx1]];
-
-        return lerp(sx, u, v);
-    }
-
-    /**
-     * Create noise in a 2D space using the orignal perlin noise algorithm.
-     *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @return A noisy value at the given position
-     */
-    public float noise2(float x, float y)
-    {
-        float t = x + N;
-        int bx0 = ((int)t) & BM;
-        int bx1 = (bx0 + 1) & BM;
-        float rx0 = t - (int)t;
-        float rx1 = rx0 - 1;
-
-        t = y + N;
-        int by0 = ((int)t) & BM;
-        int by1 = (by0 + 1) & BM;
-        float ry0 = t - (int)t;
-        float ry1 = ry0 - 1;
-
-        int i = p[bx0];
-        int j = p[bx1];
-
-        int b00 = p[i + by0];
-        int b10 = p[j + by0];
-        int b01 = p[i + by1];
-        int b11 = p[j + by1];
-
-        float sx = sCurve(rx0);
-        float sy = sCurve(ry0);
-
-        float[] q = g2[b00];
-        float u = rx0 * q[0] + ry0 * q[1];
-        q = g2[b10];
-        float v = rx1 * q[0] + ry0 * q[1];
-        float a = lerp(sx, u, v);
-
-        q = g2[b01];
-        u = rx0 * q[0] + ry1 * q[1];
-        q = g2[b11];
-        v = rx1 * q[0] + ry1 * q[1];
-        float b = lerp(sx, u, v);
-
-        return lerp(sy, a, b);
-    }
-
-    /**
-     * Create noise in a 3D space using the orignal perlin noise algorithm.
-     *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param z The Z coordinate of the location to sample
-     * @return A noisy value at the given position
-     */
-    public float noise3(float x, float y, float z)
-    {
-    	float t = x + (float)N;
-        int bx0 = ((int)t) & BM;
-        int bx1 = (bx0 + 1) & BM;
-        float rx0 = (float)(t - (int)t);
-        float rx1 = rx0 - 1;
-
-        t = y + (float)N;
-        int by0 = ((int)t) & BM;
-        int by1 = (by0 + 1) & BM;
-        float ry0 = (float)(t - (int)t);
-        float ry1 = ry0 - 1;
-
-        t = z + (float)N;
-        int bz0 = ((int)t) & BM;
-        int bz1 = (bz0 + 1) & BM;
-        float rz0 = (float)(t - (int)t);
-        float rz1 = rz0 - 1;
-
-        int i = p[bx0];
-        int j = p[bx1];
-
-        int b00 = p[i + by0];
-        int b10 = p[j + by0];
-        int b01 = p[i + by1];
-        int b11 = p[j + by1];
-
-        t  = sCurve(rx0);
-        float sy = sCurve(ry0);
-        float sz = sCurve(rz0);
-
-        float[] q = g3[b00 + bz0];
-        float u = (rx0 * q[0] + ry0 * q[1] + rz0 * q[2]);
-        q = g3[b10 + bz0];
-        float v = (rx1 * q[0] + ry0 * q[1] + rz0 * q[2]);
-        float a = lerp(t, u, v);
-
-        q = g3[b01 + bz0];
-        u = (rx0 * q[0] + ry1 * q[1] + rz0 * q[2]);
-        q = g3[b11 + bz0];
-        v = (rx1 * q[0] + ry1 * q[1] + rz0 * q[2]);
-        float b = lerp(t, u, v);
-
-        float c = lerp(sy, a, b);
-
-        q = g3[b00 + bz1];
-        u = (rx0 * q[0] + ry0 * q[1] + rz1 * q[2]);
-        q = g3[b10 + bz1];
-        v = (rx1 * q[0] + ry0 * q[1] + rz1 * q[2]);
-        a = lerp(t, u, v);
-
-        q = g3[b01 + bz1];
-        u = (rx0 * q[0] + ry1 * q[1] + rz1 * q[2]);
-        q = g3[b11 + bz1];
-        v = (rx1 * q[0] + ry1 * q[1] + rz1 * q[2]);
-        b = lerp(t, u, v);
-
-        float d = lerp(sy, a, b);
-
-        return lerp(sz, c, d);
-    }
-
-    /**
-     * Create a turbulent noise output based on the core noise function. This
-     * uses the noise as a base function and is suitable for creating clouds,
-     * marble and explosion effects. For example, a typical marble effect would
-     * set the colour to be:
-     * <pre>
-     *    sin(point + turbulence(point) * point.x);
-     * </pre>
-     */
-    public double imporvedTurbulence(double x,
-                                     double y,
-                                     double z,
-                                     float loF,
-                                     float hiF)
-    {
-        double p_x = x + 123.456f;
-        double p_y = y;
-        double p_z = z;
-        double t = 0;
-        double f;
-
-        for(f = loF; f < hiF; f *= 2)
-        {
-            t += Math.abs(improvedNoise(p_x, p_y, p_z)) / f;
-
-            p_x *= 2;
-            p_y *= 2;
-            p_z *= 2;
-        }
-
-        return t - 0.3;
-    }
-
-    /**
-     * Create a turbulance function in 2D using the original perlin noise
-     * function.
-     *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param freq The frequency of the turbluance to create
-     * @return The value at the given coordinates
-     */
-    public float turbulence2(float x, float y, float freq)
-    {
-        float t = 0;
-
-        do
-        {
-            t += noise2(freq * x, freq * y) / freq;
-            freq *= 0.5f;
-        }
-        while (freq >= 1);
-
-        return t;
-    }
-
-    /**
-     * Create a turbulance function in 3D using the original perlin noise
-     * function.
-     *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param z The Z coordinate of the location to sample
-     * @param freq The frequency of the turbluance to create
-     * @return The value at the given coordinates
-     */
-    public float turbulence3(float x, float y, float z, float freq)
-    {
-        float t = 0;
-
-        do
-        {
-            t += noise3(freq * x, freq * y, freq * z) / freq;
-            freq *= 0.5f;
-        }
-        while (freq >= 1);
-
-        return t;
-    }
-
-    /**
-     * Create a 1D tileable noise function for the given width.
-     *
-     * @param x The X coordinate to generate the noise for
-     * @param w The width of the tiled block
-     * @return The value of the noise at the given coordinate
-     */
-    public float tileableNoise1(float x, float w)
-    {
-        return (noise1(x)     * (w - x) +
-                noise1(x - w) *      x) / w;
-    }
-
-    /**
-     * Create a 2D tileable noise function for the given width and height.
-     *
-     * @param x The X coordinate to generate the noise for
-     * @param y The Y coordinate to generate the noise for
-     * @param w The width of the tiled block
-     * @param h The height of the tiled block
-     * @return The value of the noise at the given coordinate
-     */
-    public float tileableNoise2(float x, float y, float w, float h)
-    {
-        return (noise2(x,     y)     * (w - x) * (h - y) +
-                noise2(x - w, y)     *      x  * (h - y) +
-                noise2(x,     y - h) * (w - x) *      y  +
-                noise2(x - w, y - h) *      x  *      y) / (w * h);
-    }
-
-    /**
-     * Create a 3D tileable noise function for the given width, height and
-     * depth.
-     *
-     * @param x The X coordinate to generate the noise for
-     * @param y The Y coordinate to generate the noise for
-     * @param z The Z coordinate to generate the noise for
-     * @param w The width of the tiled block
-     * @param h The height of the tiled block
-     * @param d The depth of the tiled block
-     * @return The value of the noise at the given coordinate
-     */
-    public float tileableNoise3(float x,
-                                float y,
-                                float z,
-                                float w,
-                                float h,
-                                float d)
-    {
-        return (noise3(x,     y,     z)     * (w - x) * (h - y) * (d - z) +
-                noise3(x - w, y,     z)     *      x  * (h - y) * (d - z) +
-                noise3(x,     y - h, z)     * (w - x) *      y  * (d - z) +
-                noise3(x - w, y - h, z)     *      x  *      y  * (d - z) +
-                noise3(x,     y,     z - d) * (w - x) * (h - y) *      z  +
-                noise3(x - w, y,     z - d) *      x  * (h - y) *      z  +
-                noise3(x,     y - h, z - d) * (w - x) *      y  *      z  +
-                noise3(x - w, y - h, z - d) *      x  *      y  *      z) /
-                (w * h * d);
-    }
-
-    /**
-     * Create a turbulance function that can be tiled across a surface in 2D.
-     *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param w The width to tile over
-     * @param h The height to tile over
-     * @param freq The frequency of the turbluance to create
-     * @return The value at the given coordinates
-     */
-    public float tileableTurbulence2(float x,
-                                     float y,
-                                     float w,
-                                     float h,
-                                     float freq)
-    {
-        float t = 0;
-
-        do
-        {
-            t += tileableNoise2(freq * x, freq * y, w * freq, h * freq) / freq;
-            freq *= 0.5f;
-        }
-        while (freq >= 1);
-
-        return t;
-    }
-
-    /**
-     * Create a turbulance function that can be tiled across a surface in 3D.
-     *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param z The Z coordinate of the location to sample
-     * @param w The width to tile over
-     * @param h The height to tile over
-     * @param d The depth to tile over
-     * @param freq The frequency of the turbluance to create
-     * @return The value at the given coordinates
-     */
-    public float tileableTurbulence3(float x,
-                                     float y,
-                                     float z,
-                                     float w,
-                                     float h,
-                                     float d,
-                                     float freq)
-    {
-        float t = 0;
-
-        do
-        {
-            t += tileableNoise3(freq * x,
-                                freq * y,
-                                freq * z,
-                                w * freq,
-                                h * freq,
-                                d * freq) / freq;
-            freq *= 0.5f;
-        }
-        while (freq >= 1);
-
-        return t;
-    }
-
-
-    /**
-     * Simple lerp function using doubles.
-     */
-    private double lerp(double t, double a, double b)
-    {
-        return a + t * (b - a);
-    }
-
-    /**
-     * Simple lerp function using floats.
-     */
-    private float lerp(float t, float a, float b)
-    {
-        return a + t * (b - a);
-    }
-
-    /**
-     * Fade curve calculation which is 6t^5 - 15t^4 + 10t^3. This is the new
-     * algorithm, where the old one used to be 3t^2 - 2t^3.
-     *
-     * @param t The t parameter to calculate the fade for
-     * @return the drop-off amount.
-     */
-    private double fade(double t)
-    {
-        return t * t * t * (t * (t * 6 - 15) + 10);
-    }
-
-    /**
-     * Calculate the gradient function based on the hash code.
-     */
-    private double grad(int hash, double x, double y, double z)
-    {
-        // Convert low 4 bits of hash code into 12 gradient directions.
-        int h = hash & 15;
-        double u = (h < 8 || h == 12 || h == 13) ? x : y;
-        double v = (h < 4 || h == 12 || h == 13) ? y : z;
-
-        return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
-    }
-
-    /**
-     * Simple bias generator using exponents.
-     */
-    private float bias(float a, float b)
-    {
-        return (float)Math.pow(a, Math.log(b) / LOG_HALF);
-    }
-
-
-    /*
-     * Gain generator that caps to the range of [0, 1].
-     */
-    private float gain(float a, float b)
-    {
-        if(a < 0.001f)
-            return 0;
-        else if (a > 0.999f)
-            return 1.0f;
-
-        double p = Math.log(1.0f - b) / LOG_HALF;
-
-        if(a < 0.5f)
-            return (float)(Math.pow(2 * a, p) / 2);
-        else
-            return 1 - (float)(Math.pow(2 * (1.0f - a), p) / 2);
-    }
-
-    /**
-     * S-curve function for value distribution for Perlin-1 noise function.
-     */
-    private float sCurve(float t)
-    {
-        return (t * t * (3 - 2 * t));
-    }
-
-    /**
-     * 2D-vector normalisation function.
-     */
-    private void normalize2(float[] v)
-    {
-        float s = (float)(1 / Math.sqrt(v[0] * v[0] + v[1] * v[1]));
-        v[0] *= s;
-        v[1] *= s;
-    }
-
-    /**
-     * 3D-vector normalisation function.
-     */
-    private void normalize3(float[] v)
-    {
-        float s = (float)(1 / Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]));
-        v[0] *= s;
-        v[1] *= s;
-        v[2] *= s;
-    }
-
-    /**
-     * Initialise the lookup arrays used by Perlin 1 function.
-     */
-    private void initPerlin1()
-    {
-        p = new int[B + B + 2];
-        g3 = new float[B + B + 2][3];
-        g2 = new float[B + B + 2][2];
-        g1 = new float[B + B + 2];
-        int i, j, k;
-
-        for(i = 0; i < B; i++)
-        {
-            p[i] = i;
-
-            g1[i] = (float)(((rand.nextDouble() * Integer.MAX_VALUE) % (B + B)) - B) / B;
-
-            for(j = 0; j < 2; j++)
-                g2[i][j] = (float)(((rand.nextDouble() * Integer.MAX_VALUE) % (B + B)) - B) / B;
-            normalize2(g2[i]);
-
-            for(j = 0; j < 3; j++)
-                g3[i][j] = (float)(((rand.nextDouble() * Integer.MAX_VALUE) % (B + B)) - B) / B;
-            normalize3(g3[i]);
-        }
-
-        while(--i > 0)
-        {
-            k = p[i];
-            j = (int)((rand.nextDouble() * Integer.MAX_VALUE) % B);
-            p[i] = p[j];
-            p[j] = k;
-        }
-
-        for(i = 0; i < B + 2; i++)
-        {
-            p[B + i] = p[i];
-            g1[B + i] = g1[i];
-            for(j = 0; j < 2; j++)
-                g2[B + i][j] = g2[i][j];
-            for(j = 0; j < 3; j++)
-                g3[B + i][j] = g3[i][j];
-        }
-    }
 }
