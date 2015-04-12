@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import gnu.trove.map.hash.TLongIntHashMap;
+import gnu.trove.map.hash.TLongObjectHashMap;
+import net.minecraft.world.ChunkCoordIntPair;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.biomes.realistic.desert.RealisticBiomeDesert;
 import rwg.biomes.realistic.desert.RealisticBiomeDesertMountains;
@@ -241,7 +244,9 @@ public class ChunkManagerRealistic extends WorldChunkManager
     {
     	return getBiomeDataAt(par1, par2, getOceanValue(par1, par2));
     }
-    
+
+	private TLongObjectHashMap<RealisticBiomeBase> biomeDataMap = new TLongObjectHashMap<RealisticBiomeBase>();
+
     public RealisticBiomeBase getBiomeDataAt(int par1, int par2, float ocean)
     {
     	//return RealisticBiomeBase.woodmountains;
@@ -283,6 +288,14 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	return RealisticBiomeBase.mesa;
     	}
     	*/
+
+		long coords = ChunkCoordIntPair.chunkXZ2Int(par1, par2);
+
+		if (biomeDataMap.containsKey(coords)) {
+			return biomeDataMap.get(coords);
+		}
+
+		RealisticBiomeBase output = null;
     	
     	float b = (biomecell.noise((par1 + 4000f) / 1200D, par2 / 1200D, 1D) * 0.5f) + 0.5f;
     	b = b < 0f ? 0f : b >= 0.9999999f ? 0.9999999f : b;
@@ -293,7 +306,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	float h = (s - 0.975f) * 40f;
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	h *= biomes_smallLength;
-        	return biomes_small.get((int)(h));
+        	output = biomes_small.get((int)(h));
     	}
     	else if((wetEnabled && b < 0.25f) || (!wetEnabled && b < 0.33f))
     	{
@@ -301,7 +314,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_snowLength;
-        	return biomes_snow.get((int)(h));
+			output = biomes_snow.get((int)(h));
     	}
     	else if((wetEnabled && b < 0.50f) || (!wetEnabled && b < 0.66f))
     	{
@@ -309,7 +322,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_coldLength;
-        	return biomes_cold.get((int)(h));
+			output = biomes_cold.get((int)(h));
     	}
     	else if((wetEnabled && b < 0.75f) || (!wetEnabled && b < 1f))
     	{
@@ -317,7 +330,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_hotLength;
-        	return biomes_hot.get((int)(h));
+        	output = biomes_hot.get((int)(h));
     	}
     	else if(wetEnabled)
     	{
@@ -325,7 +338,7 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_wetLength;
-        	return biomes_wet.get((int)(h));
+			output = biomes_wet.get((int)(h));
     	}
     	else
     	{
@@ -333,9 +346,16 @@ public class ChunkManagerRealistic extends WorldChunkManager
         	h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
         	
         	h *= biomes_hotLength;
-        	return biomes_hot.get((int)(h));
+			output = biomes_hot.get((int)(h));
     	}
-    	
+
+		if (biomeDataMap.size() > 4096) {
+			biomeDataMap.clear();
+		}
+
+		biomeDataMap.put(coords, output);
+		return output;
+
     	/*if(par1 + par2 < 0)
     	{
     		return RealisticBiomeBase.landTaigaFields;

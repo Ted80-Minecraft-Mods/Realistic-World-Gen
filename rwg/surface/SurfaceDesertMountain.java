@@ -43,7 +43,6 @@ public class SurfaceDesertMountain extends SurfaceBase
 	@Override
 	public void paintTerrain(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world, Random rand, PerlinNoise perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base)
 	{
-		float p = perlin.noise2(i / 8f, j / 8f) * 0.5f;
 		float c = CliffCalculator.calc(x, y, noise);
 		int cliff = 0;
 		boolean gravel = false;
@@ -69,8 +68,9 @@ public class SurfaceDesertMountain extends SurfaceBase
             				gravel = true;
             			}
             		}
-            		
-        			if(c > min && c > sCliff - ((k - sHeight) / sStrength) + p)
+
+					float p = perlin.noise3(i / 8f, j / 8f, k / 8f) * 0.5f;
+					if(c > min && c > sCliff - ((k - sHeight) / sStrength) + p)
         			{
         				cliff = 1;
         			}

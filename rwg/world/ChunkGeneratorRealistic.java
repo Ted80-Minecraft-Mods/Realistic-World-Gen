@@ -9,8 +9,11 @@ import java.util.Map;
 import java.util.Random;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
+import rwg.config.ConfigRWG;
 import rwg.deco.DecoClay;
 import rwg.map.old.MapGenAncientVillage;
 import rwg.util.CanyonColor;
@@ -60,10 +63,10 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	
     private World worldObj;
     private ChunkManagerRealistic cmr;
-    private MapGenBase caves = new MapGenCaves();
-    private MapGenStronghold strongholdGenerator = new MapGenStronghold();
-    private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
-    private MapGenVillage villageGenerator;
+    private final MapGenBase caves;
+    private final MapGenStronghold strongholdGenerator;
+    private final MapGenMineshaft mineshaftGenerator;
+    private final MapGenVillage villageGenerator;
     
     private PerlinNoise perlin;
     private CellNoise cell;
@@ -96,10 +99,10 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	private WorldGenMinable ore_redstone = new WorldGenMinable(Blocks.redstone_ore, 7);
 	private WorldGenMinable ore_diamond = new WorldGenMinable(Blocks.diamond_ore, 7);
 	private WorldGenMinable ore_lapis = new WorldGenMinable(Blocks.lapis_ore, 6);
-	
+
     public ChunkGeneratorRealistic(World world, long l)
     {
-    	caves = TerrainGen.getModdedMapGen(caves, CAVE);
+    	caves = TerrainGen.getModdedMapGen(new MapGenCaves(), CAVE);
         worldObj = world;
         cmr = (ChunkManagerRealistic)worldObj.getWorldChunkManager();
         
@@ -114,7 +117,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider
         Map m = new HashMap();
         m.put("size", "0");
         m.put("distance", "24");
-        villageGenerator = new MapGenVillage(m);
+        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(new MapGenVillage(m), VILLAGE);
+		strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(new MapGenStronghold(), STRONGHOLD);
+		mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(new MapGenMineshaft(), MINESHAFT);
         
         CanyonColor.init(l);
 
@@ -480,7 +485,8 @@ public class ChunkGeneratorRealistic implements IChunkProvider
     public void populate(IChunkProvider ichunkprovider, int i, int j)
     {
         BlockFalling.fallInstantly = true;
-        int x = i * 16;
+		worldObj.scheduledUpdatesAreImmediate = true;
+		int x = i * 16;
         int y = j * 16;
         RealisticBiomeBase biome = cmr.getBiomeDataAt(x + 16, y + 16);
         this.rand.setSeed(this.worldObj.getSeed());
@@ -629,20 +635,20 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 			}
 		}
 
-        for (int g12 = 0; g12 < 4; ++g12)
-        {
-            int n1 = x + rand.nextInt(16);
-            int m1 = rand.nextInt(28) + 4;
-            int p1 = y + rand.nextInt(16);
+		if (ConfigRWG.generateEmeralds) {
+			for (int g12 = 0; g12 < 4; ++g12) {
+				int n1 = x + rand.nextInt(16);
+				int m1 = rand.nextInt(28) + 4;
+				int p1 = y + rand.nextInt(16);
 
-            if (worldObj.getBlock(n1, m1, p1).isReplaceableOreGen(worldObj, n1, m1, p1, Blocks.stone))
-            {
-            	worldObj.setBlock(n1, m1, p1, Blocks.emerald_ore, 0, 2);
-            }
-        }
-        
-        MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(worldObj, rand, x, y));
-        
+				if (worldObj.getBlock(n1, m1, p1).isReplaceableOreGen(worldObj, n1, m1, p1, Blocks.stone)) {
+					worldObj.setBlock(n1, m1, p1, Blocks.emerald_ore, 0, 2);
+				}
+			}
+		}
+
+		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(worldObj, rand, x, y));
+		
 		if(rand.nextInt(5) == 0)
 		{
 			int k15 = x + rand.nextInt(16) + 8;
@@ -781,6 +787,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider
 	        }
         }
 
+		worldObj.scheduledUpdatesAreImmediate = false;
         BlockFalling.fallInstantly = false;
     }
 
