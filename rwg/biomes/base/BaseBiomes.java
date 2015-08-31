@@ -40,20 +40,20 @@ public class BaseBiomes
 		RWGBiomes.baseTemperateForest = new BaseBiomeTemperateForest(ConfigRWG.biomeIDs[24], "rwg_temperateForest");
 
 		//RIVER
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverIce,		Type.RIVER, Type.COLD, Type.SNOWY);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverCold,		Type.RIVER, Type.COLD, Type.CONIFEROUS, Type.FOREST);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverIce, Type.RIVER, Type.COLD, Type.SNOWY);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverCold, Type.RIVER, Type.COLD, Type.CONIFEROUS, Type.FOREST);
 		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverTemperate,	Type.RIVER, Type.COLD, Type.FOREST);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverHot,		Type.RIVER, Type.HOT, Type.DRY, Type.SANDY);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverWet,		Type.RIVER, Type.HOT, Type.WET, Type.JUNGLE);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverOasis,		Type.RIVER, Type.HOT, Type.WET, Type.JUNGLE);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverHot, Type.RIVER, Type.HOT, Type.DRY, Type.SANDY);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverWet, Type.RIVER, Type.HOT, Type.WET, Type.JUNGLE);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseRiverOasis, Type.RIVER, Type.HOT, Type.WET, Type.JUNGLE);
 		
 		//OCEAN
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanIce,		Type.OCEAN, Type.BEACH, Type.COLD, Type.SNOWY);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanCold,		Type.OCEAN, Type.BEACH, Type.COLD, Type.CONIFEROUS, Type.FOREST);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanIce, Type.OCEAN, Type.BEACH, Type.COLD, Type.SNOWY);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanCold, Type.OCEAN, Type.BEACH, Type.COLD, Type.CONIFEROUS, Type.FOREST);
 		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanTemperate,	Type.OCEAN, Type.BEACH, Type.COLD, Type.FOREST);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanHot,		Type.OCEAN, Type.BEACH, Type.HOT, Type.DRY, Type.SANDY);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanWet,		Type.OCEAN, Type.BEACH, Type.HOT, Type.WET, Type.JUNGLE);
-		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanOasis,		Type.OCEAN, Type.BEACH, Type.HOT, Type.WET, Type.JUNGLE);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanHot, Type.OCEAN, Type.BEACH, Type.HOT, Type.DRY, Type.SANDY);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanWet, Type.OCEAN, Type.BEACH, Type.HOT, Type.WET, Type.JUNGLE);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseOceanOasis, Type.OCEAN, Type.BEACH, Type.HOT, Type.WET, Type.JUNGLE);
 		
 		//LAND
 		BiomeDictionary.registerBiomeType(RWGBiomes.baseSnowDesert, Type.COLD, Type.SNOWY, Type.WASTELAND);
@@ -68,5 +68,6 @@ public class BaseBiomes
 		BiomeDictionary.registerBiomeType(RWGBiomes.baseRedwood, Type.COLD, Type.CONIFEROUS, Type.FOREST);
 		BiomeDictionary.registerBiomeType(RWGBiomes.baseJungle, Type.HOT, Type.WET, Type.JUNGLE);
 		BiomeDictionary.registerBiomeType(RWGBiomes.baseColdForest, Type.FOREST, Type.DENSE, Type.HILLS);
+		BiomeDictionary.registerBiomeType(RWGBiomes.baseTemperateForest, Type.FOREST, Type.DENSE, Type.HILLS);
 	}
 }
