@@ -1,10 +1,10 @@
 [
 {
-  "modid": "RWG",
-  "name": "Realistic World Gen",
+  "modid": "${modId}",
+  "name": "${modName}",
   "description": "Adds a new realistic worldtype",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
+  "version": "${modVersion}",
+  "mcversion": "${minecraftVersion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["ted80"],

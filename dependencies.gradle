@@ -1,0 +1,6 @@
+// Add your dependencies here
+
+dependencies {
+    compileOnly('curse.maven:biomes-o-plenty-220318:2308122')
+    compileOnly('curse.maven:extrabiomesxl-60041:2273301')
+}
