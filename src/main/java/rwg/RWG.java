@@ -13,7 +13,7 @@ import rwg.data.VillageMaterials;
 import rwg.support.Support;
 import rwg.world.WorldTypeRealistic;
 
-@Mod(modid = "RWG", name = "RealisticWorldGen", version = "Alpha 1.3.2", acceptableRemoteVersions = "*")
+@Mod(modid = "RWG", name = "RealisticWorldGen", version = "GRADLETOKEN_VERSION", acceptableRemoteVersions = "*")
 public class RWG {
     @Instance("RWG")
     public static RWG instance;
