@@ -461,7 +461,6 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
 
     public void populate(IChunkProvider ichunkprovider, int i, int j) {
         BlockFalling.fallInstantly = true;
-        worldObj.scheduledUpdatesAreImmediate = true;
         int x = i * 16;
         int y = j * 16;
         RealisticBiomeBase biome = cmr.getBiomeDataAt(x + 16, y + 16);
@@ -720,7 +719,6 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
             }
         }
 
-        worldObj.scheduledUpdatesAreImmediate = false;
         BlockFalling.fallInstantly = false;
     }
 
