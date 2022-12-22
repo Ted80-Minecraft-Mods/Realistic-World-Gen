@@ -39,9 +39,7 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.config.ConfigRWG;
 import rwg.deco.DecoClay;
-import rwg.util.CanyonColor;
-import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.*;
 
 public class ChunkGeneratorRealistic implements IChunkProvider {
     private Random rand;
@@ -54,7 +52,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
     private final MapGenMineshaft mineshaftGenerator;
     private final MapGenVillage villageGenerator;
 
-    private PerlinNoise perlin;
+    private NoiseGenerator perlin;
     private CellNoise cell;
 
     private RealisticBiomeBase[] biomesForGeneration;
@@ -92,7 +90,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         cmr = (ChunkManagerRealistic) worldObj.getWorldChunkManager();
 
         rand = new Random(l);
-        perlin = new PerlinNoise(l);
+        perlin = NoiseSelector.createNoiseGenerator(l);
         cell = new CellNoise(l, (short) 0);
         cell.setUseDistance(true);
 

@@ -7,7 +7,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeCoastColdCliff extends RealisticBiomeBase {
     public RealisticBiomeCoastColdCliff() {
@@ -20,13 +20,13 @@ public class RealisticBiomeCoastColdCliff extends RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {}
 
     @Override
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         river = river > 0.5f ? 1f : river * 2f;
 
         float h = ocean < 0.5f ? ocean * 14f : 7f;
@@ -53,7 +53,7 @@ public class RealisticBiomeCoastColdCliff extends RealisticBiomeBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

@@ -1,7 +1,7 @@
 package rwg.terrain;
 
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class TerrainGrasslandHills extends TerrainBase {
     private float hHeight;
@@ -48,7 +48,7 @@ public class TerrainGrasslandHills extends TerrainBase {
 
     @Override
     public float generateNoise(
-            PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         float h = perlin.noise2(x / vWidth, y / vWidth) * vHeight * river;
         h += perlin.noise2(x / 20f, y / 20f) * 2;
 

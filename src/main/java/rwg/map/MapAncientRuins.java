@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class MapAncientRuins {
     public static void build(
@@ -17,7 +17,7 @@ public class MapAncientRuins {
             int chunkY,
             int baseX,
             int baseY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             int dis) {
         int y = 120;

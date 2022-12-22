@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import rwg.surface.SurfaceBase;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class SurfaceRiverOasis extends SurfaceBase {
     public SurfaceRiverOasis() {
@@ -25,7 +25,7 @@ public class SurfaceRiverOasis extends SurfaceBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

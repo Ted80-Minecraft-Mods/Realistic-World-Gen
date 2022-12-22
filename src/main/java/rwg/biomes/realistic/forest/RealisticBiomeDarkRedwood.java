@@ -23,7 +23,7 @@ import rwg.surface.SurfaceMountainStoneMix1;
 import rwg.terrain.TerrainBase;
 import rwg.terrain.TerrainHilly;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
     private TerrainBase terrain;
@@ -44,7 +44,7 @@ public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {
@@ -130,7 +130,7 @@ public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
         }
     }
 
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         return terrain.generateNoise(perlin, cell, x, y, ocean, border, river);
     }
 
@@ -144,7 +144,7 @@ public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

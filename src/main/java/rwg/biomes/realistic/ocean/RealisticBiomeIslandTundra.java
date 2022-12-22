@@ -10,7 +10,7 @@ import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.surface.SurfaceBase;
 import rwg.surface.SurfaceIslandMountainStone;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeIslandTundra extends RealisticBiomeBase {
     private SurfaceBase surface;
@@ -27,13 +27,13 @@ public class RealisticBiomeIslandTundra extends RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {}
 
     @Override
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         float h = 0f;
 
         if (border > 0.9f) {
@@ -54,7 +54,7 @@ public class RealisticBiomeIslandTundra extends RealisticBiomeBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

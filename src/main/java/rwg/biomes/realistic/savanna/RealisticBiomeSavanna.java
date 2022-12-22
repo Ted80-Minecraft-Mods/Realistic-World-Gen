@@ -21,7 +21,7 @@ import rwg.surface.SurfaceGrasslandMix1;
 import rwg.terrain.TerrainBase;
 import rwg.terrain.TerrainGrasslandFlats;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeSavanna extends RealisticBiomeBase {
     private TerrainBase terrain;
@@ -40,7 +40,7 @@ public class RealisticBiomeSavanna extends RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {
@@ -137,7 +137,7 @@ public class RealisticBiomeSavanna extends RealisticBiomeBase {
         }
     }
 
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         return terrain.generateNoise(perlin, cell, x, y, ocean, border, river);
     }
 
@@ -151,7 +151,7 @@ public class RealisticBiomeSavanna extends RealisticBiomeBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

@@ -11,7 +11,7 @@ import rwg.map.MapVolcano;
 import rwg.surface.SurfaceBase;
 import rwg.surface.SurfaceIslandMountainStone;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 import rwg.world.ChunkManagerRealistic;
 
 public class RealisticBiomeIslandTropical extends RealisticBiomeBase {
@@ -29,7 +29,7 @@ public class RealisticBiomeIslandTropical extends RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {
@@ -118,7 +118,7 @@ public class RealisticBiomeIslandTropical extends RealisticBiomeBase {
             int baseY,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float noise[]) {
         if (baseX % 4 == 0 && baseY % 4 == 0 && mapRand.nextInt(6) == 0) {
@@ -138,7 +138,7 @@ public class RealisticBiomeIslandTropical extends RealisticBiomeBase {
     }
 
     @Override
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         float st = 15f - ((cell.noise(x / 500D, y / 500D, 1D) * 42f) + (perlin.noise2(x / 30f, y / 30f) * 2f));
 
         st = st < 0f ? 0f : st;
@@ -169,7 +169,7 @@ public class RealisticBiomeIslandTropical extends RealisticBiomeBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

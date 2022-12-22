@@ -12,7 +12,7 @@ import rwg.deco.DecoFlowers;
 import rwg.deco.DecoGrass;
 import rwg.deco.trees.DecoSavannah;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class EditRiverOasis extends EditBase {
     public EditRiverOasis() {}
@@ -23,7 +23,7 @@ public class EditRiverOasis extends EditBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {

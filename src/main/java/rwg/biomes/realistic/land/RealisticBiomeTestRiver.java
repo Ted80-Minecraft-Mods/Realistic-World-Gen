@@ -10,7 +10,7 @@ import rwg.surface.SurfaceMountainStoneMix1;
 import rwg.terrain.TerrainBase;
 import rwg.terrain.TerrainHilly;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeTestRiver extends RealisticBiomeBase {
     private CellNoise celltest;
@@ -34,13 +34,13 @@ public class RealisticBiomeTestRiver extends RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {}
 
     @Override
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         /*
         float pX = x + (perlin.noise1(y / 240f) * 220f);
         float pY = y + (perlin.noise1(x / 240f) * 220f);
@@ -52,7 +52,7 @@ public class RealisticBiomeTestRiver extends RealisticBiomeBase {
         return 64.1f;
     }
 
-    public float generateNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float river) {
+    public float generateNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float river) {
         float h = perlin.noise2(x / 20f, y / 20f) * 2;
         h += perlin.noise2(x / 7f, y / 7f) * 0.8f;
 

@@ -1,14 +1,14 @@
 package rwg.terrain;
 
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class TerrainMesa extends TerrainBase {
     public TerrainMesa() {}
 
     @Override
     public float generateNoise(
-            PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         float b = perlin.noise2(x / 130f, y / 130f) * 50f * river;
         b *= b / 40f;
 

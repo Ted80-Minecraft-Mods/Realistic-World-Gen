@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 import rwg.util.SnowheightCalculator;
 
 public class SurfacePolar extends SurfaceBase {
@@ -25,7 +25,7 @@ public class SurfacePolar extends SurfaceBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

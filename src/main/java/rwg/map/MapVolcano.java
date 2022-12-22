@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 import rwg.util.TerrainMath;
 
 public class MapVolcano {
@@ -18,7 +18,7 @@ public class MapVolcano {
             int baseY,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise) {
         int i, j;

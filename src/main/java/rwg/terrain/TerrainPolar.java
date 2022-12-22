@@ -1,14 +1,14 @@
 package rwg.terrain;
 
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class TerrainPolar extends TerrainBase {
     public TerrainPolar() {}
 
     @Override
     public float generateNoise(
-            PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         float st = (perlin.noise2(x / 160f, y / 160f) + 0.38f) * 35f * river;
         st = st < 0.2f ? 0.2f : st;
 

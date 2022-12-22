@@ -51,6 +51,7 @@ public class ConfigRWG {
 
             generateEmeralds = config.getBoolean("Generate Emeralds", "Settings", true, "");
             enableCobblestoneBoulders = config.getBoolean("Enable Cobblestone Boulders", "Settings", true, "");
+
         } catch (Exception e) {
             for (int c = 0; c < biomeIDs.length; c++) {
                 biomeIDs[c] = 200 + c;

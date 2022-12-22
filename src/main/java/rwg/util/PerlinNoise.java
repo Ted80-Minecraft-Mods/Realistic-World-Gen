@@ -28,7 +28,7 @@ import java.util.Random;
  * @author Justin Couch
  * @version $Revision: 1.4 $
  */
-public class PerlinNoise {
+public class PerlinNoise implements NoiseGenerator {
     private Random rand;
 
     // Constants for setting up the Perlin-1 noise functions
@@ -95,6 +95,7 @@ public class PerlinNoise {
      * @param z z dimension parameter
      * @return the noise value at the point (x, y, z)
      */
+    @java.lang.Override
     public double improvedNoise(double x, double y, double z) {
         // Constraint the point to a unit cube
         int uc_x = (int) Math.floor(x) & 255;
@@ -140,6 +141,7 @@ public class PerlinNoise {
      * @param x Seed for the noise function
      * @return The noisy output
      */
+    @java.lang.Override
     public float noise1(float x) {
         float t = x + N;
         int bx0 = ((int) t) & BM;
@@ -162,6 +164,7 @@ public class PerlinNoise {
      * @param y The Y coordinate of the location to sample
      * @return A noisy value at the given position
      */
+    @java.lang.Override
     public float noise2(float x, float y) {
         float t = x + N;
         int bx0 = ((int) t) & BM;
@@ -209,6 +212,7 @@ public class PerlinNoise {
      * @param z The Z coordinate of the location to sample
      * @return A noisy value at the given position
      */
+    @java.lang.Override
     public float noise3(float x, float y, float z) {
         float t = x + (float) N;
         int bx0 = ((int) t) & BM;

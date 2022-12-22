@@ -5,7 +5,7 @@ public class CanyonColor {
 
     public static void init(long l) {
         int[] c = new int[] {0, 1, 8, 14, 1, 8};
-        PerlinNoise perlin = new PerlinNoise(l);
+        NoiseGenerator perlin = NoiseSelector.createNoiseGenerator(l);
 
         float n;
         for (int i = 0; i < 256; i++) {

@@ -31,7 +31,7 @@ import rwg.biomes.realistic.savanna.RealisticBiomeSavannaForest;
 import rwg.biomes.realistic.savanna.RealisticBiomeStoneMountains;
 import rwg.biomes.realistic.savanna.RealisticBiomeStoneMountainsCactus;
 import rwg.util.CellNoise;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 import rwg.world.ChunkManagerRealistic;
 
 public class RealisticBiomeBase {
@@ -147,7 +147,7 @@ public class RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {}
@@ -161,7 +161,7 @@ public class RealisticBiomeBase {
             Random mapRand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float noise[]) {
         int k = 5;
@@ -186,11 +186,11 @@ public class RealisticBiomeBase {
             int chunkY,
             int baseX,
             int baseY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float noise[]) {}
 
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         return 63f;
     }
 
@@ -204,7 +204,7 @@ public class RealisticBiomeBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

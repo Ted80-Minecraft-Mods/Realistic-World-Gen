@@ -17,7 +17,7 @@ import rwg.deco.DecoGrass;
 import rwg.deco.trees.DecoSavannah;
 import rwg.util.CellNoise;
 import rwg.util.CliffCalculator;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeCoastTest extends RealisticBiomeBase {
     public RealisticBiomeCoastTest() {
@@ -30,7 +30,7 @@ public class RealisticBiomeCoastTest extends RealisticBiomeBase {
             Random rand,
             int chunkX,
             int chunkY,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float strength,
             float river) {
@@ -96,7 +96,7 @@ public class RealisticBiomeCoastTest extends RealisticBiomeBase {
     }
 
     @Override
-    public float rNoise(PerlinNoise perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         river = river > 0.5f ? 1f : river * 2f;
 
         /*float h = ocean * 10f;
@@ -146,7 +146,7 @@ public class RealisticBiomeCoastTest extends RealisticBiomeBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,

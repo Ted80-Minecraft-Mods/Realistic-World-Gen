@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import rwg.util.CellNoise;
 import rwg.util.CliffCalculator;
-import rwg.util.PerlinNoise;
+import rwg.util.NoiseGenerator;
 
 public class SurfaceIslandMountainStone extends SurfaceBase {
     private int beach;
@@ -55,7 +55,7 @@ public class SurfaceIslandMountainStone extends SurfaceBase {
             int depth,
             World world,
             Random rand,
-            PerlinNoise perlin,
+            NoiseGenerator perlin,
             CellNoise cell,
             float[] noise,
             float river,
