@@ -33,7 +33,7 @@ public class SupportCC
 					Support.addBiome(
 						new RealisticBiomeSupport(
 							b[i], RWGBiomes.baseRiverTemperate,
-							new TerrainSmallSupport(0f, 140f, 68f, 200f),
+							new TerrainHighland(0f, 140f, 68f, 200f),
 							new SurfaceGrassland(b[i].topBlock, b[i].fillerBlock, Blocks.stone, Blocks.cobblestone)
 						),
 						BiomeCategory.HOT
