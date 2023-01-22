@@ -43,7 +43,7 @@ public class Support {
 
         if (Loader.isModLoaded("ChromatiCraft")) {
             SupportCC.init();
-	}
+        }
     }
 
     public static void addBiome(RealisticBiomeSupport b, BiomeCategory cat) {
