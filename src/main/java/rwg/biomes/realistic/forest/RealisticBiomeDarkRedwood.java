@@ -1,6 +1,7 @@
 package rwg.biomes.realistic.forest;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -9,6 +10,7 @@ import net.minecraft.world.gen.feature.WorldGenForest;
 import net.minecraft.world.gen.feature.WorldGenPumpkin;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.deco.DecoFlowers;
@@ -26,6 +28,7 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
+
     private TerrainBase terrain;
     private SurfaceBase surface;
 
@@ -34,20 +37,23 @@ public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
 
         terrain = new TerrainHilly(230f, 120f, 0f);
         surface = new SurfaceMountainStoneMix1(
-                Blocks.dirt, Blocks.dirt, false, null, 0f, 1.5f, 60f, 65f, 1.5f, Blocks.stone, 0.15f);
+                Blocks.dirt,
+                Blocks.dirt,
+                false,
+                null,
+                0f,
+                1.5f,
+                60f,
+                65f,
+                1.5f,
+                Blocks.stone,
+                0.15f);
         ((SurfaceMountainStoneMix1) surface).topByte = (byte) 2;
     }
 
     @Override
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {
         float l = perlin.noise2(chunkX / 80f, chunkY / 80f) * 60f + 10f;
         for (int b1 = 0; b1 < l * strength; b1++) {
             if (rand.nextInt(6) == 0) {
@@ -119,7 +125,7 @@ public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
             int j15 = chunkX + rand.nextInt(16) + 8;
             int j17 = rand.nextInt(128);
             int j20 = chunkY + rand.nextInt(16) + 8;
-            (new DecoFlowers(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})).generate(world, rand, j15, j17, j20);
+            (new DecoFlowers(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 })).generate(world, rand, j15, j17, j20);
         }
 
         for (int l14 = 0; l14 < 12f * strength; l14++) {
@@ -134,21 +140,8 @@ public class RealisticBiomeDarkRedwood extends RealisticBiomeBase {
         return terrain.generateNoise(perlin, cell, x, y, ocean, border, river);
     }
 
-    public void rReplace(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         surface.paintTerrain(blocks, metadata, i, j, x, y, depth, world, rand, perlin, cell, noise, river, base);
     }
 }

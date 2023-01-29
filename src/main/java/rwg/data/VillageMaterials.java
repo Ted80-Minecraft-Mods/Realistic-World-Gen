@@ -1,11 +1,13 @@
 package rwg.data;
 
-import cpw.mods.fml.common.eventhandler.Event.Result;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.terraingen.BiomeEvent;
 
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 public class VillageMaterials {
+
     private static VillageMaterialData[] dataList = new VillageMaterialData[256];
 
     public static void registerVillageMaterial(VillageMaterialData data) {

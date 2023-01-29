@@ -1,12 +1,14 @@
 package rwg.deco;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoCacti extends WorldGenerator {
+
     private boolean sand;
     private int eHeight;
 

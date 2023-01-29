@@ -1,15 +1,18 @@
 package rwg.surface;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.api.RWGBiomes;
 import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class SurfaceDuneValley extends SurfaceBase {
+
     private float valley;
     private boolean dirt;
     private boolean mix;
@@ -23,21 +26,8 @@ public class SurfaceDuneValley extends SurfaceBase {
     }
 
     @Override
-    public void paintTerrain(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void paintTerrain(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float h = (perlin.noise2(i / valley, j / valley) + 0.25f) * 65f;
         h = h < 1f ? 1f : h;
         float m = perlin.noise2(i / 12f, j / 12f);

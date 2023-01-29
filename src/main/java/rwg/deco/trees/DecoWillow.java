@@ -1,12 +1,14 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoWillow extends WorldGenerator {
+
     public DecoWillow() {}
 
     public boolean generate(World world, Random rand, int x, int y, int z) {
@@ -99,7 +101,7 @@ public class DecoWillow extends WorldGenerator {
     }
 
     private void createTrunk(World world, Random rand, int x, int y, int z) {
-        int[] pos = new int[] {0, 0, 1, 0, 0, 1, -1, 0, 0, -1};
+        int[] pos = new int[] { 0, 0, 1, 0, 0, 1, -1, 0, 0, -1 };
         int sh;
         for (int t = 0; t < 5; t++) {
             sh = rand.nextInt(3) + y;

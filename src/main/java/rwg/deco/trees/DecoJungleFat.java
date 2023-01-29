@@ -1,12 +1,14 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoJungleFat extends WorldGenerator {
+
     private Block blockLog;
     private int metadataLog;
     private Block blockLeaves;
@@ -24,17 +26,8 @@ public class DecoJungleFat extends WorldGenerator {
      * Blocks.log, 0, Blocks.leaves, 0, 18 + rand.nextInt(5), 5 + rand.nextInt(2), 16f, 5, 0.32f, 0.1f
      */
 
-    public DecoJungleFat(
-            Block log,
-            int metaLog,
-            Block leaves,
-            int metaLeaves,
-            int baseHeight,
-            int rootHeight,
-            float branchLength,
-            int numBranches,
-            float verticalStart,
-            float verticalRand) {
+    public DecoJungleFat(Block log, int metaLog, Block leaves, int metaLeaves, int baseHeight, int rootHeight,
+            float branchLength, int numBranches, float verticalStart, float verticalRand) {
         blockLog = log;
         metadataLog = metaLog;
         blockLeaves = leaves;
@@ -110,19 +103,10 @@ public class DecoJungleFat extends WorldGenerator {
     }
 
     /*
-     * horDir = number between -180D and 180D
-     * verDir = number between 1F (horizontal) and 0F (vertical)
+     * horDir = number between -180D and 180D verDir = number between 1F (horizontal) and 0F (vertical)
      */
-    public void generateBranch(
-            World world,
-            Random rand,
-            float x,
-            float y,
-            float z,
-            double horDir,
-            float verDir,
-            float length,
-            float speed) {
+    public void generateBranch(World world, Random rand, float x, float y, float z, double horDir, float verDir,
+            float length, float speed) {
         if (verDir < 0f) {
             verDir = -verDir;
         }

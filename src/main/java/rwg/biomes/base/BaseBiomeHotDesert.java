@@ -2,10 +2,12 @@ package rwg.biomes.base;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.data.VillageMaterialData;
 import rwg.data.VillageMaterials;
 
 public class BaseBiomeHotDesert extends BiomeGenBase {
+
     public BaseBiomeHotDesert(int id, String bn) {
         super(id);
         setTemperatureRainfall(1f, 0f);

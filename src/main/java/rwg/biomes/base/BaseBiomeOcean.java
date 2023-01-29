@@ -5,6 +5,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BaseBiomeOcean extends BiomeGenBase {
+
     public BaseBiomeOcean(int id, int subID, String bn) {
         super(id);
 

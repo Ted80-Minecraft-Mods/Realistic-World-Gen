@@ -1,6 +1,7 @@
 package rwg.deco;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -8,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoLog extends WorldGenerator {
+
     private int logMeta;
     private int leavesMeta;
     private Block logBlock;
@@ -26,8 +28,7 @@ public class DecoLog extends WorldGenerator {
 
     public boolean generate(World world, Random rand, int x, int y, int z) {
         Block g = world.getBlock(x, y - 1, z);
-        if (g.getMaterial() != Material.ground
-                && g.getMaterial() != Material.grass
+        if (g.getMaterial() != Material.ground && g.getMaterial() != Material.grass
                 && g.getMaterial() != Material.sand
                 && g.getMaterial() != Material.rock) {
             return false;
@@ -42,8 +43,7 @@ public class DecoLog extends WorldGenerator {
         int air = 0;
         for (i = 0; i < logLength; i++) {
             b = world.getBlock(x - (dir == 0 ? 1 : 0), y, z - (dir == 1 ? 1 : 0));
-            if (b.getMaterial() != Material.air
-                    && b.getMaterial() != Material.vine
+            if (b.getMaterial() != Material.air && b.getMaterial() != Material.vine
                     && b.getMaterial() != Material.plants) {
                 break;
             }
@@ -58,8 +58,7 @@ public class DecoLog extends WorldGenerator {
 
         for (i = 0; i < logLength * 2; i++) {
             b = world.getBlock(x + (dir == 0 ? 1 : 0), y, z + (dir == 1 ? 1 : 0));
-            if (b.getMaterial() != Material.air
-                    && b.getMaterial() != Material.vine
+            if (b.getMaterial() != Material.air && b.getMaterial() != Material.vine
                     && b.getMaterial() != Material.plants) {
                 break;
             }
@@ -84,13 +83,11 @@ public class DecoLog extends WorldGenerator {
 
     private int airCheck(World world, Random rand, int x, int y, int z) {
         Block b = world.getBlock(x, y - 1, z);
-        if (b.getMaterial() == Material.air
-                || b.getMaterial() == Material.vine
+        if (b.getMaterial() == Material.air || b.getMaterial() == Material.vine
                 || b.getMaterial() == Material.water
                 || b.getMaterial() == Material.plants) {
             b = world.getBlock(x, y - 2, z);
-            if (b.getMaterial() == Material.air
-                    || b.getMaterial() == Material.vine
+            if (b.getMaterial() == Material.air || b.getMaterial() == Material.vine
                     || b.getMaterial() == Material.water
                     || b.getMaterial() == Material.plants) {
                 return 99;
@@ -105,32 +102,24 @@ public class DecoLog extends WorldGenerator {
         Block b;
         if (dir == 0) {
             b = world.getBlock(x, y, z - 1);
-            if ((b.getMaterial() == Material.air
-                            || b.getMaterial() == Material.vine
-                            || b.getMaterial() == Material.plants)
-                    && rand.nextInt(3) == 0) {
+            if ((b.getMaterial() == Material.air || b.getMaterial() == Material.vine
+                    || b.getMaterial() == Material.plants) && rand.nextInt(3) == 0) {
                 world.setBlock(x, y, z - 1, leavesBlock, leavesMeta, 0);
             }
             b = world.getBlock(x, y, z + 1);
-            if ((b.getMaterial() == Material.air
-                            || b.getMaterial() == Material.vine
-                            || b.getMaterial() == Material.plants)
-                    && rand.nextInt(3) == 0) {
+            if ((b.getMaterial() == Material.air || b.getMaterial() == Material.vine
+                    || b.getMaterial() == Material.plants) && rand.nextInt(3) == 0) {
                 world.setBlock(x, y, z + 1, leavesBlock, leavesMeta, 0);
             }
         } else {
             b = world.getBlock(x - 1, y, z);
-            if ((b.getMaterial() == Material.air
-                            || b.getMaterial() == Material.vine
-                            || b.getMaterial() == Material.plants)
-                    && rand.nextInt(3) == 0) {
+            if ((b.getMaterial() == Material.air || b.getMaterial() == Material.vine
+                    || b.getMaterial() == Material.plants) && rand.nextInt(3) == 0) {
                 world.setBlock(x - 1, y, z, leavesBlock, leavesMeta, 0);
             }
             b = world.getBlock(x + 1, y, z);
-            if ((b.getMaterial() == Material.air
-                            || b.getMaterial() == Material.vine
-                            || b.getMaterial() == Material.plants)
-                    && rand.nextInt(3) == 0) {
+            if ((b.getMaterial() == Material.air || b.getMaterial() == Material.vine
+                    || b.getMaterial() == Material.plants) && rand.nextInt(3) == 0) {
                 world.setBlock(x + 1, y, z, leavesBlock, leavesMeta, 0);
             }
         }

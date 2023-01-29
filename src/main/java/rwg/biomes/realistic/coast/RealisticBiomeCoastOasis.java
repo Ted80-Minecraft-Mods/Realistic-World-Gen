@@ -1,6 +1,7 @@
 package rwg.biomes.realistic.coast;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -9,6 +10,7 @@ import net.minecraft.world.gen.feature.WorldGenPumpkin;
 import net.minecraft.world.gen.feature.WorldGenReed;
 import net.minecraft.world.gen.feature.WorldGenShrub;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.deco.DecoCacti;
@@ -20,20 +22,14 @@ import rwg.util.CliffCalculator;
 import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeCoastOasis extends RealisticBiomeBase {
+
     public RealisticBiomeCoastOasis() {
         super(0, RWGBiomes.baseRiverOasis);
     }
 
     @Override
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {
         if (strength > 0.7f) {
             for (int b33 = 0; b33 < 12f * strength; b33++) {
                 int j6 = chunkX + rand.nextInt(16) + 8;
@@ -41,10 +37,8 @@ public class RealisticBiomeCoastOasis extends RealisticBiomeBase {
                 int z52 = world.getHeightValue(j6, k10);
 
                 if (z52 > 65f && z52 < 90f) {
-                    WorldGenerator worldgenerator = rand.nextInt(3) != 0
-                            ? new WorldGenShrub(0, 0)
-                            : rand.nextInt(6) != 0
-                                    ? new DecoSavannah(1)
+                    WorldGenerator worldgenerator = rand.nextInt(3) != 0 ? new WorldGenShrub(0, 0)
+                            : rand.nextInt(6) != 0 ? new DecoSavannah(1)
                                     : rand.nextInt(5) != 0 ? new DecoSavannah(2) : new DecoSavannah(0);
                     worldgenerator.setScale(1.0D, 1.0D, 1.0D);
                     worldgenerator.generate(world, rand, j6, z52, k10);
@@ -78,7 +72,7 @@ public class RealisticBiomeCoastOasis extends RealisticBiomeBase {
             int j15 = chunkX + rand.nextInt(16) + 8;
             int j17 = rand.nextInt(128);
             int j20 = chunkY + rand.nextInt(16) + 8;
-            (new DecoFlowers(new int[] {9, 9, 9, 9, 3, 3, 3, 3, 3, 2, 2, 2, 11, 11, 11}))
+            (new DecoFlowers(new int[] { 9, 9, 9, 9, 3, 3, 3, 3, 3, 2, 2, 2, 11, 11, 11 }))
                     .generate(world, rand, j15, j17, j20);
         }
 
@@ -99,8 +93,7 @@ public class RealisticBiomeCoastOasis extends RealisticBiomeBase {
     public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         river = river > 0.5f ? 1f : river * 2f;
 
-        float start = (perlin.noise2(x / 90f, y / 90f) * 1f)
-                + (perlin.noise2(x / 40f, y / 40f) * 0.15f)
+        float start = (perlin.noise2(x / 90f, y / 90f) * 1f) + (perlin.noise2(x / 40f, y / 40f) * 0.15f)
                 + (perlin.noise2(x / 9f, y / 9f) * 0.07f);
 
         float h = 0f;
@@ -124,21 +117,8 @@ public class RealisticBiomeCoastOasis extends RealisticBiomeBase {
     }
 
     @Override
-    public void rReplace(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float c = CliffCalculator.calc(x, y, noise);
         boolean cliff = c > 1.4f ? true : false;
 

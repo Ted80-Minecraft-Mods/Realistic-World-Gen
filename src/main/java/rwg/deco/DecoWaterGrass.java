@@ -1,12 +1,14 @@
 package rwg.deco;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoWaterGrass extends WorldGenerator {
+
     private Block block;
     private int metadata;
     private int minHeight;
@@ -47,8 +49,7 @@ public class DecoWaterGrass extends WorldGenerator {
                     world.setBlock(i1, j1 - 1, k1, Blocks.grass, 0, 0);
                 }
 
-                if (world.isAirBlock(i1, j1, k1)
-                        && j1 < 254
+                if (world.isAirBlock(i1, j1, k1) && j1 < 254
                         && Blocks.double_plant.canPlaceBlockAt(world, i1, j1, k1)) {
                     Blocks.double_plant.func_149889_c(world, i1, j1, k1, metadata, 0);
                 }

@@ -1,6 +1,7 @@
 package rwg.deco;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -9,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoIceSpike extends WorldGenerator {
+
     public boolean generate(World world, Random rand, int x, int y, int z) {
         while (world.isAirBlock(x, y, z) && y > 2) {
             --y;
@@ -44,8 +46,7 @@ public class DecoIceSpike extends WorldGenerator {
                                 && (l1 != -k1 && l1 != k1 && i2 != -k1 && i2 != k1 || rand.nextFloat() <= 0.75F)) {
                             block = world.getBlock(x + l1, y + j1, z + i2);
 
-                            if (block.getMaterial() == Material.air
-                                    || block == Blocks.dirt
+                            if (block.getMaterial() == Material.air || block == Blocks.dirt
                                     || block == Blocks.snow
                                     || block == Blocks.ice) {
                                 this.func_150515_a(world, x + l1, y + j1, z + i2, Blocks.packed_ice);
@@ -54,8 +55,7 @@ public class DecoIceSpike extends WorldGenerator {
                             if (j1 != 0 && k1 > 1) {
                                 block = world.getBlock(x + l1, y - j1, z + i2);
 
-                                if (block.getMaterial() == Material.air
-                                        || block == Blocks.dirt
+                                if (block.getMaterial() == Material.air || block == Blocks.dirt
                                         || block == Blocks.snow
                                         || block == Blocks.ice) {
                                     this.func_150515_a(world, x + l1, y - j1, z + i2, Blocks.packed_ice);
@@ -89,8 +89,7 @@ public class DecoIceSpike extends WorldGenerator {
                         if (l1 > 50) {
                             block = world.getBlock(x + j2, l1, z + k1);
 
-                            if (block.getMaterial() == Material.air
-                                    || block == Blocks.dirt
+                            if (block.getMaterial() == Material.air || block == Blocks.dirt
                                     || block == Blocks.snow
                                     || block == Blocks.ice
                                     || block == Blocks.packed_ice) {

@@ -1,15 +1,17 @@
 package rwg.support;
 
-import extrabiomes.api.BiomeManager;
 import net.minecraft.init.Blocks;
+
 import rwg.api.RWGBiomes;
 import rwg.support.Support.BiomeCategory;
 import rwg.support.edit.*;
 import rwg.surface.*;
 import rwg.surface.river.SurfaceRiverOasis;
 import rwg.terrain.*;
+import extrabiomes.api.BiomeManager;
 
 public class SupportEBXL {
+
     public static void init() {
         // ALPINE
         if (BiomeManager.alpine.isPresent()) {
@@ -212,20 +214,17 @@ public class SupportEBXL {
                             BiomeManager.mountaindesert.get(),
                             RWGBiomes.baseRiverOasis,
                             new TerrainHilly(230f, 100f, 0f),
-                            new SurfaceBase[] {
-                                new SurfaceDesertMountain(
-                                        BiomeManager.mountaindesert.get().topBlock,
-                                        BiomeManager.mountaindesert.get().fillerBlock,
-                                        false,
-                                        null,
-                                        0f,
-                                        1.5f,
-                                        60f,
-                                        65f,
-                                        1.5f),
-                                new SurfaceRiverOasis()
-                            },
-                            new EditBase[] {new EditRiverOasis()}),
+                            new SurfaceBase[] { new SurfaceDesertMountain(
+                                    BiomeManager.mountaindesert.get().topBlock,
+                                    BiomeManager.mountaindesert.get().fillerBlock,
+                                    false,
+                                    null,
+                                    0f,
+                                    1.5f,
+                                    60f,
+                                    65f,
+                                    1.5f), new SurfaceRiverOasis() },
+                            new EditBase[] { new EditRiverOasis() }),
                     BiomeCategory.HOT);
         }
 
@@ -236,20 +235,17 @@ public class SupportEBXL {
                             BiomeManager.mountainridge.get(),
                             RWGBiomes.baseRiverOasis,
                             new TerrainHilly(230f, 110f, 0f),
-                            new SurfaceBase[] {
-                                new SurfaceDesertMountain(
-                                        BiomeManager.mountainridge.get().topBlock,
-                                        BiomeManager.mountainridge.get().fillerBlock,
-                                        false,
-                                        null,
-                                        0f,
-                                        1.5f,
-                                        60f,
-                                        65f,
-                                        1.5f),
-                                new SurfaceRiverOasis()
-                            },
-                            new EditBase[] {new EditRiverOasis()}),
+                            new SurfaceBase[] { new SurfaceDesertMountain(
+                                    BiomeManager.mountainridge.get().topBlock,
+                                    BiomeManager.mountainridge.get().fillerBlock,
+                                    false,
+                                    null,
+                                    0f,
+                                    1.5f,
+                                    60f,
+                                    65f,
+                                    1.5f), new SurfaceRiverOasis() },
+                            new EditBase[] { new EditRiverOasis() }),
                     BiomeCategory.HOT);
         }
 
@@ -433,15 +429,12 @@ public class SupportEBXL {
                             BiomeManager.wasteland.get(),
                             RWGBiomes.baseRiverOasis,
                             new TerrainGrasslandHills(30f, 180f, 13f, 100f, 28f, 260f, 70f),
-                            new SurfaceBase[] {
-                                new SurfaceGrassland(
-                                        BiomeManager.wasteland.get().topBlock,
-                                        BiomeManager.wasteland.get().fillerBlock,
-                                        Blocks.stone,
-                                        Blocks.cobblestone),
-                                new SurfaceRiverOasis()
-                            },
-                            new EditBase[] {new EditRiverOasis()}),
+                            new SurfaceBase[] { new SurfaceGrassland(
+                                    BiomeManager.wasteland.get().topBlock,
+                                    BiomeManager.wasteland.get().fillerBlock,
+                                    Blocks.stone,
+                                    Blocks.cobblestone), new SurfaceRiverOasis() },
+                            new EditBase[] { new EditRiverOasis() }),
                     BiomeCategory.HOT);
         }
 

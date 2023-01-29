@@ -1,6 +1,7 @@
 package rwg.util;
 
 public class TerrainMath {
+
     public static double nextX(double x, double d, double s) {
         return x + (s * Math.cos(d * Math.PI / 180.0));
     }

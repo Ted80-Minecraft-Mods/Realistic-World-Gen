@@ -5,6 +5,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BaseBiomeColdPlains extends BiomeGenBase {
+
     public BaseBiomeColdPlains(int id, String bn) {
         super(id);
         setTemperatureRainfall(0.2f, 0.2f);

@@ -1,10 +1,11 @@
 package rwg.util;
 
 public class CanyonColor {
+
     private static byte[] claycolor = new byte[256];
 
     public static void init(long l) {
-        int[] c = new int[] {0, 1, 8, 14, 1, 8};
+        int[] c = new int[] { 0, 1, 8, 14, 1, 8 };
         NoiseGenerator perlin = NoiseSelector.createNoiseGenerator(l);
 
         float n;

@@ -4,10 +4,11 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class TerrainDunes extends TerrainBase {
+
     public TerrainDunes() {}
 
-    public float generateNoise(
-            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float generateNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border,
+            float river) {
         float st = (perlin.noise2(x / 160f, y / 160f) + 0.38f) * 35f;
         st = st < 0.2f ? 0.2f : st;
 

@@ -1,6 +1,7 @@
 package rwg.util;
 
 public interface NoiseGenerator {
+
     /**
      * Computes noise function for three dimensions at the point (x,y,z).
      *

@@ -5,9 +5,11 @@ import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.common.DimensionManager;
+
 import rwg.util.NoiseImplementation;
 
 public class RwgWorldSavedData extends WorldSavedData {
+
     private static RwgWorldSavedData INSTANCE = null;
     private static final String DATA_NAME = "rwg_data";
     private NoiseImplementation noiseImplementation = rwg.util.NoiseImplementation.UNKNOWN;

@@ -1,12 +1,14 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoDeadDesertTrees extends WorldGenerator {
+
     private int type;
 
     public DecoDeadDesertTrees(int t) {

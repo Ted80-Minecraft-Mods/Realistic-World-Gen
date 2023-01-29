@@ -4,6 +4,7 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BaseBiomeJungle extends BiomeGenBase {
+
     public BaseBiomeJungle(int id, String bn) {
         super(id);
         setTemperatureRainfall(0.9f, 0.9f);

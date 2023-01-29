@@ -1,6 +1,7 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -8,10 +9,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoBigTree extends WorldGenerator {
-    static final byte[] otherCoordPairs = new byte[] {(byte) 2, (byte) 0, (byte) 0, (byte) 1, (byte) 2, (byte) 1};
+
+    static final byte[] otherCoordPairs = new byte[] { (byte) 2, (byte) 0, (byte) 0, (byte) 1, (byte) 2, (byte) 1 };
     Random rand = new Random();
     World worldObj;
-    int[] basePos = new int[] {0, 0, 0};
+    int[] basePos = new int[] { 0, 0, 0 };
     int heightLimit = 0;
     int height;
     double heightAttenuation = 0.618D;
@@ -72,13 +74,14 @@ public class DecoBigTree extends WorldGenerator {
                     double var13 = (double) this.rand.nextFloat() * 2.0D * Math.PI;
                     int var15 = MathHelper.floor_double(var11 * Math.sin(var13) + (double) this.basePos[0] + var9);
                     int var16 = MathHelper.floor_double(var11 * Math.cos(var13) + (double) this.basePos[2] + var9);
-                    int[] var17 = new int[] {var15, var3, var16};
-                    int[] var18 = new int[] {var15, var3 + this.leafDistanceLimit, var16};
+                    int[] var17 = new int[] { var15, var3, var16 };
+                    int[] var18 = new int[] { var15, var3 + this.leafDistanceLimit, var16 };
 
                     if (this.checkBlockLine(var17, var18) == -1) {
-                        int[] var19 = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]};
-                        double var20 = Math.sqrt(Math.pow((double) Math.abs(this.basePos[0] - var17[0]), 2.0D)
-                                + Math.pow((double) Math.abs(this.basePos[2] - var17[2]), 2.0D));
+                        int[] var19 = new int[] { this.basePos[0], this.basePos[1], this.basePos[2] };
+                        double var20 = Math.sqrt(
+                                Math.pow((double) Math.abs(this.basePos[0] - var17[0]), 2.0D)
+                                        + Math.pow((double) Math.abs(this.basePos[2] - var17[2]), 2.0D));
                         double var22 = var20 * this.branchSlope;
 
                         if ((double) var17[1] - var22 > (double) var5) {
@@ -110,8 +113,8 @@ public class DecoBigTree extends WorldGenerator {
         int var7 = (int) ((double) par4 + 0.618D);
         byte var8 = otherCoordPairs[par5];
         byte var9 = otherCoordPairs[par5 + 3];
-        int[] var10 = new int[] {par1, par2, par3};
-        int[] var11 = new int[] {0, 0, 0};
+        int[] var10 = new int[] { par1, par2, par3 };
+        int[] var11 = new int[] { 0, 0, 0 };
         int var12 = -var7;
         int var13 = -var7;
 
@@ -156,8 +159,8 @@ public class DecoBigTree extends WorldGenerator {
             } else if (Math.abs(var3) >= var2) {
                 var4 = 0.0F;
             } else {
-                var4 = (float)
-                        Math.sqrt(Math.pow((double) Math.abs(var2), 2.0D) - Math.pow((double) Math.abs(var3), 2.0D));
+                var4 = (float) Math
+                        .sqrt(Math.pow((double) Math.abs(var2), 2.0D) - Math.pow((double) Math.abs(var3), 2.0D));
             }
 
             var4 *= 0.5F;
@@ -187,7 +190,7 @@ public class DecoBigTree extends WorldGenerator {
      * Places a line of the specified block ID into the world from the first coordinate triplet to the second.
      */
     void placeBlockLine(int[] par1ArrayOfInteger, int[] par2ArrayOfInteger, Block par3) {
-        int[] var4 = new int[] {0, 0, 0};
+        int[] var4 = new int[] { 0, 0, 0 };
         byte var5 = 0;
         byte var6;
 
@@ -212,15 +215,15 @@ public class DecoBigTree extends WorldGenerator {
 
             double var10 = (double) var4[var7] / (double) var4[var6];
             double var12 = (double) var4[var8] / (double) var4[var6];
-            int[] var14 = new int[] {0, 0, 0};
+            int[] var14 = new int[] { 0, 0, 0 };
             int var15 = 0;
 
             for (int var16 = var4[var6] + var9; var15 != var16; var15 += var9) {
                 var14[var6] = MathHelper.floor_double((double) (par1ArrayOfInteger[var6] + var15) + 0.5D);
-                var14[var7] =
-                        MathHelper.floor_double((double) par1ArrayOfInteger[var7] + (double) var15 * var10 + 0.5D);
-                var14[var8] =
-                        MathHelper.floor_double((double) par1ArrayOfInteger[var8] + (double) var15 * var12 + 0.5D);
+                var14[var7] = MathHelper
+                        .floor_double((double) par1ArrayOfInteger[var7] + (double) var15 * var10 + 0.5D);
+                var14[var8] = MathHelper
+                        .floor_double((double) par1ArrayOfInteger[var8] + (double) var15 * var12 + 0.5D);
                 int var17 = 0;
                 int var18 = Math.abs(var14[0] - par1ArrayOfInteger[0]);
                 int var19 = Math.abs(var14[2] - par1ArrayOfInteger[2]);
@@ -269,8 +272,8 @@ public class DecoBigTree extends WorldGenerator {
         int var2 = this.basePos[1];
         int var3 = this.basePos[1] + this.height;
         int var4 = this.basePos[2];
-        int[] var5 = new int[] {var1, var2, var4};
-        int[] var6 = new int[] {var1, var3, var4};
+        int[] var5 = new int[] { var1, var2, var4 };
+        int[] var6 = new int[] { var1, var3, var4 };
         this.placeBlockLine(var5, var6, Blocks.log);
 
         if (this.trunkSize == 2) {
@@ -293,9 +296,9 @@ public class DecoBigTree extends WorldGenerator {
         int var1 = 0;
         int var2 = this.leafNodes.length;
 
-        for (int[] var3 = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]}; var1 < var2; ++var1) {
+        for (int[] var3 = new int[] { this.basePos[0], this.basePos[1], this.basePos[2] }; var1 < var2; ++var1) {
             int[] var4 = this.leafNodes[var1];
-            int[] var5 = new int[] {var4[0], var4[1], var4[2]};
+            int[] var5 = new int[] { var4[0], var4[1], var4[2] };
             var3[1] = var4[3];
             int var6 = var3[1] - this.basePos[1];
 
@@ -310,7 +313,7 @@ public class DecoBigTree extends WorldGenerator {
      * (in blocks) before a non-air, non-leaf block is encountered and/or the end is encountered.
      */
     int checkBlockLine(int[] par1ArrayOfInteger, int[] par2ArrayOfInteger) {
-        int[] var3 = new int[] {0, 0, 0};
+        int[] var3 = new int[] { 0, 0, 0 };
         byte var4 = 0;
         byte var5;
 
@@ -337,7 +340,7 @@ public class DecoBigTree extends WorldGenerator {
 
             double var9 = (double) var3[var6] / (double) var3[var5];
             double var11 = (double) var3[var7] / (double) var3[var5];
-            int[] var13 = new int[] {0, 0, 0};
+            int[] var13 = new int[] { 0, 0, 0 };
             int var14 = 0;
             int var15;
 
@@ -361,8 +364,8 @@ public class DecoBigTree extends WorldGenerator {
      * limit, is valid.
      */
     boolean validTreeLocation() {
-        int[] var1 = new int[] {this.basePos[0], this.basePos[1], this.basePos[2]};
-        int[] var2 = new int[] {this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2]};
+        int[] var1 = new int[] { this.basePos[0], this.basePos[1], this.basePos[2] };
+        int[] var2 = new int[] { this.basePos[0], this.basePos[1] + this.heightLimit - 1, this.basePos[2] };
         Block var3 = this.worldObj.getBlock(this.basePos[0], this.basePos[1] - 1, this.basePos[2]);
 
         if (var3 != Blocks.grass && var3 != Blocks.dirt) {

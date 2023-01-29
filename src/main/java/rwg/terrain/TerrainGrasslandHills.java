@@ -4,6 +4,7 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class TerrainGrasslandHills extends TerrainBase {
+
     private float hHeight;
     private float hWidth;
     private float vHeight;
@@ -13,27 +14,11 @@ public class TerrainGrasslandHills extends TerrainBase {
     private float bHeight;
 
     /*
-     * hillHeight = 70f
-     * hillWidth = 180f
-     *
-     * varHeight = 7f
-     * varWidth = 100f
-     *
-     * lakeHeigth = 38f
-     * lakeWidth = 260f
-     *
-     * baseHeight = 68f
-     *
-     * 70f, 180f, 7f, 100f, 38f, 260f, 68f
+     * hillHeight = 70f hillWidth = 180f varHeight = 7f varWidth = 100f lakeHeigth = 38f lakeWidth = 260f baseHeight =
+     * 68f 70f, 180f, 7f, 100f, 38f, 260f, 68f
      */
-    public TerrainGrasslandHills(
-            float hillHeight,
-            float hillWidth,
-            float varHeight,
-            float varWidth,
-            float lakeHeight,
-            float lakeWidth,
-            float baseHeight) {
+    public TerrainGrasslandHills(float hillHeight, float hillWidth, float varHeight, float varWidth, float lakeHeight,
+            float lakeWidth, float baseHeight) {
         hHeight = hillHeight;
         hWidth = hillWidth;
 
@@ -47,8 +32,8 @@ public class TerrainGrasslandHills extends TerrainBase {
     }
 
     @Override
-    public float generateNoise(
-            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float generateNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border,
+            float river) {
         float h = perlin.noise2(x / vWidth, y / vWidth) * vHeight * river;
         h += perlin.noise2(x / 20f, y / 20f) * 2;
 

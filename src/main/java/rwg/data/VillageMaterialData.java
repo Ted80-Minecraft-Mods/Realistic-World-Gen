@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class VillageMaterialData {
+
     public int biomeID;
 
     public Block logBlock = Blocks.log;

@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class SnowheightCalculator {
+
     public static void calc(int x, int y, int k, Block[] blocks, byte[] metadata, float[] noise) {
         if (k < 254) {
             byte h = (byte) ((noise[y * 16 + x] - ((int) noise[y * 16 + x])) * 8);

@@ -3,6 +3,7 @@ package rwg.api;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class RWGBiomes {
+
     /*
      * These biomes are used for grass/foliage color and entity spawning
      */
@@ -38,30 +39,9 @@ public class RWGBiomes {
      * This function will never break. use this instead of the above.
      */
     public static BiomeGenBase[] getAllBaseBiomes() {
-        return new BiomeGenBase[] {
-            baseRiverIce,
-            baseRiverCold,
-            baseRiverTemperate,
-            baseRiverHot,
-            baseRiverWet,
-            baseRiverOasis,
-            baseOceanIce,
-            baseOceanCold,
-            baseOceanTemperate,
-            baseOceanHot,
-            baseOceanWet,
-            baseSnowDesert,
-            baseSnowForest,
-            baseColdPlains,
-            baseColdForest,
-            baseHotPlains,
-            baseHotForest,
-            baseHotDesert,
-            basePlains,
-            baseTropicalIsland,
-            baseRedwood,
-            baseJungle,
-            baseOasis
-        };
+        return new BiomeGenBase[] { baseRiverIce, baseRiverCold, baseRiverTemperate, baseRiverHot, baseRiverWet,
+                baseRiverOasis, baseOceanIce, baseOceanCold, baseOceanTemperate, baseOceanHot, baseOceanWet,
+                baseSnowDesert, baseSnowForest, baseColdPlains, baseColdForest, baseHotPlains, baseHotForest,
+                baseHotDesert, basePlains, baseTropicalIsland, baseRedwood, baseJungle, baseOasis };
     }
 }

@@ -1,8 +1,10 @@
 package rwg.biomes.realistic.land;
 
 import java.util.Random;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.surface.SurfaceBase;
@@ -13,6 +15,7 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeTestRiver extends RealisticBiomeBase {
+
     private CellNoise celltest;
     private TerrainBase terrain;
     private SurfaceBase surface;
@@ -25,30 +28,31 @@ public class RealisticBiomeTestRiver extends RealisticBiomeBase {
 
         terrain = new TerrainHilly(230f, 120f, 0f);
         surface = new SurfaceMountainStoneMix1(
-                Blocks.grass, Blocks.dirt, false, null, 0f, 1.5f, 60f, 65f, 1.5f, Blocks.stone, 0.08f);
+                Blocks.grass,
+                Blocks.dirt,
+                false,
+                null,
+                0f,
+                1.5f,
+                60f,
+                65f,
+                1.5f,
+                Blocks.stone,
+                0.08f);
     }
 
     @Override
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {}
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {}
 
     @Override
     public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         /*
-        float pX = x + (perlin.noise1(y / 240f) * 220f);
-        float pY = y + (perlin.noise1(x / 240f) * 220f);
-        float p = cell.border(pX / 1250D, pY / 1250D, 50D / 2300D, 1f);
-        float st = cell.border(pX / 1250D, pY / 1250D, 50D / 400D, 1f);
-
-        return ((generateNoise(perlin, cell, x, y, st + 1f)) * (p + 1f)) + ((57f + perlin.noise2(x / 15f, y / 15f) * 3f + perlin.noise2(x / 8f, y / 8f) * 1.5f) * (-p));
-        */
+         * float pX = x + (perlin.noise1(y / 240f) * 220f); float pY = y + (perlin.noise1(x / 240f) * 220f); float p =
+         * cell.border(pX / 1250D, pY / 1250D, 50D / 2300D, 1f); float st = cell.border(pX / 1250D, pY / 1250D, 50D /
+         * 400D, 1f); return ((generateNoise(perlin, cell, x, y, st + 1f)) * (p + 1f)) + ((57f + perlin.noise2(x / 15f,
+         * y / 15f) * 3f + perlin.noise2(x / 8f, y / 8f) * 1.5f) * (-p));
+         */
         return 64.1f;
     }
 

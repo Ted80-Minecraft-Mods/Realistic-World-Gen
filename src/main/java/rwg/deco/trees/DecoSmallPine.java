@@ -1,6 +1,7 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -8,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoSmallPine extends WorldGenerator {
+
     private int startHeight;
     private int treeSize;
     private int metadata;
@@ -87,8 +89,8 @@ public class DecoSmallPine extends WorldGenerator {
         return true;
     }
 
-    public void buildBranch(
-            World world, Random rand, int x, int y, int z, int dX, int dZ, int logLength, int leaveSize) {
+    public void buildBranch(World world, Random rand, int x, int y, int z, int dX, int dZ, int logLength,
+            int leaveSize) {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 for (int k = 0; k < 2; k++) {

@@ -1,10 +1,12 @@
 package rwg.biomes.realistic;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.coast.*;
 import rwg.biomes.realistic.desert.RealisticBiomeDesert;
@@ -35,6 +37,7 @@ import rwg.util.NoiseGenerator;
 import rwg.world.ChunkManagerRealistic;
 
 public class RealisticBiomeBase {
+
     private static final RealisticBiomeBase[] biomeList = new RealisticBiomeBase[256];
     private static int nextBiomeID = 0;
 
@@ -142,28 +145,11 @@ public class RealisticBiomeBase {
 
     // ======================================================================================================================================
 
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {}
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {}
 
-    public void generateMapGen(
-            Block[] blocks,
-            byte[] metadata,
-            Long seed,
-            World world,
-            ChunkManagerRealistic cmr,
-            Random mapRand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float noise[]) {
+    public void generateMapGen(Block[] blocks, byte[] metadata, Long seed, World world, ChunkManagerRealistic cmr,
+            Random mapRand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell, float noise[]) {
         int k = 5;
         mapRand.setSeed(seed);
         long l = (mapRand.nextLong() / 2L) * 2L + 1L;
@@ -176,39 +162,15 @@ public class RealisticBiomeBase {
         }
     }
 
-    public void rMapGen(
-            Block[] blocks,
-            byte[] metadata,
-            World world,
-            ChunkManagerRealistic cmr,
-            Random mapRand,
-            int chunkX,
-            int chunkY,
-            int baseX,
-            int baseY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float noise[]) {}
+    public void rMapGen(Block[] blocks, byte[] metadata, World world, ChunkManagerRealistic cmr, Random mapRand,
+            int chunkX, int chunkY, int baseX, int baseY, NoiseGenerator perlin, CellNoise cell, float noise[]) {}
 
     public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         return 63f;
     }
 
-    public void rReplace(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         Block b;
         for (int k = 255; k > -1; k--) {
             b = blocks[(y * 16 + x) * 256 + k];

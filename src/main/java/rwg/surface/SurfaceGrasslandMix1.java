@@ -1,23 +1,26 @@
 package rwg.surface;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.util.CellNoise;
 import rwg.util.CliffCalculator;
 import rwg.util.NoiseGenerator;
 
 public class SurfaceGrasslandMix1 extends SurfaceBase {
+
     private Block mixBlock;
     private Block cliffBlock1;
     private Block cliffBlock2;
     private float width;
     private float height;
 
-    public SurfaceGrasslandMix1(
-            Block top, Block filler, Block mix, Block cliff1, Block cliff2, float mixWidth, float mixHeight) {
+    public SurfaceGrasslandMix1(Block top, Block filler, Block mix, Block cliff1, Block cliff2, float mixWidth,
+            float mixHeight) {
         super(top, filler);
 
         mixBlock = mix;
@@ -29,21 +32,8 @@ public class SurfaceGrasslandMix1 extends SurfaceBase {
     }
 
     @Override
-    public void paintTerrain(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void paintTerrain(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float c = CliffCalculator.calc(x, y, noise);
         boolean cliff = c > 1.4f ? true : false;
 

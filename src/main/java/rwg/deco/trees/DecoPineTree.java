@@ -1,6 +1,7 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
@@ -9,6 +10,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class DecoPineTree extends WorldGenAbstractTree {
+
     private int height;
     private int metadata;
 
@@ -44,8 +46,7 @@ public class DecoPineTree extends WorldGenAbstractTree {
                         if (l1 >= 0 && l1 < 256) {
                             Block block = p_76484_1_.getBlock(i2, l1, j2);
 
-                            if (!block.isAir(p_76484_1_, i2, l1, j2)
-                                    && !block.isLeaves(p_76484_1_, i2, l1, j2)
+                            if (!block.isAir(p_76484_1_, i2, l1, j2) && !block.isLeaves(p_76484_1_, i2, l1, j2)
                                     && block != Blocks.snow_layer) {
                                 flag = false;
                             }
@@ -62,11 +63,21 @@ public class DecoPineTree extends WorldGenAbstractTree {
                 Block block1 = p_76484_1_.getBlock(p_76484_3_, p_76484_4_ - 1, p_76484_5_);
 
                 boolean isSoil = block1.canSustainPlant(
-                        p_76484_1_, p_76484_3_, p_76484_4_ - 1, p_76484_5_, ForgeDirection.UP, (BlockSapling)
-                                Blocks.sapling);
+                        p_76484_1_,
+                        p_76484_3_,
+                        p_76484_4_ - 1,
+                        p_76484_5_,
+                        ForgeDirection.UP,
+                        (BlockSapling) Blocks.sapling);
                 if (isSoil && p_76484_4_ < 256 - l - 1) {
                     block1.onPlantGrow(
-                            p_76484_1_, p_76484_3_, p_76484_4_ - 1, p_76484_5_, p_76484_3_, p_76484_4_, p_76484_5_);
+                            p_76484_1_,
+                            p_76484_3_,
+                            p_76484_4_ - 1,
+                            p_76484_5_,
+                            p_76484_3_,
+                            p_76484_4_,
+                            p_76484_5_);
                     l3 = p_76484_2_.nextInt(2);
                     i2 = 1;
                     byte b0 = 0;
@@ -82,10 +93,8 @@ public class DecoPineTree extends WorldGenAbstractTree {
                             for (int j3 = p_76484_5_ - l3; j3 <= p_76484_5_ + l3; ++j3) {
                                 int k3 = j3 - p_76484_5_;
 
-                                if ((Math.abs(i3) != l3 || Math.abs(k3) != l3 || l3 <= 0)
-                                        && p_76484_1_
-                                                .getBlock(l2, k2, j3)
-                                                .canBeReplacedByLeaves(p_76484_1_, l2, k2, j3)) {
+                                if ((Math.abs(i3) != l3 || Math.abs(k3) != l3 || l3 <= 0) && p_76484_1_
+                                        .getBlock(l2, k2, j3).canBeReplacedByLeaves(p_76484_1_, l2, k2, j3)) {
                                     p_76484_1_.setBlock(l2, k2, j3, Blocks.leaves, metadata, 0);
                                 }
                             }
@@ -131,7 +140,7 @@ public class DecoPineTree extends WorldGenAbstractTree {
     }
 
     private void createTrunk(World world, Random rand, int x, int y, int z) {
-        int[] pos = new int[] {0, 0, 1, 0, 0, 1, -1, 0, 0, -1};
+        int[] pos = new int[] { 0, 0, 1, 0, 0, 1, -1, 0, 0, -1 };
         int sh;
         Block b;
         for (int t = 0; t < 5; t++) {

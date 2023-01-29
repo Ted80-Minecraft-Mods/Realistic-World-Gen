@@ -1,6 +1,7 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -8,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoShrub extends WorldGenerator {
+
     private int size;
     private Block logBlock;
     private int logMeta;
@@ -53,8 +55,7 @@ public class DecoShrub extends WorldGenerator {
 
     public void buildLeaves(World world, int x, int y, int z, int size) {
         Block b = world.getBlock(x, y - 2, z);
-        if (b.getMaterial() == Material.grass
-                || b.getMaterial() == Material.ground
+        if (b.getMaterial() == Material.grass || b.getMaterial() == Material.ground
                 || (sand && b.getMaterial() == Material.sand)) {
             if (world.getBlock(x, y - 1, z) != Blocks.water) {
                 for (int i = -size; i <= size; i++) {
@@ -73,8 +74,7 @@ public class DecoShrub extends WorldGenerator {
 
     public void buildBlock(World world, int x, int y, int z, Block block, int meta) {
         Block b = world.getBlock(x, y, z);
-        if (b.getMaterial() == Material.air
-                || b.getMaterial() == Material.vine
+        if (b.getMaterial() == Material.air || b.getMaterial() == Material.vine
                 || b.getMaterial() == Material.plants
                 || b == Blocks.snow_layer) {
             world.setBlock(x, y, z, block, meta, 0);

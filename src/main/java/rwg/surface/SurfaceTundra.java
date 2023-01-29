@@ -1,35 +1,25 @@
 package rwg.surface;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.util.CellNoise;
 import rwg.util.CliffCalculator;
 import rwg.util.NoiseGenerator;
 
 public class SurfaceTundra extends SurfaceBase {
+
     public SurfaceTundra(Block top, Block fill) {
         super(top, fill);
     }
 
     @Override
-    public void paintTerrain(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void paintTerrain(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float p = perlin.noise2(i / 8f, j / 8f) * 0.5f;
         float c = CliffCalculator.calc(x, y, noise);
         int cliff = 0;

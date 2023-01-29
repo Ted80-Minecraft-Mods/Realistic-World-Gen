@@ -1,12 +1,11 @@
 /*****************************************************************************
- *                        J3D.org Copyright (c) 2000
- *                               Java Source
+ * J3D.org Copyright (c) 2000 Java Source
  *
- * This source is licensed under the GNU LGPL v2.1
- * Please read http://www.gnu.org/copyleft/lgpl.html for more information
+ * This source is licensed under the GNU LGPL v2.1 Please read http://www.gnu.org/copyleft/lgpl.html for more
+ * information
  *
- * This software comes with the standard NO WARRANTY disclaimer for any
- * purpose. Use it at your own risk. If there's a problem you get to fix it.
+ * This software comes with the standard NO WARRANTY disclaimer for any purpose. Use it at your own risk. If there's a
+ * problem you get to fix it.
  *
  ****************************************************************************/
 package rwg.util;
@@ -17,18 +16,18 @@ import java.util.Random;
  * Computes Perlin Noise for three dimensions.
  * <p>
  *
- * The result is a continuous function that interpolates a smooth path
- * along a series random points. The function is consitent, so given
- * the same parameters, it will always return the same value. The smoothing
- * function is based on the Improving Noise paper presented at Siggraph 2002.
+ * The result is a continuous function that interpolates a smooth path along a series random points. The function is
+ * consitent, so given the same parameters, it will always return the same value. The smoothing function is based on the
+ * Improving Noise paper presented at Siggraph 2002.
  * <p>
- * Computing noise for one and two dimensions can make use of the 3D problem
- * space by just setting the un-needed dimensions to a fixed value.
+ * Computing noise for one and two dimensions can make use of the 3D problem space by just setting the un-needed
+ * dimensions to a fixed value.
  *
  * @author Justin Couch
  * @version $Revision: 1.4 $
  */
 public class PerlinNoise implements NoiseGenerator {
+
     private Random rand;
 
     // Constants for setting up the Perlin-1 noise functions
@@ -276,12 +275,12 @@ public class PerlinNoise implements NoiseGenerator {
     }
 
     /**
-     * Create a turbulent noise output based on the core noise function. This
-     * uses the noise as a base function and is suitable for creating clouds,
-     * marble and explosion effects. For example, a typical marble effect would
-     * set the colour to be:
+     * Create a turbulent noise output based on the core noise function. This uses the noise as a base function and is
+     * suitable for creating clouds, marble and explosion effects. For example, a typical marble effect would set the
+     * colour to be:
+     * 
      * <pre>
-     *    sin(point + turbulence(point) * point.x);
+     * sin(point + turbulence(point) * point.x);
      * </pre>
      */
     public double imporvedTurbulence(double x, double y, double z, float loF, float hiF) {
@@ -303,11 +302,10 @@ public class PerlinNoise implements NoiseGenerator {
     }
 
     /**
-     * Create a turbulance function in 2D using the original perlin noise
-     * function.
+     * Create a turbulance function in 2D using the original perlin noise function.
      *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
+     * @param x    The X coordinate of the location to sample
+     * @param y    The Y coordinate of the location to sample
      * @param freq The frequency of the turbluance to create
      * @return The value at the given coordinates
      */
@@ -323,12 +321,11 @@ public class PerlinNoise implements NoiseGenerator {
     }
 
     /**
-     * Create a turbulance function in 3D using the original perlin noise
-     * function.
+     * Create a turbulance function in 3D using the original perlin noise function.
      *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param z The Z coordinate of the location to sample
+     * @param x    The X coordinate of the location to sample
+     * @param y    The Y coordinate of the location to sample
+     * @param z    The Z coordinate of the location to sample
      * @param freq The frequency of the turbluance to create
      * @return The value at the given coordinates
      */
@@ -364,16 +361,13 @@ public class PerlinNoise implements NoiseGenerator {
      * @return The value of the noise at the given coordinate
      */
     public float tileableNoise2(float x, float y, float w, float h) {
-        return (noise2(x, y) * (w - x) * (h - y)
-                        + noise2(x - w, y) * x * (h - y)
-                        + noise2(x, y - h) * (w - x) * y
-                        + noise2(x - w, y - h) * x * y)
-                / (w * h);
+        return (noise2(x, y) * (w - x) * (h - y) + noise2(x - w, y) * x * (h - y)
+                + noise2(x, y - h) * (w - x) * y
+                + noise2(x - w, y - h) * x * y) / (w * h);
     }
 
     /**
-     * Create a 3D tileable noise function for the given width, height and
-     * depth.
+     * Create a 3D tileable noise function for the given width, height and depth.
      *
      * @param x The X coordinate to generate the noise for
      * @param y The Y coordinate to generate the noise for
@@ -384,24 +378,22 @@ public class PerlinNoise implements NoiseGenerator {
      * @return The value of the noise at the given coordinate
      */
     public float tileableNoise3(float x, float y, float z, float w, float h, float d) {
-        return (noise3(x, y, z) * (w - x) * (h - y) * (d - z)
-                        + noise3(x - w, y, z) * x * (h - y) * (d - z)
-                        + noise3(x, y - h, z) * (w - x) * y * (d - z)
-                        + noise3(x - w, y - h, z) * x * y * (d - z)
-                        + noise3(x, y, z - d) * (w - x) * (h - y) * z
-                        + noise3(x - w, y, z - d) * x * (h - y) * z
-                        + noise3(x, y - h, z - d) * (w - x) * y * z
-                        + noise3(x - w, y - h, z - d) * x * y * z)
-                / (w * h * d);
+        return (noise3(x, y, z) * (w - x) * (h - y) * (d - z) + noise3(x - w, y, z) * x * (h - y) * (d - z)
+                + noise3(x, y - h, z) * (w - x) * y * (d - z)
+                + noise3(x - w, y - h, z) * x * y * (d - z)
+                + noise3(x, y, z - d) * (w - x) * (h - y) * z
+                + noise3(x - w, y, z - d) * x * (h - y) * z
+                + noise3(x, y - h, z - d) * (w - x) * y * z
+                + noise3(x - w, y - h, z - d) * x * y * z) / (w * h * d);
     }
 
     /**
      * Create a turbulance function that can be tiled across a surface in 2D.
      *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param w The width to tile over
-     * @param h The height to tile over
+     * @param x    The X coordinate of the location to sample
+     * @param y    The Y coordinate of the location to sample
+     * @param w    The width to tile over
+     * @param h    The height to tile over
      * @param freq The frequency of the turbluance to create
      * @return The value at the given coordinates
      */
@@ -419,12 +411,12 @@ public class PerlinNoise implements NoiseGenerator {
     /**
      * Create a turbulance function that can be tiled across a surface in 3D.
      *
-     * @param x The X coordinate of the location to sample
-     * @param y The Y coordinate of the location to sample
-     * @param z The Z coordinate of the location to sample
-     * @param w The width to tile over
-     * @param h The height to tile over
-     * @param d The depth to tile over
+     * @param x    The X coordinate of the location to sample
+     * @param y    The Y coordinate of the location to sample
+     * @param z    The Z coordinate of the location to sample
+     * @param w    The width to tile over
+     * @param h    The height to tile over
+     * @param d    The depth to tile over
      * @param freq The frequency of the turbluance to create
      * @return The value at the given coordinates
      */
@@ -454,8 +446,8 @@ public class PerlinNoise implements NoiseGenerator {
     }
 
     /**
-     * Fade curve calculation which is 6t^5 - 15t^4 + 10t^3. This is the new
-     * algorithm, where the old one used to be 3t^2 - 2t^3.
+     * Fade curve calculation which is 6t^5 - 15t^4 + 10t^3. This is the new algorithm, where the old one used to be
+     * 3t^2 - 2t^3.
      *
      * @param t The t parameter to calculate the fade for
      * @return the drop-off amount.

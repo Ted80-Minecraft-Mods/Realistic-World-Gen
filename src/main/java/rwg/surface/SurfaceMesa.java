@@ -1,13 +1,16 @@
 package rwg.surface;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.util.*;
 
 public class SurfaceMesa extends SurfaceBase {
+
     private int[] claycolor = new int[100];
     private byte blockByte = 0;
 
@@ -15,7 +18,7 @@ public class SurfaceMesa extends SurfaceBase {
         super(top, fill);
         blockByte = b;
 
-        int[] c = new int[] {1, 8, 0};
+        int[] c = new int[] { 1, 8, 0 };
         NoiseGenerator perlin = NoiseSelector.createNoiseGenerator(2L);
 
         float n;
@@ -33,21 +36,8 @@ public class SurfaceMesa extends SurfaceBase {
     }
 
     @Override
-    public void paintTerrain(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void paintTerrain(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float c = CliffCalculator.calc(x, y, noise);
         boolean cliff = c > 1.3f ? true : false;
 
