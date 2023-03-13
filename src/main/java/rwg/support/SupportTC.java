@@ -40,7 +40,10 @@ public class SupportTC {
                                     RWGBiomes.baseTemperateForest,
                                     new TerrainHighland(6f, 120f, 65f, 150f),
                                     new SurfaceGrassland(
-                                            b[i].topBlock, b[i].fillerBlock, Blocks.stone, Blocks.cobblestone)),
+                                            b[i].topBlock,
+                                            b[i].fillerBlock,
+                                            Blocks.stone,
+                                            Blocks.cobblestone)),
                             BiomeCategory.WET);
                 }
             }
