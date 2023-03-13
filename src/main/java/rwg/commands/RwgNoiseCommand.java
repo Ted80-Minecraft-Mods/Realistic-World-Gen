@@ -1,15 +1,18 @@
 package rwg.commands;
 
 import java.util.Locale;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentTranslation;
+
 import rwg.util.NoiseGeneratorWrapper;
 import rwg.util.NoiseImplementation;
 import rwg.world.RwgWorldSavedData;
 
 public class RwgNoiseCommand extends CommandBase {
+
     @Override
     public String getCommandName() {
         return "rwg_noise";
@@ -60,14 +63,18 @@ public class RwgNoiseCommand extends CommandBase {
                 case DYNAMICPERLIN:
                 case PERLIN:
                     NoiseGeneratorWrapper.useOpenSimplex = false;
-                    sender.addChatMessage(new ChatComponentTranslation(
-                            "rwg.noise.was_set_to.generic", noiseImplementation.toString()));
+                    sender.addChatMessage(
+                            new ChatComponentTranslation(
+                                    "rwg.noise.was_set_to.generic",
+                                    noiseImplementation.toString()));
                     break;
                 case DYNAMICOPENSIMPLEX:
                 case OPENSIMPLEX:
                     NoiseGeneratorWrapper.useOpenSimplex = true;
-                    sender.addChatMessage(new ChatComponentTranslation(
-                            "rwg.noise.was_set_to.generic", noiseImplementation.toString()));
+                    sender.addChatMessage(
+                            new ChatComponentTranslation(
+                                    "rwg.noise.was_set_to.generic",
+                                    noiseImplementation.toString()));
                     break;
             }
             if (wasDynamic) {

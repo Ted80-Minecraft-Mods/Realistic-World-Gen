@@ -1,23 +1,16 @@
 package rwg.data;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
+
 import rwg.RWG;
 import rwg.deco.trees.DecoSavannah;
 import rwg.deco.trees.DecoSmallPine;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class TreeReplacement {
     /*
-     *
-     *
-     *
      * Missing a check for air and its extremely buggy :(
-     *
-     *
-     *
-     *
-     *
      */
 
     @SubscribeEvent

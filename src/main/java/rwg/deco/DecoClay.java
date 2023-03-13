@@ -1,6 +1,7 @@
 package rwg.deco;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -8,9 +9,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoClay extends WorldGenerator {
+
     private Block field_150519_a;
     private int numberOfBlocks;
-    private static final String __OBFID = "CL_00000426";
     private int mineableBlockMeta;
 
     public DecoClay(Block block, int metadata, int amount) {
@@ -34,12 +35,10 @@ public class DecoClay extends WorldGenerator {
             double d7 = d4 + (d5 - d4) * (double) l / (double) this.numberOfBlocks;
             double d8 = d2 + (d3 - d2) * (double) l / (double) this.numberOfBlocks;
             double d9 = p_76484_2_.nextDouble() * (double) this.numberOfBlocks / 16.0D;
-            double d10 =
-                    (double) (MathHelper.sin((float) l * (float) Math.PI / (float) this.numberOfBlocks) + 1.0F) * d9
-                            + 1.0D;
-            double d11 =
-                    (double) (MathHelper.sin((float) l * (float) Math.PI / (float) this.numberOfBlocks) + 1.0F) * d9
-                            + 1.0D;
+            double d10 = (double) (MathHelper.sin((float) l * (float) Math.PI / (float) this.numberOfBlocks) + 1.0F)
+                    * d9 + 1.0D;
+            double d11 = (double) (MathHelper.sin((float) l * (float) Math.PI / (float) this.numberOfBlocks) + 1.0F)
+                    * d9 + 1.0D;
             int i1 = MathHelper.floor_double(d6 - d10 / 2.0D);
             int j1 = MathHelper.floor_double(d7 - d11 / 2.0D);
             int k1 = MathHelper.floor_double(d8 - d10 / 2.0D);
@@ -59,11 +58,9 @@ public class DecoClay extends WorldGenerator {
                                 double d14 = ((double) i3 + 0.5D - d8) / (d10 / 2.0D);
                                 b = p_76484_1_.getBlock(k2, l2, i3);
 
-                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D
-                                        && (b == Blocks.grass
-                                                || b == Blocks.dirt
-                                                || b == Blocks.sand
-                                                || b == Blocks.gravel)) {
+                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && (b == Blocks.grass || b == Blocks.dirt
+                                        || b == Blocks.sand
+                                        || b == Blocks.gravel)) {
                                     p_76484_1_.setBlock(k2, l2, i3, this.field_150519_a, mineableBlockMeta, 2);
                                 }
                             }

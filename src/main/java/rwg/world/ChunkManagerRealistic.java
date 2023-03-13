@@ -1,22 +1,25 @@
 package rwg.world;
 
-import gnu.trove.map.hash.TLongObjectHashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
+
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.support.Support;
 import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 import rwg.util.NoiseSelector;
+import gnu.trove.map.hash.TLongObjectHashMap;
 
 public class ChunkManagerRealistic extends WorldChunkManager {
+
     private BiomeCache biomeCache;
     private List biomesToSpawnIn;
 
@@ -205,40 +208,18 @@ public class ChunkManagerRealistic extends WorldChunkManager {
         // return RealisticBiomeBase.hotForest; //rainForestHigh test
 
         /*
-        if(par1 + par2 < 0)
-        {
-        	return RealisticBiomeBase.islandTropicalVolcano;
-        }
-        else
-        {
-        	return RealisticBiomeBase.ocean;
-        }
-        */
+         * if(par1 + par2 < 0) { return RealisticBiomeBase.islandTropicalVolcano; } else { return
+         * RealisticBiomeBase.ocean; }
+         */
 
         /*
-        if(ocean >= 1.99f)
-        {
-           	return RealisticBiomeBase.hotForest;
-        }
-        else if(ocean <= 0.01f)
-        {
-           	return RealisticBiomeBase.ocean;
-        }
-        else
-        {
-           	return RealisticBiomeBase.coastDunes;
-        }*/
+         * if(ocean >= 1.99f) { return RealisticBiomeBase.hotForest; } else if(ocean <= 0.01f) { return
+         * RealisticBiomeBase.ocean; } else { return RealisticBiomeBase.coastDunes; }
+         */
 
         /*
-        if(par1 + par2 > 0f)
-        {
-           	return RealisticBiomeBase.savannaDunes;
-        }
-        else
-        {
-           	return RealisticBiomeBase.mesa;
-        }
-        */
+         * if(par1 + par2 > 0f) { return RealisticBiomeBase.savannaDunes; } else { return RealisticBiomeBase.mesa; }
+         */
 
         long coords = ChunkCoordIntPair.chunkXZ2Int(par1, par2);
 
@@ -296,56 +277,21 @@ public class ChunkManagerRealistic extends WorldChunkManager {
         biomeDataMap.put(coords, output);
         return output;
 
-        /*if(par1 + par2 < 0)
-          	{
-          		return RealisticBiomeBase.landTaigaFields;
-        }
-        else
-        {
-        	return RealisticBiomeBase.landTaigaHills;
-        }*/
+        /*
+         * if(par1 + par2 < 0) { return RealisticBiomeBase.landTaigaFields; } else { return
+         * RealisticBiomeBase.landTaigaHills; }
+         */
 
         /*
-        float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f;
-        h = h < 0f ? 0f : h >= 0.9999999f ? 0.9999999f : h;
-
-        float temp = 0.5f + (perlin.noise2((par1 + 2000f) / 2000f, par2 / 2000f) * 1.1f);
-        float hum = 0.5f + (perlin.noise2((par1 - 2000f) / 2000f, par2 / 2000f) * 1.1f);
-
-        temp = temp > 1f ? 1f : temp < 0f ? 0f : temp;
-        hum = hum > 1f ? 1f : hum < 0f ? 0f : hum;
-
-        if((1f - temp) + hum > 1f)
-        {
-        	hum -= temp;
-        	temp += hum;
-        }
-
-        if(temp < 0.15f)
-        {
-        	h *= 2f;
-        	return biomes_polar[(int)(h)];
-        }
-        else if(hum < 0.2f)
-        {
-        	h *= 8f;
-        	return biomes_tundra[(int)(h)];
-        }
-        else if(temp < 0.5f)
-        {
-        	h *= 5f;
-        	return biomes_snow[(int)(h)];
-        }
-        else if(temp > 0.85f && hum > 0.85f)
-        {
-        	return RealisticBiomeBase.landRedwoodSpikes;
-        }
-        else
-        {
-        	h *= 9f;
-        	return biomes_taiga[(int)(h)];
-        }
-        */
+         * float h = (biomecell.noise(par1 / 450D, par2 / 450D, 1D) * 0.5f) + 0.5f; h = h < 0f ? 0f : h >= 0.9999999f ?
+         * 0.9999999f : h; float temp = 0.5f + (perlin.noise2((par1 + 2000f) / 2000f, par2 / 2000f) * 1.1f); float hum =
+         * 0.5f + (perlin.noise2((par1 - 2000f) / 2000f, par2 / 2000f) * 1.1f); temp = temp > 1f ? 1f : temp < 0f ? 0f :
+         * temp; hum = hum > 1f ? 1f : hum < 0f ? 0f : hum; if((1f - temp) + hum > 1f) { hum -= temp; temp += hum; }
+         * if(temp < 0.15f) { h *= 2f; return biomes_polar[(int)(h)]; } else if(hum < 0.2f) { h *= 8f; return
+         * biomes_tundra[(int)(h)]; } else if(temp < 0.5f) { h *= 5f; return biomes_snow[(int)(h)]; } else if(temp >
+         * 0.85f && hum > 0.85f) { return RealisticBiomeBase.landRedwoodSpikes; } else { h *= 9f; return
+         * biomes_taiga[(int)(h)]; }
+         */
 
         // int x = (int)(temp * 7f);
         // int y = (int)(hum * 7f);
@@ -353,27 +299,18 @@ public class ChunkManagerRealistic extends WorldChunkManager {
         // x = x < 0 ? 0 : x > 6 ? 6 : x;
         // y = y < 0 ? 0 : y > 6 ? 6 : y;
 
-        /*if(par1 % 100 == 0 && par2 % 100 == 0)
-        {
-           	System.out.println(par1 + " " + par2 + " " + x + " " + y + " - " + temp + " " + hum);
-        }*/
+        /*
+         * if(par1 % 100 == 0 && par2 % 100 == 0) { System.out.println(par1 + " " + par2 + " " + x + " " + y + " - " +
+         * temp + " " + hum); }
+         */
 
         // return biomes[x * 7 + y];
 
-        /*ocean = ocean > 1f ? 1f : ocean < 0f ? 0f : ocean;
-
-        if(ocean < 0.45f)
-        {
-        	return biomeLayerOcean.getBiome(temp, hum);
-        }
-        else if (ocean > 0.55f)
-        {
-        	return biomeLayerLand.getBiome(temp, hum);
-        }
-        else
-        {
-        	return biomeLayerCoast.getBiome(temp, hum);
-        }*/
+        /*
+         * ocean = ocean > 1f ? 1f : ocean < 0f ? 0f : ocean; if(ocean < 0.45f) { return biomeLayerOcean.getBiome(temp,
+         * hum); } else if (ocean > 0.55f) { return biomeLayerLand.getBiome(temp, hum); } else { return
+         * biomeLayerCoast.getBiome(temp, hum); }
+         */
     }
 
     public float getNoiseAt(int x, int y) {
@@ -458,8 +395,8 @@ public class ChunkManagerRealistic extends WorldChunkManager {
         return par1;
     }
 
-    public BiomeGenBase[] getBiomesForGeneration(
-            BiomeGenBase[] par1ArrayOfBiomeGenBase, int par2, int par3, int par4, int par5) {
+    public BiomeGenBase[] getBiomesForGeneration(BiomeGenBase[] par1ArrayOfBiomeGenBase, int par2, int par3, int par4,
+            int par5) {
         if (par1ArrayOfBiomeGenBase == null || par1ArrayOfBiomeGenBase.length < par4 * par5) {
             par1ArrayOfBiomeGenBase = new BiomeGenBase[par4 * par5];
         }
@@ -473,13 +410,13 @@ public class ChunkManagerRealistic extends WorldChunkManager {
         return par1ArrayOfBiomeGenBase;
     }
 
-    public BiomeGenBase[] loadBlockGeneratorData(
-            BiomeGenBase[] par1ArrayOfBiomeGenBase, int par2, int par3, int par4, int par5) {
+    public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase[] par1ArrayOfBiomeGenBase, int par2, int par3, int par4,
+            int par5) {
         return this.getBiomeGenAt(par1ArrayOfBiomeGenBase, par2, par3, par4, par5, true);
     }
 
-    public BiomeGenBase[] getBiomeGenAt(
-            BiomeGenBase[] par1ArrayOfBiomeGenBase, int par2, int par3, int par4, int par5, boolean par6) {
+    public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] par1ArrayOfBiomeGenBase, int par2, int par3, int par4, int par5,
+            boolean par6) {
         if (par1ArrayOfBiomeGenBase == null || par1ArrayOfBiomeGenBase.length < par4 * par5) {
             par1ArrayOfBiomeGenBase = new BiomeGenBase[par4 * par5];
         }
@@ -522,8 +459,8 @@ public class ChunkManagerRealistic extends WorldChunkManager {
         return false;
     }
 
-    public ChunkPosition findBiomePosition(
-            int p_150795_1_, int p_150795_2_, int p_150795_3_, List p_150795_4_, Random p_150795_5_) {
+    public ChunkPosition findBiomePosition(int p_150795_1_, int p_150795_2_, int p_150795_3_, List p_150795_4_,
+            Random p_150795_5_) {
         return null;
     }
 

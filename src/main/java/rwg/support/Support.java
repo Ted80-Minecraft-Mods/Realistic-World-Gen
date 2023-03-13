@@ -1,10 +1,12 @@
 package rwg.support;
 
-import cpw.mods.fml.common.Loader;
 import java.util.ArrayList;
+
 import rwg.biomes.realistic.RealisticBiomeBase;
+import cpw.mods.fml.common.Loader;
 
 public class Support {
+
     public static ArrayList<RealisticBiomeBase> biomes_snow;
     public static ArrayList<RealisticBiomeBase> biomes_cold;
     public static ArrayList<RealisticBiomeBase> biomes_hot;

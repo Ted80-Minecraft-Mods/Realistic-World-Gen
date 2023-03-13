@@ -4,6 +4,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BaseBiomePlains extends BiomeGenBase {
+
     public BaseBiomePlains(int id, String bn) {
         super(id);
         setTemperatureRainfall(0.6f, 0.4f);

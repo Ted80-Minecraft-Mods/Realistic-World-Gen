@@ -1,15 +1,18 @@
 package rwg.surface;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.util.CellNoise;
 import rwg.util.CliffCalculator;
 import rwg.util.NoiseGenerator;
 
 public class SurfaceGrasslandMixBig extends SurfaceBase {
+
     private Block mixBlockTop;
     private Block mixBlockFill;
     private Block cliffBlock1;
@@ -19,17 +22,8 @@ public class SurfaceGrasslandMixBig extends SurfaceBase {
     private float smallW;
     private float smallS;
 
-    public SurfaceGrasslandMixBig(
-            Block top,
-            Block filler,
-            Block mixTop,
-            Block mixFill,
-            Block cliff1,
-            Block cliff2,
-            float mixWidth,
-            float mixHeight,
-            float smallWidth,
-            float smallStrength) {
+    public SurfaceGrasslandMixBig(Block top, Block filler, Block mixTop, Block mixFill, Block cliff1, Block cliff2,
+            float mixWidth, float mixHeight, float smallWidth, float smallStrength) {
         super(top, filler);
 
         mixBlockTop = mixTop;
@@ -44,21 +38,8 @@ public class SurfaceGrasslandMixBig extends SurfaceBase {
     }
 
     @Override
-    public void paintTerrain(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void paintTerrain(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float c = CliffCalculator.calc(x, y, noise);
         boolean cliff = c > 1.4f ? true : false;
         boolean mix = false;

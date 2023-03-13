@@ -4,26 +4,20 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class TerrainMountainRiver extends TerrainBase {
+
     public TerrainMountainRiver() {}
 
     @Override
-    public float generateNoise(
-            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float generateNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border,
+            float river) {
         float h = perlin.noise2(x / 300f, y / 300f) * 135f * river;
         h *= h / 32f;
         h = h > 150f ? 150f : h;
 
-        /*float bn = 0f;
-        if(h < 1f)
-        {
-        	bn = 1f - h;
-        	for(int i = 0; i < 3; i++)
-        	{
-        		bn *= bn * 1.25f;
-        	}
-
-        	bn = bn > 3f ? 3f : bn;
-        }*/
+        /*
+         * float bn = 0f; if(h < 1f) { bn = 1f - h; for(int i = 0; i < 3; i++) { bn *= bn * 1.25f; } bn = bn > 3f ? 3f :
+         * bn; }
+         */
 
         if (h < 10f) {
             h += perlin.noise2(x / 14f, y / 14f) * (10f - h) * 0.2f;

@@ -1,6 +1,7 @@
 package rwg.biomes.realistic.red;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -12,6 +13,7 @@ import net.minecraft.world.gen.feature.WorldGenPumpkin;
 import net.minecraft.world.gen.feature.WorldGenReed;
 import net.minecraft.world.gen.feature.WorldGenShrub;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.deco.DecoCacti;
@@ -27,6 +29,7 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeMesa extends RealisticBiomeBase {
+
     private TerrainBase terrain;
     private SurfaceBase surface;
     private SurfaceBase riverSurface;
@@ -40,15 +43,8 @@ public class RealisticBiomeMesa extends RealisticBiomeBase {
     }
 
     @Override
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {
         for (int l = 0; l < 1; ++l) {
             int i1 = chunkX + rand.nextInt(16) + 8;
             int j1 = chunkY + rand.nextInt(16) + 8;
@@ -66,8 +62,8 @@ public class RealisticBiomeMesa extends RealisticBiomeBase {
                     int z52 = world.getHeightValue(j6, k10);
 
                     if (z52 < 100f || (z52 < 120f && rand.nextInt(10) == 0)) {
-                        WorldGenerator worldgenerator =
-                                rand.nextInt(4) != 0 ? new WorldGenShrub(0, 0) : new DecoSavannah(1);
+                        WorldGenerator worldgenerator = rand.nextInt(4) != 0 ? new WorldGenShrub(0, 0)
+                                : new DecoSavannah(1);
                         worldgenerator.setScale(1.0D, 1.0D, 1.0D);
                         worldgenerator.generate(world, rand, j6, z52, k10);
                     }
@@ -100,7 +96,7 @@ public class RealisticBiomeMesa extends RealisticBiomeBase {
                 int j15 = chunkX + rand.nextInt(16) + 8;
                 int j17 = rand.nextInt(128);
                 int j20 = chunkY + rand.nextInt(16) + 8;
-                (new DecoFlowers(new int[] {9, 9, 9, 9, 3, 3, 3, 3, 3, 2, 2, 2, 11, 11, 11}))
+                (new DecoFlowers(new int[] { 9, 9, 9, 9, 3, 3, 3, 3, 3, 2, 2, 2, 11, 11, 11 }))
                         .generate(world, rand, j15, j17, j20);
             }
 
@@ -149,21 +145,8 @@ public class RealisticBiomeMesa extends RealisticBiomeBase {
         return terrain.generateNoise(perlin, cell, x, y, ocean, border, river);
     }
 
-    public void rReplace(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         surface.paintTerrain(blocks, metadata, i, j, x, y, depth, world, rand, perlin, cell, noise, river, base);
         riverSurface.paintTerrain(blocks, metadata, i, j, x, y, depth, world, rand, perlin, cell, noise, river, base);
     }

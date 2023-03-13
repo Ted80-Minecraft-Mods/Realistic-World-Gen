@@ -1,12 +1,14 @@
 package rwg.support.edit;
 
 import java.util.Random;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenPumpkin;
 import net.minecraft.world.gen.feature.WorldGenReed;
 import net.minecraft.world.gen.feature.WorldGenShrub;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import rwg.deco.DecoCacti;
 import rwg.deco.DecoFlowers;
 import rwg.deco.DecoGrass;
@@ -15,18 +17,12 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class EditRiverOasis extends EditBase {
+
     public EditRiverOasis() {}
 
     @Override
-    public void decorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {
+    public void decorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {
         if (river > 0.7f) {
             if (river > 0.86f) {
                 for (int b33 = 0; b33 < 10f * strength; b33++) {
@@ -35,8 +31,8 @@ public class EditRiverOasis extends EditBase {
                     int z52 = world.getHeightValue(j6, k10);
 
                     if (z52 < 100f || (z52 < 120f && rand.nextInt(10) == 0)) {
-                        WorldGenerator worldgenerator =
-                                rand.nextInt(4) != 0 ? new WorldGenShrub(0, 0) : new DecoSavannah(1);
+                        WorldGenerator worldgenerator = rand.nextInt(4) != 0 ? new WorldGenShrub(0, 0)
+                                : new DecoSavannah(1);
                         worldgenerator.setScale(1.0D, 1.0D, 1.0D);
                         worldgenerator.generate(world, rand, j6, z52, k10);
                     }
@@ -69,7 +65,7 @@ public class EditRiverOasis extends EditBase {
                 int j15 = chunkX + rand.nextInt(16) + 8;
                 int j17 = rand.nextInt(128);
                 int j20 = chunkY + rand.nextInt(16) + 8;
-                (new DecoFlowers(new int[] {9, 9, 9, 9, 3, 3, 3, 3, 3, 2, 2, 2, 11, 11, 11}))
+                (new DecoFlowers(new int[] { 9, 9, 9, 9, 3, 3, 3, 3, 3, 2, 2, 2, 11, 11, 11 }))
                         .generate(world, rand, j15, j17, j20);
             }
 

@@ -2,6 +2,7 @@ package rwg.support;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.api.RWGBiomes;
 import rwg.support.Support.BiomeCategory;
 import rwg.surface.SurfaceGrassland;
@@ -10,11 +11,8 @@ import rwg.terrain.TerrainSmallSupport;
 
 public class SupportTC {
     /*
-    THAUMCRAFT BIOMES
-
-    118: "Tainted Land"
-    119: "Magical Forest"
-    */
+     * THAUMCRAFT BIOMES 118: "Tainted Land" 119: "Magical Forest"
+     */
 
     public static void init() {
         BiomeGenBase[] b = BiomeGenBase.getBiomeGenArray();
@@ -28,7 +26,10 @@ public class SupportTC {
                                     RWGBiomes.baseRiverTemperate,
                                     new TerrainSmallSupport(),
                                     new SurfaceGrassland(
-                                            b[i].topBlock, b[i].fillerBlock, Blocks.stone, Blocks.cobblestone)),
+                                            b[i].topBlock,
+                                            b[i].fillerBlock,
+                                            Blocks.stone,
+                                            Blocks.cobblestone)),
                             BiomeCategory.SMALL);
                 }
 

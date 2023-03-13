@@ -1,10 +1,12 @@
 package rwg.biomes.realistic.coast;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.surface.SurfaceBase;
@@ -15,6 +17,7 @@ import rwg.util.NoiseGenerator;
 import rwg.util.SnowheightCalculator;
 
 public class RealisticBiomeCoastIce extends RealisticBiomeBase {
+
     private SurfaceBase surface;
 
     public RealisticBiomeCoastIce() {
@@ -24,22 +27,14 @@ public class RealisticBiomeCoastIce extends RealisticBiomeBase {
     }
 
     @Override
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {}
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {}
 
     @Override
     public float rNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
         river = river > 0.5f ? 1f : river * 2f;
 
-        float start = (perlin.noise2(x / 90f, y / 90f) * 1f)
-                + (perlin.noise2(x / 40f, y / 40f) * 0.15f)
+        float start = (perlin.noise2(x / 90f, y / 90f) * 1f) + (perlin.noise2(x / 40f, y / 40f) * 0.15f)
                 + (perlin.noise2(x / 9f, y / 9f) * 0.07f);
 
         float h = 0f;
@@ -61,21 +56,8 @@ public class RealisticBiomeCoastIce extends RealisticBiomeBase {
     }
 
     @Override
-    public void rReplace(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float c = CliffCalculator.calc(x, y, noise);
         boolean cliff = c > 1.4f ? true : false;
         int type = 0;

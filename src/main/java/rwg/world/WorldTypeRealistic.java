@@ -6,6 +6,7 @@ import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public class WorldTypeRealistic extends WorldType {
+
     public WorldTypeRealistic(String name) {
         super(name);
     }

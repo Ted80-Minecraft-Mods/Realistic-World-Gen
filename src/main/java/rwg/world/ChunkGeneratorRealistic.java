@@ -3,11 +3,11 @@ package rwg.world;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.*;
 import static net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable.EventType.*;
 
-import cpw.mods.fml.common.eventhandler.Event.Result;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.EnumCreatureType;
@@ -36,12 +36,15 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.config.ConfigRWG;
 import rwg.deco.DecoClay;
 import rwg.util.*;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 public class ChunkGeneratorRealistic implements IChunkProvider {
+
     private Random rand;
     private Random mapRand;
 
@@ -140,9 +143,18 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
 
         for (k = 0; k < 256; k++) {
             if (mapGenBiomes[k] > 0f) {
-                RealisticBiomeBase.getBiome(k)
-                        .generateMapGen(
-                                blocks, metadata, worldSeed, worldObj, cmr, mapRand, cx, cy, perlin, cell, noise);
+                RealisticBiomeBase.getBiome(k).generateMapGen(
+                        blocks,
+                        metadata,
+                        worldSeed,
+                        worldObj,
+                        cmr,
+                        mapRand,
+                        cx,
+                        cy,
+                        perlin,
+                        cell,
+                        noise);
                 mapGenBiomes[k] = 0f;
             }
             baseBiomesList[k] = biomesForGeneration[k].baseBiome;
@@ -167,14 +179,8 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         return chunk;
     }
 
-    public void generateTerrain(
-            ChunkManagerRealistic cmr,
-            int cx,
-            int cy,
-            Block[] blocks,
-            byte[] metadata,
-            RealisticBiomeBase biomes[],
-            float[] n) {
+    public void generateTerrain(ChunkManagerRealistic cmr, int cx, int cy, Block[] blocks, byte[] metadata,
+            RealisticBiomeBase biomes[], float[] n) {
         int p, h;
         float[] noise = getNewNoise(cmr, cx * 16, cy * 16, biomes);
         for (int i = 0; i < 16; i++) {
@@ -203,8 +209,8 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
 
         for (i = -sampleSize; i < sampleSize + 5; i++) {
             for (j = -sampleSize; j < sampleSize + 5; j++) {
-                biomeData[(i + sampleSize) * sampleArraySize + (j + sampleSize)] =
-                        cmr.getBiomeDataAt(x + ((i * 8) - 8), y + ((j * 8) - 8)).biomeID;
+                biomeData[(i + sampleSize) * sampleArraySize + (j + sampleSize)] = cmr
+                        .getBiomeDataAt(x + ((i * 8) - 8), y + ((j * 8) - 8)).biomeID;
             }
         }
 
@@ -213,12 +219,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
                 hugeRender[(i * 2 + 2) * 9 + (j * 2 + 2)] = new float[256];
                 for (k = -parabolicSize; k <= parabolicSize; k++) {
                     for (l = -parabolicSize; l <= parabolicSize; l++) {
-                        hugeRender[(i * 2 + 2) * 9 + (j * 2 + 2)][
-                                        biomeData[
-                                                (i + k + sampleSize + 1) * sampleArraySize
-                                                        + (j + l + sampleSize + 1)]] +=
-                                parabolicField[k + parabolicSize + (l + parabolicSize) * parabolicArraySize]
-                                        / parabolicFieldTotal;
+                        hugeRender[(i * 2 + 2) * 9 + (j * 2 + 2)][biomeData[(i + k + sampleSize + 1) * sampleArraySize
+                                + (j + l + sampleSize + 1)]] += parabolicField[k + parabolicSize
+                                        + (l + parabolicSize) * parabolicArraySize] / parabolicFieldTotal;
                     }
                 }
             }
@@ -235,12 +238,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         // RENDER HUGE 1
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
-                hugeRender[(i * 2 + 1) * 9 + (j * 2 + 1)] = mix4(new float[][] {
-                    hugeRender[(i * 2) * 9 + (j * 2)],
-                    hugeRender[(i * 2 + 2) * 9 + (j * 2)],
-                    hugeRender[(i * 2) * 9 + (j * 2 + 2)],
-                    hugeRender[(i * 2 + 2) * 9 + (j * 2 + 2)]
-                });
+                hugeRender[(i * 2 + 1) * 9 + (j * 2 + 1)] = mix4(
+                        new float[][] { hugeRender[(i * 2) * 9 + (j * 2)], hugeRender[(i * 2 + 2) * 9 + (j * 2)],
+                                hugeRender[(i * 2) * 9 + (j * 2 + 2)], hugeRender[(i * 2 + 2) * 9 + (j * 2 + 2)] });
             }
         }
 
@@ -248,12 +248,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         for (i = 0; i < 7; i++) {
             for (j = 0; j < 7; j++) {
                 if (!(i % 2 == 0 && j % 2 == 0) && !(i % 2 != 0 && j % 2 != 0)) {
-                    smallRender[(i * 4) * 25 + (j * 4)] = mix4(new float[][] {
-                        hugeRender[(i) * 9 + (j + 1)],
-                        hugeRender[(i + 1) * 9 + (j)],
-                        hugeRender[(i + 1) * 9 + (j + 2)],
-                        hugeRender[(i + 2) * 9 + (j + 1)]
-                    });
+                    smallRender[(i * 4) * 25 + (j * 4)] = mix4(
+                            new float[][] { hugeRender[(i) * 9 + (j + 1)], hugeRender[(i + 1) * 9 + (j)],
+                                    hugeRender[(i + 1) * 9 + (j + 2)], hugeRender[(i + 2) * 9 + (j + 1)] });
                 } else {
                     smallRender[(i * 4) * 25 + (j * 4)] = hugeRender[(i + 1) * 9 + (j + 1)];
                 }
@@ -263,12 +260,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         // RENDER SMALL 1
         for (i = 0; i < 6; i++) {
             for (j = 0; j < 6; j++) {
-                smallRender[(i * 4 + 2) * 25 + (j * 4 + 2)] = mix4(new float[][] {
-                    smallRender[(i * 4) * 25 + (j * 4)],
-                    smallRender[(i * 4 + 4) * 25 + (j * 4)],
-                    smallRender[(i * 4) * 25 + (j * 4 + 4)],
-                    smallRender[(i * 4 + 4) * 25 + (j * 4 + 4)]
-                });
+                smallRender[(i * 4 + 2) * 25 + (j * 4 + 2)] = mix4(
+                        new float[][] { smallRender[(i * 4) * 25 + (j * 4)], smallRender[(i * 4 + 4) * 25 + (j * 4)],
+                                smallRender[(i * 4) * 25 + (j * 4 + 4)], smallRender[(i * 4 + 4) * 25 + (j * 4 + 4)] });
             }
         }
 
@@ -276,12 +270,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         for (i = 0; i < 11; i++) {
             for (j = 0; j < 11; j++) {
                 if (!(i % 2 == 0 && j % 2 == 0) && !(i % 2 != 0 && j % 2 != 0)) {
-                    smallRender[(i * 2 + 2) * 25 + (j * 2 + 2)] = mix4(new float[][] {
-                        smallRender[(i * 2) * 25 + (j * 2 + 2)],
-                        smallRender[(i * 2 + 2) * 25 + (j * 2)],
-                        smallRender[(i * 2 + 2) * 25 + (j * 2 + 4)],
-                        smallRender[(i * 2 + 4) * 25 + (j * 2 + 2)]
-                    });
+                    smallRender[(i * 2 + 2) * 25 + (j * 2 + 2)] = mix4(
+                            new float[][] { smallRender[(i * 2) * 25 + (j * 2 + 2)],
+                                    smallRender[(i * 2 + 2) * 25 + (j * 2)],
+                                    smallRender[(i * 2 + 2) * 25 + (j * 2 + 4)],
+                                    smallRender[(i * 2 + 4) * 25 + (j * 2 + 2)] });
                 }
             }
         }
@@ -289,12 +282,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         // RENDER SMALL 3
         for (i = 0; i < 9; i++) {
             for (j = 0; j < 9; j++) {
-                smallRender[(i * 2 + 3) * 25 + (j * 2 + 3)] = mix4(new float[][] {
-                    smallRender[(i * 2 + 2) * 25 + (j * 2 + 2)],
-                    smallRender[(i * 2 + 4) * 25 + (j * 2 + 2)],
-                    smallRender[(i * 2 + 2) * 25 + (j * 2 + 4)],
-                    smallRender[(i * 2 + 4) * 25 + (j * 2 + 4)]
-                });
+                smallRender[(i * 2 + 3) * 25 + (j * 2 + 3)] = mix4(
+                        new float[][] { smallRender[(i * 2 + 2) * 25 + (j * 2 + 2)],
+                                smallRender[(i * 2 + 4) * 25 + (j * 2 + 2)],
+                                smallRender[(i * 2 + 2) * 25 + (j * 2 + 4)],
+                                smallRender[(i * 2 + 4) * 25 + (j * 2 + 4)] });
             }
         }
 
@@ -302,12 +294,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         for (i = 0; i < 16; i++) {
             for (j = 0; j < 16; j++) {
                 if (!(i % 2 == 0 && j % 2 == 0) && !(i % 2 != 0 && j % 2 != 0)) {
-                    smallRender[(i + 4) * 25 + (j + 4)] = mix4(new float[][] {
-                        smallRender[(i + 3) * 25 + (j + 4)],
-                        smallRender[(i + 4) * 25 + (j + 3)],
-                        smallRender[(i + 4) * 25 + (j + 5)],
-                        smallRender[(i + 5) * 25 + (j + 4)]
-                    });
+                    smallRender[(i + 4) * 25 + (j + 4)] = mix4(
+                            new float[][] { smallRender[(i + 3) * 25 + (j + 4)], smallRender[(i + 4) * 25 + (j + 3)],
+                                    smallRender[(i + 4) * 25 + (j + 5)], smallRender[(i + 5) * 25 + (j + 4)] });
                 }
             }
         }
@@ -359,18 +348,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
                         }
 
                         testHeight[i * 16 + j] += cmr.calculateRiver(
-                                        x + i,
-                                        y + j,
-                                        river,
-                                        RealisticBiomeBase.getBiome(k)
-                                                .rNoise(
-                                                        perlin,
-                                                        cell,
-                                                        x + i,
-                                                        y + j,
-                                                        ocean,
-                                                        smallRender[l][k],
-                                                        river + 1f))
+                                x + i,
+                                y + j,
+                                river,
+                                RealisticBiomeBase.getBiome(k)
+                                        .rNoise(perlin, cell, x + i, y + j, ocean, smallRender[l][k], river + 1f))
                                 * smallRender[l][k];
                     }
                 }
@@ -394,16 +376,16 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         return result;
     }
 
-    public void replaceBlocksForBiome(
-            int cx,
-            int cy,
-            Block[] blocks,
-            byte[] metadata,
-            RealisticBiomeBase[] biomes,
-            BiomeGenBase[] base,
-            float[] n) {
-        ChunkProviderEvent.ReplaceBiomeBlocks event =
-                new ChunkProviderEvent.ReplaceBiomeBlocks(this, cx, cy, blocks, metadata, base, worldObj);
+    public void replaceBlocksForBiome(int cx, int cy, Block[] blocks, byte[] metadata, RealisticBiomeBase[] biomes,
+            BiomeGenBase[] base, float[] n) {
+        ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(
+                this,
+                cx,
+                cy,
+                blocks,
+                metadata,
+                base,
+                worldObj);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Result.DENY) return;
 
@@ -675,7 +657,13 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
 
         if (TerrainGen.populate(this, worldObj, rand, i, j, flag, PopulateChunkEvent.Populate.EventType.ANIMALS)) {
             SpawnerAnimals.performWorldGenSpawning(
-                    this.worldObj, worldObj.getBiomeGenForCoords(x + 16, y + 16), x + 8, y + 8, 16, 16, this.rand);
+                    this.worldObj,
+                    worldObj.getBiomeGenForCoords(x + 16, y + 16),
+                    x + 8,
+                    y + 8,
+                    16,
+                    16,
+                    this.rand);
         }
 
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(ichunkprovider, worldObj, rand, i, j, flag));
@@ -704,8 +692,7 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
                             worldObj.setBlock(sn1 + x, sn3 - 1, sn2 + y, Blocks.ice, 0, 2);
                         }
 
-                        if (Blocks.snow_layer.canPlaceBlockAt(worldObj, sn1 + x, sn3, sn2 + y)
-                                && b2 != Blocks.ice
+                        if (Blocks.snow_layer.canPlaceBlockAt(worldObj, sn1 + x, sn3, sn2 + y) && b2 != Blocks.ice
                                 && b2 != Blocks.water
                                 && sn3 > 62) {
                             if (b1 != Blocks.snow_layer && b2 != Blocks.packed_ice) {

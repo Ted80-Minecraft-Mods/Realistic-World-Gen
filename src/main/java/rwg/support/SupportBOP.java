@@ -1,33 +1,29 @@
 package rwg.support;
 
-import biomesoplenty.api.content.BOPCBiomes;
 import net.minecraft.init.Blocks;
+
 import rwg.api.RWGBiomes;
 import rwg.support.Support.BiomeCategory;
 import rwg.support.edit.*;
 import rwg.surface.*;
 import rwg.surface.river.SurfaceRiverOasis;
 import rwg.terrain.*;
+import biomesoplenty.api.content.BOPCBiomes;
 
 public class SupportBOP {
+
     public static void init() {
         // ALPS
-        /*Support.biomes_snow.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.alps,
-        		new TerrainMountainRiver(),
-        		new SurfaceMountainSnow(Blocks.grass, Blocks.dirt, false, null, 0.45f)
-        	)
-        );*/
+        /*
+         * Support.biomes_snow.add( new RealisticBiomeSupport( BOPCBiomes.alps, new TerrainMountainRiver(), new
+         * SurfaceMountainSnow(Blocks.grass, Blocks.dirt, false, null, 0.45f) ) );
+         */
 
         // ARCTIC
-        /*Support.biomes_snow.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.arctic,
-        		new TerrainMountainRiver(),
-        		new SurfaceMountainSnow(Blocks.grass, Blocks.dirt, false, null, 0.45f)
-        	)
-        );*/
+        /*
+         * Support.biomes_snow.add( new RealisticBiomeSupport( BOPCBiomes.arctic, new TerrainMountainRiver(), new
+         * SurfaceMountainSnow(Blocks.grass, Blocks.dirt, false, null, 0.45f) ) );
+         */
 
         // BAMBOO FOREST
         Support.addBiome(
@@ -63,7 +59,10 @@ public class SupportBOP {
                         RWGBiomes.baseRiverHot,
                         new TerrainMarsh(),
                         new SurfaceGrassland(
-                                BOPCBiomes.bog.topBlock, BOPCBiomes.bog.fillerBlock, Blocks.stone, Blocks.cobblestone)),
+                                BOPCBiomes.bog.topBlock,
+                                BOPCBiomes.bog.fillerBlock,
+                                Blocks.stone,
+                                Blocks.cobblestone)),
                 BiomeCategory.HOT);
 
         // BOREAL FOREST
@@ -107,12 +106,13 @@ public class SupportBOP {
                         BOPCBiomes.brushland,
                         RWGBiomes.baseRiverOasis,
                         new TerrainDuneValley(300f),
-                        new SurfaceBase[] {
-                            new SurfaceDuneValley(
-                                    BOPCBiomes.brushland.topBlock, BOPCBiomes.brushland.fillerBlock, 300f, false, true),
-                            new SurfaceRiverOasis(),
-                        },
-                        new EditBase[] {new EditRiverOasis()}),
+                        new SurfaceBase[] { new SurfaceDuneValley(
+                                BOPCBiomes.brushland.topBlock,
+                                BOPCBiomes.brushland.fillerBlock,
+                                300f,
+                                false,
+                                true), new SurfaceRiverOasis(), },
+                        new EditBase[] { new EditRiverOasis() }),
                 BiomeCategory.HOT);
 
         // CANYON
@@ -172,17 +172,27 @@ public class SupportBOP {
                         RWGBiomes.baseRiverIce,
                         new TerrainMountainRiver(),
                         new SurfaceMountainSnow(
-                                Blocks.grass, Blocks.dirt, false, null, 0.45f, 1.5f, 50f, 60f, 0.4f, 100f, 50f, 1.5f)),
+                                Blocks.grass,
+                                Blocks.dirt,
+                                false,
+                                null,
+                                0.45f,
+                                1.5f,
+                                50f,
+                                60f,
+                                0.4f,
+                                100f,
+                                50f,
+                                1.5f)),
                 BiomeCategory.SNOW);
 
         // CRAG
-        /*Support.biomes_cold.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.crag,
-        		new TerrainCanyon(false, new float[]{2.0f, 0.5f, 6.5f, 0.5f, 14.0f, 0.5f, 19.0f, 0.5f}, 35f, 80f, 60f, 40f, 69f),
-        		new SurfaceGrassland(BOPCBiomes.crag.topBlock, BOPCBiomes.crag.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_cold.add( new RealisticBiomeSupport( BOPCBiomes.crag, new TerrainCanyon(false, new
+         * float[]{2.0f, 0.5f, 6.5f, 0.5f, 14.0f, 0.5f, 19.0f, 0.5f}, 35f, 80f, 60f, 40f, 69f), new
+         * SurfaceGrassland(BOPCBiomes.crag.topBlock, BOPCBiomes.crag.fillerBlock, Blocks.stone, Blocks.cobblestone) )
+         * );
+         */
 
         // DEAD FOREST
         Support.addBiome(
@@ -230,17 +240,18 @@ public class SupportBOP {
                         RWGBiomes.baseRiverHot,
                         new TerrainHighland(0f, 140f, 68f, 200f),
                         new SurfaceGrassland(
-                                BOPCBiomes.fen.topBlock, BOPCBiomes.fen.fillerBlock, Blocks.stone, Blocks.cobblestone)),
+                                BOPCBiomes.fen.topBlock,
+                                BOPCBiomes.fen.fillerBlock,
+                                Blocks.stone,
+                                Blocks.cobblestone)),
                 BiomeCategory.HOT);
 
         // FLOWER FIELD
-        /*Support.biomes_hot.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.flowerField,
-        		new TerrainGrasslandHills(40f, 180f, 13f, 100f, 28f, 260f, 70f),
-        		new SurfaceGrassland(BOPCBiomes.flowerField.topBlock, BOPCBiomes.flowerField.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_hot.add( new RealisticBiomeSupport( BOPCBiomes.flowerField, new TerrainGrasslandHills(40f,
+         * 180f, 13f, 100f, 28f, 260f, 70f), new SurfaceGrassland(BOPCBiomes.flowerField.topBlock,
+         * BOPCBiomes.flowerField.fillerBlock, Blocks.stone, Blocks.cobblestone) ) );
+         */
 
         // FROST FOREST
         Support.addBiome(
@@ -291,13 +302,11 @@ public class SupportBOP {
                 BiomeCategory.COLD);
 
         // GRASSLAND
-        /*Support.biomes_cold.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.grassland,
-        		new TerrainGrasslandHills(47f, 180f, 13f, 100f, 28f, 260f, 70f),
-        		new SurfaceGrassland(BOPCBiomes.grassland.topBlock, BOPCBiomes.grassland.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_cold.add( new RealisticBiomeSupport( BOPCBiomes.grassland, new TerrainGrasslandHills(47f,
+         * 180f, 13f, 100f, 28f, 260f, 70f), new SurfaceGrassland(BOPCBiomes.grassland.topBlock,
+         * BOPCBiomes.grassland.fillerBlock, Blocks.stone, Blocks.cobblestone) ) );
+         */
 
         // GROVE
         Support.addBiome(
@@ -318,12 +327,13 @@ public class SupportBOP {
                         BOPCBiomes.heathland,
                         RWGBiomes.baseRiverOasis,
                         new TerrainDuneValley(300f),
-                        new SurfaceBase[] {
-                            new SurfaceDuneValley(
-                                    BOPCBiomes.brushland.topBlock, BOPCBiomes.brushland.fillerBlock, 300f, false, true),
-                            new SurfaceRiverOasis(),
-                        },
-                        new EditBase[] {new EditRiverOasis()}),
+                        new SurfaceBase[] { new SurfaceDuneValley(
+                                BOPCBiomes.brushland.topBlock,
+                                BOPCBiomes.brushland.fillerBlock,
+                                300f,
+                                false,
+                                true), new SurfaceRiverOasis(), },
+                        new EditBase[] { new EditRiverOasis() }),
                 BiomeCategory.HOT);
 
         // HIGHLAND
@@ -351,7 +361,11 @@ public class SupportBOP {
                         RWGBiomes.baseRiverHot,
                         new TerrainHilly(230f, 120f, 0f),
                         new SurfaceMountainStone(
-                                BOPCBiomes.jadeCliffs.topBlock, BOPCBiomes.jadeCliffs.fillerBlock, false, null, 0.95f)),
+                                BOPCBiomes.jadeCliffs.topBlock,
+                                BOPCBiomes.jadeCliffs.fillerBlock,
+                                false,
+                                null,
+                                0.95f)),
                 BiomeCategory.HOT);
 
         // LAVENDER FIELDS
@@ -408,13 +422,11 @@ public class SupportBOP {
                 BiomeCategory.COLD);
 
         // MARSH
-        /*Support.biomes_cold.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.marsh,
-        		new TerrainMarsh(),
-        		new SurfaceGrassland(BOPCBiomes.marsh.topBlock, BOPCBiomes.marsh.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_cold.add( new RealisticBiomeSupport( BOPCBiomes.marsh, new TerrainMarsh(), new
+         * SurfaceGrassland(BOPCBiomes.marsh.topBlock, BOPCBiomes.marsh.fillerBlock, Blocks.stone, Blocks.cobblestone) )
+         * );
+         */
 
         // MEADOW
         Support.addBiome(
@@ -423,17 +435,19 @@ public class SupportBOP {
                         RWGBiomes.baseRiverTemperate,
                         new TerrainMountainSpikes(),
                         new SurfaceMountainStone(
-                                BOPCBiomes.meadow.topBlock, BOPCBiomes.meadow.fillerBlock, false, null, 1.2f)),
+                                BOPCBiomes.meadow.topBlock,
+                                BOPCBiomes.meadow.fillerBlock,
+                                false,
+                                null,
+                                1.2f)),
                 BiomeCategory.COLD);
 
         // MOOR
-        /*Support.biomes_wet.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.moor,
-        		new TerrainHighland(0f, 70f, 68f, 200f),
-        		new SurfaceGrassland(BOPCBiomes.moor.topBlock, BOPCBiomes.moor.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_wet.add( new RealisticBiomeSupport( BOPCBiomes.moor, new TerrainHighland(0f, 70f, 68f, 200f),
+         * new SurfaceGrassland(BOPCBiomes.moor.topBlock, BOPCBiomes.moor.fillerBlock, Blocks.stone, Blocks.cobblestone)
+         * ) );
+         */
 
         // MOUNTAIN
         Support.addBiome(
@@ -463,22 +477,18 @@ public class SupportBOP {
                 BiomeCategory.WET);
 
         // OMINOUS WOODS
-        /*Support.biomes_cold.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.ominousWoods,
-        		new TerrainHighland(0f, 140f, 68f, 200f),
-        		new SurfaceGrassland(BOPCBiomes.ominousWoods.topBlock, BOPCBiomes.ominousWoods.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_cold.add( new RealisticBiomeSupport( BOPCBiomes.ominousWoods, new TerrainHighland(0f, 140f,
+         * 68f, 200f), new SurfaceGrassland(BOPCBiomes.ominousWoods.topBlock, BOPCBiomes.ominousWoods.fillerBlock,
+         * Blocks.stone, Blocks.cobblestone) ) );
+         */
 
         // ORIGIN VALLEY
-        /*Support.biomes_cold.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.originValley,
-        		new TerrainHighland(10f, 80f, 68f, 200f),
-        		new SurfaceGrassland(BOPCBiomes.originValley.topBlock, BOPCBiomes.originValley.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_cold.add( new RealisticBiomeSupport( BOPCBiomes.originValley, new TerrainHighland(10f, 80f,
+         * 68f, 200f), new SurfaceGrassland(BOPCBiomes.originValley.topBlock, BOPCBiomes.originValley.fillerBlock,
+         * Blocks.stone, Blocks.cobblestone) ) );
+         */
 
         // OUTBACK
         Support.addBiome(
@@ -486,12 +496,13 @@ public class SupportBOP {
                         BOPCBiomes.outback,
                         RWGBiomes.baseRiverOasis,
                         new TerrainDuneValley(300f),
-                        new SurfaceBase[] {
-                            new SurfaceDuneValley(
-                                    BOPCBiomes.outback.topBlock, BOPCBiomes.outback.fillerBlock, 300f, false, false),
-                            new SurfaceRiverOasis(),
-                        },
-                        new EditBase[] {new EditRiverOasis()}),
+                        new SurfaceBase[] { new SurfaceDuneValley(
+                                BOPCBiomes.outback.topBlock,
+                                BOPCBiomes.outback.fillerBlock,
+                                300f,
+                                false,
+                                false), new SurfaceRiverOasis(), },
+                        new EditBase[] { new EditRiverOasis() }),
                 BiomeCategory.HOT);
 
         // PRAIRIE
@@ -514,7 +525,11 @@ public class SupportBOP {
                         RWGBiomes.baseRiverWet,
                         new TerrainSwampMountain(120f, 300f),
                         new SurfaceMountainStone(
-                                BOPCBiomes.rainforest.topBlock, BOPCBiomes.rainforest.fillerBlock, false, null, 1.3f)),
+                                BOPCBiomes.rainforest.topBlock,
+                                BOPCBiomes.rainforest.fillerBlock,
+                                false,
+                                null,
+                                1.3f)),
                 BiomeCategory.WET);
 
         // REDWOOD FOREST
@@ -597,13 +612,11 @@ public class SupportBOP {
                 BiomeCategory.WET);
 
         // STEPPE
-        /*Support.biomes_hot.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.steppe,
-        		new TerrainGrasslandHills(70f, 180f, 13f, 100f, 38f, 260f, 71f),
-        		new SurfaceGrassland(BOPCBiomes.steppe.topBlock, BOPCBiomes.steppe.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_hot.add( new RealisticBiomeSupport( BOPCBiomes.steppe, new TerrainGrasslandHills(70f, 180f,
+         * 13f, 100f, 38f, 260f, 71f), new SurfaceGrassland(BOPCBiomes.steppe.topBlock, BOPCBiomes.steppe.fillerBlock,
+         * Blocks.stone, Blocks.cobblestone) ) );
+         */
 
         // TEMPERATE RAINFOREST
         Support.addBiome(
@@ -620,13 +633,11 @@ public class SupportBOP {
                 BiomeCategory.WET);
 
         // THICKET
-        /*Support.biomes_hot.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.thicket,
-        		new TerrainGrasslandHills(70f, 180f, 13f, 100f, 38f, 260f, 71f),
-        		new SurfaceGrassland(BOPCBiomes.thicket.topBlock, BOPCBiomes.thicket.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_hot.add( new RealisticBiomeSupport( BOPCBiomes.thicket, new TerrainGrasslandHills(70f, 180f,
+         * 13f, 100f, 38f, 260f, 71f), new SurfaceGrassland(BOPCBiomes.thicket.topBlock, BOPCBiomes.thicket.fillerBlock,
+         * Blocks.stone, Blocks.cobblestone) ) );
+         */
 
         // TROPICAL RAINFOREST
         Support.addBiome(
@@ -655,13 +666,11 @@ public class SupportBOP {
                 BiomeCategory.SNOW);
 
         // WASTELAND
-        /*Support.biomes_hot.add(
-        	new RealisticBiomeSupport(
-        		BOPCBiomes.wasteland,
-        		new TerrainHighland(10f, 80f, 68f, 200f),
-        		new SurfaceGrassland(BOPCBiomes.wasteland.topBlock, BOPCBiomes.wasteland.fillerBlock, Blocks.stone, Blocks.cobblestone)
-        	)
-        );*/
+        /*
+         * Support.biomes_hot.add( new RealisticBiomeSupport( BOPCBiomes.wasteland, new TerrainHighland(10f, 80f, 68f,
+         * 200f), new SurfaceGrassland(BOPCBiomes.wasteland.topBlock, BOPCBiomes.wasteland.fillerBlock, Blocks.stone,
+         * Blocks.cobblestone) ) );
+         */
 
         // WETLAND
         Support.addBiome(

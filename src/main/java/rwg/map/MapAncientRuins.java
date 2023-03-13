@@ -1,25 +1,18 @@
 package rwg.map;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+
 import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class MapAncientRuins {
-    public static void build(
-            Block[] blocks,
-            byte[] metadata,
-            World world,
-            Random mapRand,
-            int chunkX,
-            int chunkY,
-            int baseX,
-            int baseY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            int dis) {
+
+    public static void build(Block[] blocks, byte[] metadata, World world, Random mapRand, int chunkX, int chunkY,
+            int baseX, int baseY, NoiseGenerator perlin, CellNoise cell, int dis) {
         int y = 120;
         for (; y > 49; y--) {
             if (blocks[coordstoArray(8, y - 1, 8)] != Blocks.air) {

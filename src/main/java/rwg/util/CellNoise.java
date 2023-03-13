@@ -1,39 +1,27 @@
 /*
- * Copyright (C) 2003, 2004 Jason Bevins (original libnoise code)
- * Copyright (C) 2010 Thomas J. Hodge (java port of libnoise)
- *
- * This file was part of libnoiseforjava.
- *
- * libnoiseforjava is a Java port of the C++ library libnoise, which may be found at
- * http://libnoise.sourceforge.net/.  libnoise was developed by Jason Bevins, who may be
- * contacted at jlbezigvins@gmzigail.com (for great email, take off every 'zig').
- * Porting to Java was done by Thomas Hodge, who may be contacted at
- * libnoisezagforjava@gzagmail.com (remove every 'zag').
- *
- * libnoiseforjava is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the Free Software
- * Foundation, either version 3 of the License, or (at your option) any later version.
- *
- * libnoiseforjava is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * libnoiseforjava.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * Copyright (C) 2003, 2004 Jason Bevins (original libnoise code) Copyright (C) 2010 Thomas J. Hodge (java port of
+ * libnoise) This file was part of libnoiseforjava. libnoiseforjava is a Java port of the C++ library libnoise, which
+ * may be found at http://libnoise.sourceforge.net/. libnoise was developed by Jason Bevins, who may be contacted at
+ * jlbezigvins@gmzigail.com (for great email, take off every 'zig'). Porting to Java was done by Thomas Hodge, who may
+ * be contacted at libnoisezagforjava@gzagmail.com (remove every 'zag'). libnoiseforjava is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version. libnoiseforjava is distributed in
+ * the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a
+ * copy of the GNU General Public License along with libnoiseforjava. If not, see <http://www.gnu.org/licenses/>.
  */
 package rwg.util;
 
 import java.util.Random;
 
 /**
- * This is a Voronoi noise generator, originally from https://github.com/TJHJava/libnoiseforjava
- * It was modified to work in a similar way to the bukkit noise generators, and to support
- * octaves and 2d noise,
+ * This is a Voronoi noise generator, originally from https://github.com/TJHJava/libnoiseforjava It was modified to work
+ * in a similar way to the bukkit noise generators, and to support octaves and 2d noise,
  *
  * by mncat77 and jtjj222. <----------
  */
 public class CellNoise {
+
     private static final double SQRT_2 = 1.4142135623730950488;
     private static final double SQRT_3 = 1.7320508075688772935;
 
@@ -65,8 +53,9 @@ public class CellNoise {
     private double getDistance(double xDist, double yDist, double zDist) {
         switch (distanceMethod) {
             case 0:
-                return Math.sqrt(xDist * xDist + yDist * yDist + zDist * zDist)
-                        / SQRT_3; // Approximation (for speed) of elucidean (regular) distance
+                return Math.sqrt(xDist * xDist + yDist * yDist + zDist * zDist) / SQRT_3; // Approximation (for speed)
+                                                                                          // of elucidean (regular)
+                                                                                          // distance
             case 1:
                 return xDist + yDist + zDist;
             default:
@@ -131,9 +120,8 @@ public class CellNoise {
             double xDist = xCandidate - x;
             double zDist = zCandidate - z;
             return (float) getDistance2D(xDist, zDist);
-        } else
-            return ((float)
-                    CellNoise.valueNoise2D((int) (Math.floor(xCandidate)), (int) (Math.floor(zCandidate)), seed));
+        } else return ((float) CellNoise
+                .valueNoise2D((int) (Math.floor(xCandidate)), (int) (Math.floor(zCandidate)), seed));
     }
 
     public float border2(double x, double z, double width, float depth) {
@@ -219,13 +207,10 @@ public class CellNoise {
                     dNeighbour = dCandidate;
                     dCandidate = dist;
 
-                    /*dNeighbour = dCandidate;
-                    xNeighbour = xCandidate;
-                    zNeighbour = zCandidate;
-
-                    dCandidate = dist;
-                    xCandidate = xPos;
-                    zCandidate = zPos;*/
+                    /*
+                     * dNeighbour = dCandidate; xNeighbour = xCandidate; zNeighbour = zCandidate; dCandidate = dist;
+                     * xCandidate = xPos; zCandidate = zPos;
+                     */
                 } else if (dist < dNeighbour) {
                     dNeighbour = dist;
                 }
@@ -242,7 +227,7 @@ public class CellNoise {
     }
 
     public double noise(double x, double y, double z, double frequency) {
-        // Inside each unit cube, there is a seed point at a random position.  Go
+        // Inside each unit cube, there is a seed point at a random position. Go
         // through each of the nearby cubes until we find a cube with a seed point
         // that is closest to the specified position.
         x *= frequency;
@@ -293,18 +278,16 @@ public class CellNoise {
             double zDist = zCandidate - z;
 
             return getDistance(xDist, yDist, zDist);
-        } else
-            return ((double) CellNoise.valueNoise3D(
-                    (int) (Math.floor(xCandidate)),
-                    (int) (Math.floor(yCandidate)),
-                    (int) (Math.floor(zCandidate)),
-                    seed));
+        } else return ((double) CellNoise.valueNoise3D(
+                (int) (Math.floor(xCandidate)),
+                (int) (Math.floor(yCandidate)),
+                (int) (Math.floor(zCandidate)),
+                seed));
     }
 
     /**
-     * To avoid having to store the feature points, we use a hash function
-     * of the coordinates and the seed instead. Those big scary numbers are
-     * arbitrary primes.
+     * To avoid having to store the feature points, we use a hash function of the coordinates and the seed instead.
+     * Those big scary numbers are arbitrary primes.
      */
     public static double valueNoise2D(int x, int z, long seed) {
         long n = (1619 * x + 6971 * z + 1013 * seed) & 0x7fffffff;

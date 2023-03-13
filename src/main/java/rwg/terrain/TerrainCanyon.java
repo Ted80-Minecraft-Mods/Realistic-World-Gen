@@ -4,6 +4,7 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class TerrainCanyon extends TerrainBase {
+
     private boolean smallRiver;
     private float[] height;
     private int heightLength;
@@ -14,36 +15,15 @@ public class TerrainCanyon extends TerrainBase {
     private float base;
 
     /*
-     * Example parameters:
-     *
-     * allowed to generate rivers?
-     * riverGen = true
-     *
-     * canyon jump heights
-     * heightArray = new float[]{2.0f, 0.5f, 6.5f, 0.5f, 14.0f, 0.5f, 19.0f, 0.5f}
-     *
-     * strength of canyon jump heights
-     * heightStrength = 35f
-     *
-     * canyon width (cliff to cliff)
-     * canyonWidth = 160f
-     *
-     * canyon heigth (total heigth)
-     * canyonHeight = 60f
-     *
-     * canyon strength
+     * Example parameters: allowed to generate rivers? riverGen = true canyon jump heights heightArray = new
+     * float[]{2.0f, 0.5f, 6.5f, 0.5f, 14.0f, 0.5f, 19.0f, 0.5f} strength of canyon jump heights heightStrength = 35f
+     * canyon width (cliff to cliff) canyonWidth = 160f canyon heigth (total heigth) canyonHeight = 60f canyon strength
      * canyonStrength = 40f
-     *
      */
-    public TerrainCanyon(
-            boolean riverGen,
-            float heightStrength,
-            float canyonWidth,
-            float canyonHeight,
-            float canyonStrength,
-            float baseHeight) {
+    public TerrainCanyon(boolean riverGen, float heightStrength, float canyonWidth, float canyonHeight,
+            float canyonStrength, float baseHeight) {
         smallRiver = riverGen;
-        height = new float[] {5.0f, 0.5f, 12.5f, 0.5f, 18.0f, 0.5f};
+        height = new float[] { 5.0f, 0.5f, 12.5f, 0.5f, 18.0f, 0.5f };
         strength = heightStrength;
         heightLength = height.length;
         cWidth = canyonWidth;
@@ -53,8 +33,8 @@ public class TerrainCanyon extends TerrainBase {
     }
 
     @Override
-    public float generateNoise(
-            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float generateNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border,
+            float river) {
         // float b = perlin.noise2(x / cWidth, y / cWidth) * cHeigth * river;
         // b *= b / cStrength;
         river *= 1.3f;

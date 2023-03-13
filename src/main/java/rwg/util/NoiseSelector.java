@@ -3,6 +3,7 @@ package rwg.util;
 import rwg.world.RwgWorldSavedData;
 
 public class NoiseSelector {
+
     public static NoiseGenerator createNoiseGenerator(long seed) {
 
         NoiseImplementation noiseImplementation = RwgWorldSavedData.getNoiseImplementation();

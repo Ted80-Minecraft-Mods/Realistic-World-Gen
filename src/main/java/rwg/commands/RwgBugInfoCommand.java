@@ -8,6 +8,7 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
 public class RwgBugInfoCommand extends CommandBase {
+
     @Override
     public String getCommandName() {
         return "rwg_buginfo";
@@ -24,14 +25,16 @@ public class RwgBugInfoCommand extends CommandBase {
             iCommandSender.addChatMessage(new ChatComponentTranslation("rwg.buginfo.line" + line));
         }
 
-        iCommandSender.addChatMessage(new ChatComponentText("/rwg_noise perlin")
-                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD))
-                .appendSibling(new ChatComponentTranslation("rwg.buginfo.perlin")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RESET))));
-        iCommandSender.addChatMessage(new ChatComponentText("/rwg_noise opensimplex")
-                .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD))
-                .appendSibling(new ChatComponentTranslation("rwg.buginfo.opensimplex")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RESET))));
+        iCommandSender.addChatMessage(
+                new ChatComponentText("/rwg_noise perlin")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)).appendSibling(
+                                new ChatComponentTranslation("rwg.buginfo.perlin")
+                                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RESET))));
+        iCommandSender.addChatMessage(
+                new ChatComponentText("/rwg_noise opensimplex")
+                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)).appendSibling(
+                                new ChatComponentTranslation("rwg.buginfo.opensimplex")
+                                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RESET))));
     }
 
     @Override

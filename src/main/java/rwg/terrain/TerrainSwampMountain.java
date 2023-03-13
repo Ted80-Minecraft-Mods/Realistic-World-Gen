@@ -4,6 +4,7 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class TerrainSwampMountain extends TerrainBase {
+
     private float heigth;
     private float width;
 
@@ -13,8 +14,8 @@ public class TerrainSwampMountain extends TerrainBase {
     }
 
     @Override
-    public float generateNoise(
-            NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border, float river) {
+    public float generateNoise(NoiseGenerator perlin, CellNoise cell, int x, int y, float ocean, float border,
+            float river) {
         float h = perlin.noise2(x / width, y / width) * heigth * river;
         h *= h / 32f;
         h = h > 150f ? 150f : h;

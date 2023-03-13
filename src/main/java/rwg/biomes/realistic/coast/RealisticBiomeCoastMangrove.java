@@ -1,11 +1,13 @@
 package rwg.biomes.realistic.coast;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.deco.DecoBlob;
@@ -16,20 +18,14 @@ import rwg.util.CliffCalculator;
 import rwg.util.NoiseGenerator;
 
 public class RealisticBiomeCoastMangrove extends RealisticBiomeBase {
+
     public RealisticBiomeCoastMangrove() {
         super(0, RWGBiomes.baseOceanOasis);
     }
 
     @Override
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {
         for (int l = 0; l < 2f * strength; ++l) {
             int i1 = chunkX + rand.nextInt(16) + 8;
             int j1 = chunkY + rand.nextInt(16) + 8;
@@ -45,7 +41,16 @@ public class RealisticBiomeCoastMangrove extends RealisticBiomeBase {
             int z52 = world.getHeightValue(j6, k10);
 
             WorldGenerator worldgenerator = new DecoMangrove(
-                    Blocks.log, 0, Blocks.leaves, 0, 1 + rand.nextInt(4), 4 + rand.nextInt(2), 5f, 2, 0.32f, 0.14f);
+                    Blocks.log,
+                    0,
+                    Blocks.leaves,
+                    0,
+                    1 + rand.nextInt(4),
+                    4 + rand.nextInt(2),
+                    5f,
+                    2,
+                    0.32f,
+                    0.14f);
             worldgenerator.setScale(1.0D, 1.0D, 1.0D);
             worldgenerator.generate(world, rand, j6, z52, k10);
         }
@@ -76,21 +81,8 @@ public class RealisticBiomeCoastMangrove extends RealisticBiomeBase {
     }
 
     @Override
-    public void rReplace(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float c = CliffCalculator.calc(x, y, noise);
         boolean cliff = c > 1.3f ? true : false;
         boolean sand = false;

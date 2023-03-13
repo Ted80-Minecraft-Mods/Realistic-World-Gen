@@ -1,15 +1,17 @@
 package rwg.biomes.base;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.data.VillageMaterialData;
 import rwg.data.VillageMaterials;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BaseBiomeHotForest extends BiomeGenBase {
+
     public BaseBiomeHotForest(int id, String bn) {
         super(id);
         setTemperatureRainfall(0.8f, 0.2f);

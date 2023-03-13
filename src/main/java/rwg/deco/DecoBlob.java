@@ -1,16 +1,18 @@
 package rwg.deco;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import rwg.config.ConfigRWG;
 
 public class DecoBlob extends WorldGenerator {
+
     private Block field_150545_a;
     private int field_150544_b;
-    private static final String __OBFID = "CL_00000402";
 
     public DecoBlob(Block p_i45450_1_, int p_i45450_2_) {
         super(false);
@@ -26,13 +28,11 @@ public class DecoBlob extends WorldGenerator {
 
         while (true) {
             if (p_76484_4_ > 3) {
-                label63:
-                {
+                label63: {
                     if (!p_76484_1_.isAirBlock(p_76484_3_, p_76484_4_ - 1, p_76484_5_)) {
                         Block block = p_76484_1_.getBlock(p_76484_3_, p_76484_4_ - 1, p_76484_5_);
 
-                        if (block == Blocks.grass
-                                || block == Blocks.dirt
+                        if (block == Blocks.grass || block == Blocks.dirt
                                 || block == Blocks.stone
                                 || block == Blocks.gravel
                                 || block == Blocks.sand) {

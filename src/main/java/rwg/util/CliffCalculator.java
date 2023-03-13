@@ -3,6 +3,7 @@ package rwg.util;
 import java.util.Random;
 
 public class CliffCalculator {
+
     public static float calc(int x, int y, float[] noise) {
         float cliff = 0f;
         if (x > 0) {

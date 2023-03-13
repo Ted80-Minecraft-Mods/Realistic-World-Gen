@@ -1,11 +1,13 @@
 package rwg.biomes.realistic.land;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
 import rwg.api.RWGBiomes;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.deco.DecoBlob;
@@ -18,6 +20,7 @@ import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 
 public class RealisticBiomePolar extends RealisticBiomeBase {
+
     private TerrainBase terrain;
     private SurfaceBase surface;
 
@@ -28,15 +31,8 @@ public class RealisticBiomePolar extends RealisticBiomeBase {
     }
 
     @Override
-    public void rDecorate(
-            World world,
-            Random rand,
-            int chunkX,
-            int chunkY,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float strength,
-            float river) {
+    public void rDecorate(World world, Random rand, int chunkX, int chunkY, NoiseGenerator perlin, CellNoise cell,
+            float strength, float river) {
         if (river > 0.86f) {
             for (int j = 0; j < 5f * strength; j++) {
                 int i1 = chunkX + rand.nextInt(16) + 8;
@@ -63,21 +59,8 @@ public class RealisticBiomePolar extends RealisticBiomeBase {
         return terrain.generateNoise(perlin, cell, x, y, ocean, border, river);
     }
 
-    public void rReplace(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void rReplace(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         surface.paintTerrain(blocks, metadata, i, j, x, y, depth, world, rand, perlin, cell, noise, river, base);
     }
 }

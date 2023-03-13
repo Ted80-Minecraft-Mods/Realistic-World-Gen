@@ -1,12 +1,14 @@
 package rwg.deco;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoGrass extends WorldGenerator {
+
     private Block block;
     private int metadata;
 
@@ -29,8 +31,7 @@ public class DecoGrass extends WorldGenerator {
                 int j1 = y + rand.nextInt(4) - rand.nextInt(4);
                 int k1 = z + rand.nextInt(8) - rand.nextInt(8);
 
-                if (world.isAirBlock(i1, j1, k1)
-                        && j1 < 254
+                if (world.isAirBlock(i1, j1, k1) && j1 < 254
                         && Blocks.double_plant.canPlaceBlockAt(world, i1, j1, k1)) {
                     Blocks.double_plant.func_149889_c(world, i1, j1, k1, metadata, 0);
                 }

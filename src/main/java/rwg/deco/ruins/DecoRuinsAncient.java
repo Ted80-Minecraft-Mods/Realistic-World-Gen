@@ -1,11 +1,13 @@
 package rwg.deco.ruins;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 
 public class DecoRuinsAncient {
+
     private Block block;
 
     public DecoRuinsAncient(Block b) {
@@ -16,8 +18,7 @@ public class DecoRuinsAncient {
         int type = rand.nextInt(2);
 
         Block g = world.getBlock(x, y - 1, z);
-        if (g.getMaterial() != Material.ground
-                && g.getMaterial() != Material.grass
+        if (g.getMaterial() != Material.ground && g.getMaterial() != Material.grass
                 && g.getMaterial() != Material.sand
                 && g.getMaterial() != Material.rock) {
             return false;
@@ -29,8 +30,7 @@ public class DecoRuinsAncient {
             for (int cZ = -6; cZ <= 6; cZ += 12) {
                 for (int cY = y + 10; cY > 40; cY--) {
                     Block b = world.getBlock(x + cX, cY, z + cZ);
-                    if (b.getMaterial() == Material.ground
-                            || b.getMaterial() == Material.grass
+                    if (b.getMaterial() == Material.ground || b.getMaterial() == Material.grass
                             || b.getMaterial() == Material.sand
                             || b.getMaterial() == Material.rock) {
                         high = cY > high ? cY : high;
@@ -55,8 +55,7 @@ public class DecoRuinsAncient {
 
                 for (; sY > 50; sY--) {
                     Block b = world.getBlock(sX, sY - 1, sZ);
-                    if (b.getMaterial() == Material.ground
-                            || b.getMaterial() == Material.grass
+                    if (b.getMaterial() == Material.ground || b.getMaterial() == Material.grass
                             || b.getMaterial() == Material.sand
                             || b.getMaterial() == Material.rock) {
                         break;

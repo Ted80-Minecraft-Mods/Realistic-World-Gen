@@ -1,16 +1,18 @@
 package rwg.biomes.base;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.data.VillageMaterialData;
 import rwg.data.VillageMaterials;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BaseBiomeHotPlains extends BiomeGenBase {
+
     public BaseBiomeHotPlains(int id, String bn) {
         super(id);
         setTemperatureRainfall(0.9f, 0.1f);

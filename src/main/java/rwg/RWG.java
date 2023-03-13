@@ -1,17 +1,10 @@
 package rwg;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
+
 import rwg.biomes.base.BaseBiomes;
 import rwg.commands.RwgBugInfoCommand;
 import rwg.commands.RwgNoiseCommand;
@@ -20,9 +13,18 @@ import rwg.data.VillageMaterials;
 import rwg.handlers.LoginHandler;
 import rwg.support.Support;
 import rwg.world.WorldTypeRealistic;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = "RWG", name = "RealisticWorldGen", version = "GRADLETOKEN_VERSION", acceptableRemoteVersions = "*")
 public class RWG {
+
     @Instance("RWG")
     public static RWG instance;
 

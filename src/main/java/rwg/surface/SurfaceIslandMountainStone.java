@@ -1,15 +1,18 @@
 package rwg.surface;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+
 import rwg.util.CellNoise;
 import rwg.util.CliffCalculator;
 import rwg.util.NoiseGenerator;
 
 public class SurfaceIslandMountainStone extends SurfaceBase {
+
     private int beach;
     private Block beachBlock;
     private float min;
@@ -26,16 +29,8 @@ public class SurfaceIslandMountainStone extends SurfaceBase {
         min = minCliff;
     }
 
-    public SurfaceIslandMountainStone(
-            Block top,
-            Block fill,
-            int beachHeight,
-            Block genBeachBlock,
-            float minCliff,
-            float stoneCliff,
-            float stoneHeight,
-            float stoneStrength,
-            float clayCliff) {
+    public SurfaceIslandMountainStone(Block top, Block fill, int beachHeight, Block genBeachBlock, float minCliff,
+            float stoneCliff, float stoneHeight, float stoneStrength, float clayCliff) {
         this(top, fill, beachHeight, genBeachBlock, minCliff);
 
         sCliff = stoneCliff;
@@ -45,21 +40,8 @@ public class SurfaceIslandMountainStone extends SurfaceBase {
     }
 
     @Override
-    public void paintTerrain(
-            Block[] blocks,
-            byte[] metadata,
-            int i,
-            int j,
-            int x,
-            int y,
-            int depth,
-            World world,
-            Random rand,
-            NoiseGenerator perlin,
-            CellNoise cell,
-            float[] noise,
-            float river,
-            BiomeGenBase[] base) {
+    public void paintTerrain(Block[] blocks, byte[] metadata, int i, int j, int x, int y, int depth, World world,
+            Random rand, NoiseGenerator perlin, CellNoise cell, float[] noise, float river, BiomeGenBase[] base) {
         float c = CliffCalculator.calc(x, y, noise);
         int cliff = 0;
         boolean gravel = false;

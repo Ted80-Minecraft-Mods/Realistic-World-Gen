@@ -1,12 +1,14 @@
 package rwg.deco.trees;
 
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class DecoRedWood extends WorldGenerator {
+
     private int height;
     private int leaves;
     private int trunk;
@@ -74,12 +76,11 @@ public class DecoRedWood extends WorldGenerator {
     }
 
     private void createTrunk(World world, Random rand, int x, int y, int z) {
-        int[] pos = new int[] {0, 0, 1, 0, 0, 1, -1, 0, 0, -1, 1, 1, 1, -1, -1, 1, -1, -1};
+        int[] pos = new int[] { 0, 0, 1, 0, 0, 1, -1, 0, 0, -1, 1, 1, 1, -1, -1, 1, -1, -1 };
         int sh;
         Block b;
         for (int t = 0; t < 9; t++) {
-            sh = pos[t * 2] == 0 || pos[t * 2 + 1] == 0
-                    ? rand.nextInt(trunk * 2) + y + trunk
+            sh = pos[t * 2] == 0 || pos[t * 2 + 1] == 0 ? rand.nextInt(trunk * 2) + y + trunk
                     : rand.nextInt(trunk) + y - 1;
             while (sh > y - 2) {
                 if (world.getBlock(x + pos[t * 2], sh, z + pos[t * 2 + 1]) == Blocks.grass) {
