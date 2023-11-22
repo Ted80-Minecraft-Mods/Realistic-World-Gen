@@ -37,11 +37,14 @@ import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.config.ConfigRWG;
 import rwg.deco.DecoClay;
-import rwg.util.*;
-import cpw.mods.fml.common.eventhandler.Event.Result;
+import rwg.util.CanyonColor;
+import rwg.util.CellNoise;
+import rwg.util.NoiseGenerator;
+import rwg.util.NoiseSelector;
 
 public class ChunkGeneratorRealistic implements IChunkProvider {
 
@@ -161,11 +164,17 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
         }
 
         replaceBlocksForBiome(cx, cy, blocks, metadata, biomesForGeneration, baseBiomesList, noise);
-        caves.func_151539_a(this, worldObj, cx, cy, blocks);
+        if (ConfigRWG.generateCaves) {
+            caves.func_151539_a(this, worldObj, cx, cy, blocks);
+        }
 
-        mineshaftGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
+        if (ConfigRWG.generateMineshafts) {
+            mineshaftGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
+        }
         strongholdGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
-        villageGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
+        if (ConfigRWG.generateVillages) {
+            villageGenerator.func_151539_a(this, this.worldObj, cx, cy, blocks);
+        }
 
         long second = System.currentTimeMillis();
 
@@ -452,27 +461,35 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
 
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(ichunkprovider, worldObj, rand, i, j, flag));
 
-        mineshaftGenerator.generateStructuresInChunk(worldObj, rand, i, j);
+        if (ConfigRWG.generateMineshafts) {
+            mineshaftGenerator.generateStructuresInChunk(worldObj, rand, i, j);
+        }
         strongholdGenerator.generateStructuresInChunk(worldObj, rand, i, j);
-        villageGenerator.generateStructuresInChunk(worldObj, rand, i, j);
+        if (ConfigRWG.generateVillages) {
+            villageGenerator.generateStructuresInChunk(worldObj, rand, i, j);
+        }
 
         boolean gen = false;
 
-        gen = TerrainGen.populate(this, worldObj, rand, i, j, flag, PopulateChunkEvent.Populate.EventType.LAKE);
-        if (gen && rand.nextInt(10) == 0) {
-            int i2 = x + rand.nextInt(16) + 8;
-            int l4 = rand.nextInt(50);
-            int i8 = y + rand.nextInt(16) + 8;
-            (new WorldGenLakes(Blocks.water)).generate(worldObj, rand, i2, l4, i8);
+        if (ConfigRWG.generateUndergroundLakes) {
+            gen = TerrainGen.populate(this, worldObj, rand, i, j, flag, PopulateChunkEvent.Populate.EventType.LAKE);
+            if (gen && rand.nextInt(10) == 0) {
+                int i2 = x + rand.nextInt(16) + 8;
+                int l4 = rand.nextInt(50);
+                int i8 = y + rand.nextInt(16) + 8;
+                (new WorldGenLakes(Blocks.water)).generate(worldObj, rand, i2, l4, i8);
+            }
         }
 
-        gen = TerrainGen.populate(this, worldObj, rand, i, j, flag, PopulateChunkEvent.Populate.EventType.LAVA);
-        if (gen && rand.nextInt(18) == 0) {
-            int j2 = x + rand.nextInt(16) + 8;
-            int i5 = rand.nextInt(rand.nextInt(45) + 8);
-            int j8 = y + rand.nextInt(16) + 8;
-            if (i5 < 64 || rand.nextInt(10) == 0) {
-                (new WorldGenLakes(Blocks.lava)).generate(worldObj, rand, j2, i5, j8);
+        if (ConfigRWG.generateUndergroundLavaLakes) {
+            gen = TerrainGen.populate(this, worldObj, rand, i, j, flag, PopulateChunkEvent.Populate.EventType.LAVA);
+            if (gen && rand.nextInt(18) == 0) {
+                int j2 = x + rand.nextInt(16) + 8;
+                int i5 = rand.nextInt(rand.nextInt(45) + 8);
+                int j8 = y + rand.nextInt(16) + 8;
+                if (i5 < 64 || rand.nextInt(10) == 0) {
+                    (new WorldGenLakes(Blocks.lava)).generate(worldObj, rand, j2, i5, j8);
+                }
             }
         }
 
@@ -746,7 +763,11 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
 
     public void recreateStructures(int par1, int par2) {
         strongholdGenerator.func_151539_a(this, worldObj, par1, par2, (Block[]) null);
-        mineshaftGenerator.func_151539_a(this, worldObj, par1, par2, (Block[]) null);
-        villageGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[]) null);
+        if (ConfigRWG.generateMineshafts) {
+            mineshaftGenerator.func_151539_a(this, worldObj, par1, par2, (Block[]) null);
+        }
+        if (ConfigRWG.generateVillages) {
+            villageGenerator.func_151539_a(this, this.worldObj, par1, par2, (Block[]) null);
+        }
     }
 }

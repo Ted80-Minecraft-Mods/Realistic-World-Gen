@@ -2,8 +2,8 @@ package rwg.support;
 
 import java.util.ArrayList;
 
-import rwg.biomes.realistic.RealisticBiomeBase;
 import cpw.mods.fml.common.Loader;
+import rwg.biomes.realistic.RealisticBiomeBase;
 
 public class Support {
 

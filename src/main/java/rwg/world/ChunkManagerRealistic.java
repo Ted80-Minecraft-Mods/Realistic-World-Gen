@@ -11,12 +11,12 @@ import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 
+import gnu.trove.map.hash.TLongObjectHashMap;
 import rwg.biomes.realistic.RealisticBiomeBase;
 import rwg.support.Support;
 import rwg.util.CellNoise;
 import rwg.util.NoiseGenerator;
 import rwg.util.NoiseSelector;
-import gnu.trove.map.hash.TLongObjectHashMap;
 
 public class ChunkManagerRealistic extends WorldChunkManager {
 

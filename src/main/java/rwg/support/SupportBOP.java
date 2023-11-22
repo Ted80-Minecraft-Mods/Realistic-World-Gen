@@ -2,13 +2,29 @@ package rwg.support;
 
 import net.minecraft.init.Blocks;
 
+import biomesoplenty.api.content.BOPCBiomes;
 import rwg.api.RWGBiomes;
 import rwg.support.Support.BiomeCategory;
-import rwg.support.edit.*;
-import rwg.surface.*;
+import rwg.support.edit.EditBase;
+import rwg.support.edit.EditRiverOasis;
+import rwg.surface.SurfaceBase;
+import rwg.surface.SurfaceCanyon;
+import rwg.surface.SurfaceDuneValley;
+import rwg.surface.SurfaceGrassland;
+import rwg.surface.SurfaceGrasslandMix1;
+import rwg.surface.SurfaceMountainSnow;
+import rwg.surface.SurfaceMountainStone;
 import rwg.surface.river.SurfaceRiverOasis;
-import rwg.terrain.*;
-import biomesoplenty.api.content.BOPCBiomes;
+import rwg.terrain.TerrainCanyon;
+import rwg.terrain.TerrainDuneValley;
+import rwg.terrain.TerrainGrasslandHills;
+import rwg.terrain.TerrainHighland;
+import rwg.terrain.TerrainHilly;
+import rwg.terrain.TerrainMarsh;
+import rwg.terrain.TerrainMountainRiver;
+import rwg.terrain.TerrainMountainSpikes;
+import rwg.terrain.TerrainSwampMountain;
+import rwg.terrain.TerrainSwampRiver;
 
 public class SupportBOP {
 

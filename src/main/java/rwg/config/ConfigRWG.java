@@ -11,6 +11,11 @@ public class ConfigRWG {
 
     public static boolean generateEmeralds = true;
     public static boolean enableCobblestoneBoulders = true;
+    public static boolean generateCaves = true;
+    public static boolean generateMineshafts = true;
+    public static boolean generateVillages = true;
+    public static boolean generateUndergroundLakes = true;
+    public static boolean generateUndergroundLavaLakes = true;
 
     public static void init(FMLPreInitializationEvent event) {
         config = new Configuration(event.getSuggestedConfigurationFile());
@@ -52,6 +57,11 @@ public class ConfigRWG {
 
             generateEmeralds = config.getBoolean("Generate Emeralds", "Settings", true, "");
             enableCobblestoneBoulders = config.getBoolean("Enable Cobblestone Boulders", "Settings", true, "");
+            generateCaves = config.getBoolean("Generate Caves", "Settings", true, "");
+            generateMineshafts = config.getBoolean("Generate Mineshafts", "Settings", true, "");
+            generateVillages = config.getBoolean("Generate Villages", "Settings", true, "");
+            generateUndergroundLakes = config.getBoolean("Generate Underground Lakes", "Settings", true, "");
+            generateUndergroundLavaLakes = config.getBoolean("Generate Underground Lava Lakes", "Settings", true, "");
 
         } catch (Exception e) {
             for (int c = 0; c < biomeIDs.length; c++) {

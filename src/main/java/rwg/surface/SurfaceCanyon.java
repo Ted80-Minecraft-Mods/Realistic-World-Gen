@@ -7,7 +7,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import rwg.util.*;
+import rwg.util.CellNoise;
+import rwg.util.CliffCalculator;
+import rwg.util.NoiseGenerator;
+import rwg.util.NoiseSelector;
 
 public class SurfaceCanyon extends SurfaceBase {
 

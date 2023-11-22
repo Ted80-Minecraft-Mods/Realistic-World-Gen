@@ -3,10 +3,10 @@ package rwg.data;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import rwg.RWG;
 import rwg.deco.trees.DecoSavannah;
 import rwg.deco.trees.DecoSmallPine;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class TreeReplacement {
     /*

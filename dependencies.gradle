@@ -1,7 +1,7 @@
 // Add your dependencies here
 
 dependencies {
-    compile("com.github.GTNewHorizons:NotEnoughItems:2.3.7-GTNH:dev")
+    compile("com.github.GTNewHorizons:NotEnoughItems:2.4.12-GTNH:dev")
 
     compile('curse.maven:biomes-o-plenty-220318:2499612')
     compileOnly('curse.maven:extrabiomesxl-60041:2273301')

@@ -6,10 +6,10 @@ import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import rwg.data.VillageMaterialData;
-import rwg.data.VillageMaterials;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import rwg.data.VillageMaterialData;
+import rwg.data.VillageMaterials;
 
 public class BaseBiomeHotPlains extends BiomeGenBase {
 
