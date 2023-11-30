@@ -215,6 +215,9 @@ public class ChunkGeneratorRealistic implements IChunkProvider {
 
     public float[] getNewNoise(ChunkManagerRealistic cmr, int x, int y, RealisticBiomeBase biomes[]) {
         int i, j, k, l, m, n, p;
+        // fixes broken chunk gen (from Bartworks ASM)
+        if (x < -28675) x %= -28675;
+        if (y < -28675) y %= -28675;
 
         for (i = -sampleSize; i < sampleSize + 5; i++) {
             for (j = -sampleSize; j < sampleSize + 5; j++) {
