@@ -143,6 +143,7 @@ public class PerlinNoise implements NoiseGenerator {
     @java.lang.Override
     public float noise1(float x) {
         float t = x + N;
+        t = Math.abs(t);
         int bx0 = ((int) t) & BM;
         int bx1 = (bx0 + 1) & BM;
         float rx0 = t - (int) t;
@@ -166,12 +167,14 @@ public class PerlinNoise implements NoiseGenerator {
     @java.lang.Override
     public float noise2(float x, float y) {
         float t = x + N;
+        t = Math.abs(t);
         int bx0 = ((int) t) & BM;
         int bx1 = (bx0 + 1) & BM;
         float rx0 = t - (int) t;
         float rx1 = rx0 - 1;
 
         t = y + N;
+        t = Math.abs(t);
         int by0 = ((int) t) & BM;
         int by1 = (by0 + 1) & BM;
         float ry0 = t - (int) t;
@@ -214,18 +217,21 @@ public class PerlinNoise implements NoiseGenerator {
     @java.lang.Override
     public float noise3(float x, float y, float z) {
         float t = x + (float) N;
+        t = Math.abs(t);
         int bx0 = ((int) t) & BM;
         int bx1 = (bx0 + 1) & BM;
         float rx0 = (float) (t - (int) t);
         float rx1 = rx0 - 1;
 
         t = y + (float) N;
+        t = Math.abs(t);
         int by0 = ((int) t) & BM;
         int by1 = (by0 + 1) & BM;
         float ry0 = (float) (t - (int) t);
         float ry1 = ry0 - 1;
 
         t = z + (float) N;
+        t = Math.abs(t);
         int bz0 = ((int) t) & BM;
         int bz1 = (bz0 + 1) & BM;
         float rz0 = (float) (t - (int) t);

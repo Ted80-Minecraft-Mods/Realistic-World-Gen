@@ -328,6 +328,7 @@ public class ChunkManagerRealistic extends WorldChunkManager {
     }
 
     public float calculateRiver(int x, int y, float st, float biomeHeight) {
+
         if (st < 0f && biomeHeight > 59f) {
             float pX = x + (perlin.noise1(y / 240f) * 220f);
             float pY = y + (perlin.noise1(x / 240f) * 220f);
