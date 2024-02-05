@@ -1,0 +1,13 @@
+// Add your dependencies here
+
+dependencies {
+    runtimeOnlyNonPublishable("curse.maven:journeymap-32274:4500658")
+    compile("com.github.GTNewHorizons:NotEnoughItems:2.5.4-GTNH:dev")
+
+    devOnlyNonPublishable('curse.maven:biomes-o-plenty-220318:2499612')
+    compileOnly('curse.maven:extrabiomesxl-60041:2273301')
+
+    //runtimeOnlyNonPublishable('com.github.GTNewHorizons:Climate-Control:0.9.1-GTNH:dev')
+    devOnlyNonPublishable('com.github.GTNewHorizons:CodeChickenCore:1.2.1:dev')
+    runtimeOnlyNonPublishable("curse.maven:chunkpregenerator-267193:3790102")
+}
